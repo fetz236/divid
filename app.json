@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "divid",
+    "slug": "divid",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/divid_square.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/divid.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": false
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/divid_square.png",
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    "web": {
+      "favicon": "./assets/divid.png"
+    }
+  }
+}
