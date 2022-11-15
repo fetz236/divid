@@ -2,23 +2,24 @@ import { View, Text, TouchableOpacity, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { db } from '../../../firebase'
-import { fi_items_css } from '../../../styles/home/FitnessItemsStyle'
 import { display_categories_style } from '../../../styles/SearchHome/DisplayCategories/DisplayCategoriesStyle'
+import { style_sheet } from '../../../styles/workers/WorkerItemsStyle'
+import { Divider } from 'react-native-elements'
 
 export default function DisplayCategories({navigation, ...props}) {
 
 
 
-  const [fitness, setFitness] = useState([])
-  const [loaded_fitness, setLoadedFitness] = useState(false)
+  const [worker, setWorker] = useState([])
+  const [loaded_worker, setLoadedWorker] = useState(false)
 
 
-  useEffect( async() => {
+  useEffect(() => {
 
-      //Load all fitness data
+      //Load all worker data
       const loadData = async() => {
           let fit_data = []
-          db.collection('fitness_centres').where('categories','array-contains',props.route.params.__id__).get()
+          db.collection('workers').where('categories','array-contains',props.route.params.__id__).get()
           .then(snapshot => {
               snapshot.forEach(doc => {
                   const data = doc.data();
@@ -26,29 +27,26 @@ export default function DisplayCategories({navigation, ...props}) {
                   fit_data.push(data)
               })
           }).then( async function(){
-              await setFitness(fit_data)
-              await setLoadedFitness(true)
+              await setWorker(fit_data)
+              await setLoadedWorker(true)
           }
           ).catch(err => alert(err))
           
       }
-
-
-      if (fitness.length == 0){
-          await loadData()
-      }
+      
+      loadData()
       
   }, [])    
   
     return (
       <SafeAreaView>  
         { 
-            loaded_fitness && fitness.length>0 && 
-            <FitnessItems fitness={fitness} navigation={navigation}/>
+            loaded_worker && worker.length>0 && 
+            <WorkerItems worker={worker} navigation={navigation}/>
         }
 
         { 
-            loaded_fitness && fitness.length==0 && 
+            loaded_worker && worker.length==0 && 
             <View style={display_categories_style.header_container}>
               <Text style={display_categories_style.title}>Currently we do not have any partners under this category ;( </Text>
               <Text style={display_categories_style.title_2}>Stay tuned!</Text>
@@ -59,57 +57,51 @@ export default function DisplayCategories({navigation, ...props}) {
   
 }
 
-const FitnessItems = (props) => (
-  <>
-      {props.fitness.map((fit, index) => (
-          <TouchableOpacity activeOpacity={1} style={{
-          }}
-          key={index}
-          onPress={() => props.navigation.navigate("FitnessDetail", {
-              id: fit.id,
-              name: fit.name,
-              image: fit.images,
-              reviews: fit.reviews,
-              rating: fit.rating,
-              location: fit.location, 
-              subscription: fit.subscription,
-              telephone_number: fit.telephone_number,
-              categories: fit.categories,
-          }
-          )}
-          >
-          <View key={index}>
-              <View style={fi_items_css.main_container}>
-                  <GymImage image={fit.images} fit={fit} index={index} addFavourites={props.addFavourites}/>
-                  <GymInfo name={fit.name} rating={fit.rating}/>
-              </View> 
-          </View>
-      </TouchableOpacity>
+const WorkerItems = (props) => (
+    props.worker.map((worker, index) => (
+        <TouchableOpacity activeOpacity={1} style={{
+        }}
+            key={index}
+            onPress={() => props.navigation.navigate("WorkerDetail", {
+                first_name: worker.first_name,
+                last_name: worker.last_name,
+                id: worker.id,
+                categories: worker.categories,
+                mobile: worker.mobile,
+                mobile_calling_code: worker.mobile_calling_code,
+                description: worker.description,
+                price: worker.price,
+                location: worker.location,
+                photoURL: worker.photoURL,
+                rating: worker.rating,
+                reviews: worker.reviews,
+            }
+            )}>
+            <View style={{ marginBottom: 10 }}>
+                <View style={style_sheet.worker_item_style}>
+                    <WorkerImage worker_details={worker} />
+                    <WorkerInfo worker_details={worker} />
+                </View>
+                <Divider width={0.5} orientation="vertical" style={{ marginTop: 5 }} />
 
-      ))}
-  </>
+            </View>
+        </TouchableOpacity>
+    ))
 )
 
-const GymImage = (props) => (
-  <View style={fi_items_css.gym_image_container}>
-      <Image source={{uri:props.image[0]}} style={fi_items_css.image_def}/>
-      { /*
-      <TouchableOpacity style={fi_items_css.icon_container} onPress={() => props.addFavourites(props.fit, props.index)}>
-          <MaterialCommunityIcons name={props.fit.isFavourite?'heart':'heart-outline'} 
-          size={25} color='white'></MaterialCommunityIcons>
-      </TouchableOpacity>
-      */
-      }
-  </View>
+const WorkerInfo = (props) => (
+    <View style={style_sheet.worker_info}>
+        <Text style={style_sheet.worker_title_style}>{props.worker_details.first_name} {props.worker_details.last_name}</Text>
+        <Text>{props.worker_details.description}</Text>
+        <Text>£{(props.worker_details.price / 100).toFixed(2)}</Text>
+
+    </View>
 )
 
-const GymInfo = (props) => (
-  <View style={fi_items_css.gym_info_container}>
-          <View>
-              <Text style={fi_items_css.headline_1}>{props.name}</Text>
-          </View>
-      <View style={fi_items_css.description_container}>
-          <Text style={{color:'white'}}>{props.rating}</Text>
-      </View>
-  </View>
+const WorkerImage = (props) => (
+    <View>
+        <Image source={{uri:props.worker_details.photoURL}} 
+        style={style_sheet.worker_profile_image} 
+        />
+    </View>
 )

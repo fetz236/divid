@@ -43,7 +43,10 @@ export const checkout_style = StyleSheet.create({
     order_text:{
         fontSize:16,
         fontWeight:'600',    
-        color: '#8d8d8d'
+        color: '#8d8d8d',
+        textAlign:'center',
+        marginLeft:'2%',
+        marginRight:'2%',
     },
     order_divider:{
         marginTop:'2%',

@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, Platform, StyleSheet} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Divider } from 'react-native-elements';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { schedule_style_sheet } from '../../styles/workers/WorkerScheduleStyle'
 import { Button } from 'react-native';
 import { auth, db } from '../../firebase';
@@ -16,6 +15,7 @@ export const WorkerSchedule = ({navigation, ...props}) => {
     const [loaded_worker_schedule, setLoadedClassSchedule] = useState(false)
     const [db_schedule_data, setdb_schedule_data] = useState([])
 
+    //Loads all data for the selected worker
     useEffect(()=> {
         const loadData = async() => {
             let worker_data = []
@@ -40,9 +40,15 @@ export const WorkerSchedule = ({navigation, ...props}) => {
         loadData()
     }, [])
 
+    /*
+        As the dates are stored in the database using a day model
+        This means that when rendering, there has to be a date match system to display the worker's
+        schedule correct
+    */
     const loadWorkerDates = (worker_data, curr) =>{
         const worker_temp = []
         
+        //set at 22 for 21 days loop
         for (let i =0; i<22; i++){
             curr.setDate(curr.getDate() +1)
             for(let j =0; j<worker_data.length; j++){
@@ -62,6 +68,7 @@ export const WorkerSchedule = ({navigation, ...props}) => {
             
         }
 
+        //fixing the rendering to group the dates under the date object
         let grouped_worker_ = Object.values(worker_temp.reduce((acc, item) => {
             if (!acc[item.date]) acc[item.date] = {
                 date: item.date,
@@ -83,14 +90,15 @@ export const WorkerSchedule = ({navigation, ...props}) => {
     }
 
 
-
+    //Variables for the date picker
     const [date, setDate] = useState(new Date());
     const [show, setShow] = useState(false);
     const [mode, setMode] = useState('date');
 
-    const [worker_tate, setWorkerState] = useState(false);
-    const [indexState, setIndexState] = useState(-1);
-    
+
+    /*
+        Change date method and loads the new workers schedule
+    */
     const changedDate = (event, selectedDate) => {
         let currentDate = selectedDate || date;
         setShow(Platform.OS === 'ios');
@@ -101,14 +109,13 @@ export const WorkerSchedule = ({navigation, ...props}) => {
         setClassSchedule(temp_data)
     };  
 
-
-    const showWorker = (bool, index) =>{
-        if (bool){
-            setIndexState(index);
-            setWorkerState(true);
-        }
-    };
-
+    /*
+    This is a check authentication method to understand which screen
+    should be rendered depending on if the user is logged in or not
+    
+    If the user is logged in then we render the checkout, if they are not
+    then we render our authentication stack
+    */
     const checkAuthentication = (t_data) => {
         if (auth.currentUser) {
             navigation.navigate("Checkout",{
@@ -121,10 +128,8 @@ export const WorkerSchedule = ({navigation, ...props}) => {
                 navigation:navigation,
                 isCheckout: true,
                 t_data: t_data,
-
             })
         }
-        
     };
 
     return (
@@ -152,9 +157,7 @@ export const WorkerSchedule = ({navigation, ...props}) => {
 
           }}>
           </Divider>
-          <DisplaySchedule worker_tate={worker_tate} 
-            indexState={indexState} 
-            showWorker={showWorker} 
+          <DisplaySchedule
             worker_schedule = {worker_schedule}
             checkAuthentication={checkAuthentication}
             navigation={navigation}
@@ -163,6 +166,9 @@ export const WorkerSchedule = ({navigation, ...props}) => {
     );
   };
 
+
+
+// Utilised for displaying the schedule
 const DisplaySchedule = ({navigation, ...props}) => {
     return (
     <View showsVerticalScrollIndicator={false} style={{marginBottom:'20%'}}>
@@ -172,7 +178,7 @@ const DisplaySchedule = ({navigation, ...props}) => {
                     <View style= {schedule_style_sheet.date_container}>
                         <Text style={schedule_style_sheet.date_text_underline}> {worker.date}</Text>
                     </View>
-                    <Divider/>x
+                    <Divider/>
                     {worker.data.map((item_k, k) => (
                         <View style={schedule_style_sheet.item_container} key={k}>
                             <View style= {schedule_style_sheet.time_container} >
