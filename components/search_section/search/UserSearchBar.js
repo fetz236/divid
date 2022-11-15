@@ -17,11 +17,8 @@ const Item = ({ title }) => (
 
 const UserSearchBar = ({ navigation }) => {
 
-    const [search_fc_data, setSearchFCData] = useState([])
     const [search_worker_data, setSearchWorkerData] = useState([])
 
-    const [loadedSearchData, setLoadedSearchData] = useState(false)
-    const [loadedWorkerData, setLoadedWorkerData] = useState(false)
     const [fully_loaded, setFullyLoaded] = useState(false)
 
     const [filteredData, setFilteredData] = useState([]);
@@ -29,35 +26,21 @@ const UserSearchBar = ({ navigation }) => {
     const [search, setSearch] = useState(''); 
     const [categoryState, setCategoryState] = useState(true);
 
-    useEffect(async() => {
+    useEffect(() => {
 
         const loadMasterSearchData = () => {
-            let fc_data = []
-            db.collection('fitness_centres').get().then(
-                snapshot => {
-                    snapshot.forEach(doc => {
-                        const data = doc.data()
-                        data.id = doc.id
-                        
-                        fc_data.push(data)
-                    })
-                }
-            ).then(async function(){
-                setSearchFCData(fc_data)
-            })
-
-            let tr_data = []
-            db.collection('users').where('isWorker', '==', true).get().then(
+            let wc_data = []
+            db.collection('workers').get().then(
                 snapshot => {
                     snapshot.forEach(doc => {
                         const data = doc.data()
                         data.id = doc.id
                         data.name = data.first_name + " " + data.last_name
-                        tr_data.push(data)
+                        wc_data.push(data)
                     })
                 }
             ).then(async function(){
-                setSearchWorkerData(tr_data)
+                setSearchWorkerData(wc_data)
             })
 
             setMasterData([{
@@ -65,19 +48,14 @@ const UserSearchBar = ({ navigation }) => {
                 data: require('../../../categories.json'),
             },
             {
-                title: "Fitness Centres",
-                data: fc_data,
-            },
-            {
                 title: "Workers",
-                data: tr_data
+                data: wc_data
             },
             ])
         }
-        if (masterData.length==0){
-            await loadMasterSearchData()
-            setFullyLoaded(true)
-        }
+        
+        loadMasterSearchData()
+        setFullyLoaded(true)
 
     }, [])
     
@@ -119,20 +97,7 @@ const UserSearchBar = ({ navigation }) => {
 
 
     const checkNavigation = (title, item) =>{
-        if (title == "Fitness Centres") {
-            navigation.navigate("FitnessDetail", {
-            id: item.id,
-            name: item.name,
-            image: item.images,
-            reviews: item.reviews,
-            rating: item.rating,
-            location: item.location, 
-            subscription: item.subscription,
-            telephone_number: item.telephone_number,
-            categories: item.categories,
-        }
-        )}
-        else if (title == "Workers"){
+        if (title == "Workers"){
             navigation.navigate("WorkerDetail", {
                 first_name: item.first_name,
                 last_name: item.last_name,

@@ -5,7 +5,7 @@ import { View, Text } from 'react-native'
 import CheckoutPage from '../../components/checkout/CheckoutPage'
 
 export default function Checkout({route, navigation}) {
-    const [publishableKey, setPublishableKey] = useState("pk_test_51LuD3PIrAL49R4x55Eydaob8p1oJIHSO8C20xSX9xMVXX7URNA9AaWdGz6n5fN2LVNmAMDmwh8Q7K4JpYHNY0L5200B2LVsbdU")
+    const [publishableKey, setPublishableKey] = useState("pk_test_51M2bNQKcu8s2d1dKfVczSUAwyemIRKj28hvrYTGXlYnoVFJkQUCpZamB7znHUEl61XQvQUnr8sQxoKqUvONxak6R00nNz8L9hk")
 
     return (
         <StripeProvider

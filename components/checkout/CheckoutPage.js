@@ -129,10 +129,11 @@ Object {
 
 */
 
+//API URL for our Express server
 const API_URL = "https://serene-taiga-13771.herokuapp.com";
 
+//Checkout Page presented to the user which is wrapped in StripeProvider
 export default function CheckoutPage({navigation, ...props}) {
-    
     
     const [checkout_data, setCheckoutData] = useState()
     const [isWorker, setisWorker] = useState()
@@ -148,7 +149,7 @@ export default function CheckoutPage({navigation, ...props}) {
     const [cardDetails, setCardDetails] = useState();
     const { confirmPayment, loading } = useConfirmPayment();
 
-    useEffect(async() => {
+    useEffect(() => {
         const loadUserInfo = () => {
             db.collection('users').doc(auth.currentUser.uid).get().then(
                 snap => {
@@ -158,22 +159,18 @@ export default function CheckoutPage({navigation, ...props}) {
 
         }
     
-        if (user_data == ""){
-            await loadUserInfo()
-            if (props.route.params.u_data){
-                setCheckoutData(props.route.params.u_data)
-                setisWorker(false, "false")
-            }
-            else{
-                setCheckoutData(props.route.params.t_data)
-                setisWorker(true)
-
-                
-            }
-            setLoadedUserData(true)
-
+        loadUserInfo()
+        if (props.route.params.u_data){
+            setCheckoutData(props.route.params.u_data)
+            setisWorker(false, "false")
         }
-        
+        else{
+            setCheckoutData(props.route.params.t_data)
+            setisWorker(true)
+
+            
+        }
+        setLoadedUserData(true)
     }, [])
     
     const fetchPaymentIntentClientSecret = async () => {
@@ -216,6 +213,7 @@ export default function CheckoutPage({navigation, ...props}) {
           } else {
             const { paymentIntent, error } = await confirmPayment(clientSecret, {
               type: "Card",
+              paymentMethodType:'Card',
               billingDetails: billingDetails,
             });
             if (error) {
@@ -328,22 +326,16 @@ const Information = (props) => (
 )
 
 const WorkerInformation = (props) => (
-    <>
-        <View style={checkout_style.header_container}>
-            <Text style={checkout_style.sub_heading}>{props.checkout_data.worker_selected.worker.first_name} {props.checkout_data.worker_selected.worker.last_name} Booking</Text>
-        </View>
-        <Divider width={1} style={checkout_style.divider}/>
-        <View style ={checkout_style.order_container}>
-            <Text style={checkout_style.order_header}> Order </Text>
-            <Divider width={1} style={checkout_style.order_divider}/>
-            <View style={checkout_style.order_info}>
-                <Text style={checkout_style.order_text}>Personal training session from {props.checkout_data.start_time} - {props.checkout_data.end_time} on  
-                 the {props.checkout_data.date}
-                </Text>
-            </View>
-            <Divider width={1} style={checkout_style.order_divider}/>
-        </View>
-    </>
+  <View style ={checkout_style.order_container}>
+      <Text style={checkout_style.order_header}> Order </Text>
+      <Divider width={1} style={checkout_style.order_divider}/>
+      <View style={checkout_style.order_info}>
+          <Text style={checkout_style.order_text}> Booking with {props.checkout_data.worker_selected.worker.first_name} {props.checkout_data.worker_selected.worker.last_name} arriving from {props.checkout_data.start_time} - {props.checkout_data.end_time} on  
+            the {props.checkout_data.date}
+          </Text>
+      </View>
+      <Divider width={1} style={checkout_style.order_divider}/>
+  </View>
 )
     
 const Order = (props) => (
