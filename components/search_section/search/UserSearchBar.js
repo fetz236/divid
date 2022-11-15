@@ -18,10 +18,10 @@ const Item = ({ title }) => (
 const UserSearchBar = ({ navigation }) => {
 
     const [search_fc_data, setSearchFCData] = useState([])
-    const [search_trainer_data, setSearchTrainerData] = useState([])
+    const [search_worker_data, setSearchWorkerData] = useState([])
 
     const [loadedSearchData, setLoadedSearchData] = useState(false)
-    const [loadedTrainerData, setLoadedTrainerData] = useState(false)
+    const [loadedWorkerData, setLoadedWorkerData] = useState(false)
     const [fully_loaded, setFullyLoaded] = useState(false)
 
     const [filteredData, setFilteredData] = useState([]);
@@ -47,7 +47,7 @@ const UserSearchBar = ({ navigation }) => {
             })
 
             let tr_data = []
-            db.collection('users').where('isTrainer', '==', true).get().then(
+            db.collection('users').where('isWorker', '==', true).get().then(
                 snapshot => {
                     snapshot.forEach(doc => {
                         const data = doc.data()
@@ -57,7 +57,7 @@ const UserSearchBar = ({ navigation }) => {
                     })
                 }
             ).then(async function(){
-                setSearchTrainerData(tr_data)
+                setSearchWorkerData(tr_data)
             })
 
             setMasterData([{
@@ -69,7 +69,7 @@ const UserSearchBar = ({ navigation }) => {
                 data: fc_data,
             },
             {
-                title: "Trainers",
+                title: "Workers",
                 data: tr_data
             },
             ])
@@ -132,8 +132,8 @@ const UserSearchBar = ({ navigation }) => {
             categories: item.categories,
         }
         )}
-        else if (title == "Trainers"){
-            navigation.navigate("TrainerDetail", {
+        else if (title == "Workers"){
+            navigation.navigate("WorkerDetail", {
                 first_name: item.first_name,
                 last_name: item.last_name,
                 id: item.id,

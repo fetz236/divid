@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native'
 import { View, Text } from 'react-native'
 import { login_style } from '../../styles/authentication/LoginStyle'
@@ -6,15 +6,22 @@ import { Divider } from 'react-native-elements/dist/divider/Divider'
 import { TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Modal } from 'react-native'
-import { auth, db } from '../../firebase'
-import { doc, getDoc } from 'firebase/firestore'
+import { auth } from '../../firebase'
+
+
+/*
+    Login Page allows access to the forgot password, sign up or close screen
+*/
 
 export default function Login({navigation, ...props}) {
     const [loginState, setLoginState] = useState('');
     const [passwordState, setPasswordState] = useState('');
 
-
+    /*
+        Handles the login using Firebase auth and then navigates to the necessary page 
+        Then, it passes the new navigation page depending on whether the user called the 
+        Authentication stack from the home screen or when attempting to check out
+    */
     const handleLogin = () => {
         auth
         .signInWithEmailAndPassword(loginState, passwordState)
@@ -68,16 +75,12 @@ export default function Login({navigation, ...props}) {
                 </View>
             </View>
             <View style={login_style.forgot_container}>
-                <TouchableOpacity onPress={() => navigation.replace("ForgotPasswordScreen" , {
-                    navigation:navigation,
-                })}>
+                <TouchableOpacity onPress={() => navigation.replace("ForgotPasswordScreen" , props.route.params)}>
                     <Text style={login_style.sub_heading}> i forgot my password </Text>
                 </TouchableOpacity>
             </View>
             <View style={login_style.forgot_container}>
-                <TouchableOpacity onPress={() => navigation.replace("SignUpScreen" , {
-                    navigation:navigation,
-                })}>
+                <TouchableOpacity onPress={() => navigation.replace("SignUpScreen" , props.route.params)}>
                     <Text style={login_style.sub_heading}> i actually dont have an account </Text>
                 </TouchableOpacity>
             </View>

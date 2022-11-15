@@ -2,15 +2,12 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Home from "./screens/HomePage/Home"
-import FitnessDetail from "./screens/HomePage/FitnessDetail"
 import { Provider as ReduxProvider } from 'react-redux'
 import store from "./redux/Store"
 import configureStore from './redux/Store'
-import ScheduleDetail from './screens/HomePage/ScheduleDetail'
-import TrainerHome from './screens/HomePage/TrainerHome'
-import TrainerScheduleDetail from './screens/HomePage/TrainerScheduleDetail'
-import TrainerDetail from './screens/HomePage/TrainerDetail'
+import WorkerHome from './screens/HomePage/WorkerHome'
+import WorkerScheduleDetail from './screens/HomePage/WorkerScheduleDetail'
+import WorkerDetail from './screens/HomePage/WorkerDetail'
 import UserDetail from './screens/HomePage/UserDetail'
 import Search from './screens/SearchPage/SearchHome';
 import UpcomingHome from './screens/UpcomingPage/UpcomingHome';
@@ -24,18 +21,13 @@ import ForgotPasswordScreen from './screens/Authentication/ForgotPasswordScreen'
 import Modify from './screens/UpcomingPage/Modify';
 import Cancel from './screens/UpcomingPage/Cancel';
 import BookingConfirmation from './components/checkout/BookingConfirmation';
-import ViewPerks from './components/checkout/ViewPerks';
 import AccountDetailsScreen from './screens/HomePage/AccountDetailsScreen';
 import ContactPreferencesScreen from './screens/HomePage/ContactPreferencesScreen';
 import PaymentDetailsScreen from './screens/HomePage/PaymentDetailsScreen';
 import ReferUserScreen from './screens/HomePage/ReferUserScreen';
-import { header_style } from './styles/components/HeaderStyle';
 import NoLogin from './components/userDetail/NoLogin';
 import DisplayCategoriesScreen from './screens/SearchPage/DisplayCategoriesScreen';
-
-
-
-
+import { header_style } from './styles/components/HeaderStyle';
 
 const tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -54,20 +46,14 @@ const HomeStackScreen = () => (
         headerShown:false,
 
     }}>
-        <HomeStack.Screen name="HomePage" component={Home} options={{animationEnabled:false}}/>
-        <HomeStack.Screen name="TrainerHome" component={TrainerHome} options={{animationEnabled:false}}/>
-        <HomeStack.Screen name = "FitnessDetail" component={FitnessDetail}/>
-        <HomeStack.Screen name = "ScheduleDetail" component={ScheduleDetail} options={{headerShown:true, 
-            headerStyle:header_style.full_container, headerBackTitleVisible:false, 
-            headerTitleStyle:header_style.title, headerTintColor: 'white', headerTitle:' Select Class Date'
-            }}/>
-        <HomeStack.Screen name = "TrainerDetail" component={TrainerDetail} options={{headerShown:true, 
+        <HomeStack.Screen name="WorkerHome" component={WorkerHome} options={{animationEnabled:false}}/>
+        <HomeStack.Screen name = "WorkerDetail" component={WorkerDetail} options={{headerShown:true, 
             headerStyle:header_style.full_container, headerBackTitleVisible:false, 
             headerTitleStyle:header_style.title, headerTintColor: 'white',headerTitle:''
             }}/>
-        <HomeStack.Screen name = "TrainerScheduleDetail" component={TrainerScheduleDetail} options={{headerShown:true, 
+        <HomeStack.Screen name = "WorkerScheduleDetail" component={WorkerScheduleDetail} options={{headerShown:true, 
             headerStyle:header_style.full_container, headerBackTitleVisible:false, 
-            headerTitleStyle:header_style.title, headerTintColor: 'white', headerTitle:'Select Trainer Date'
+            headerTitleStyle:header_style.title, headerTintColor: 'white', headerTitle:'Select Date'
             }}/>
         <HomeStack.Screen name = "UserDetail" component={UserDetail} options={{headerShown:true, 
             headerStyle:header_style.full_container, headerBackTitleVisible:false, 
@@ -97,7 +83,6 @@ const HomeStackScreen = () => (
             headerStyle:header_style.full_container, headerBackTitleVisible:false, 
             headerTitleStyle:header_style.title, headerTintColor: 'white', headerTitle:' Change Payment'
             }}/>
-        <HomeStack.Screen name = "ViewPerks" component={ViewPerks}/>
         <HomeStack.Screen name = "AuthenticationScreen" component={AuthenticationScreen} options={{ presentation:'modal'}}/>
         <HomeStack.Screen name = "LoginScreen" component={LoginScreen} options={{ presentation:'modal', transitionSpec:{open:config_transition, close:config_transition}, animationEnabled:true}}/>
         <HomeStack.Screen name = "SignUpScreen" component={SignUpScreen} options={{ presentation:'modal', transitionSpec:{open:config_transition, close:config_transition}, animationEnabled:true}}/>
@@ -147,7 +132,6 @@ export default function RootNavigation() {
     return (
         <ReduxProvider store={store}>
             <NavigationContainer>
-
                 <tab.Navigator screenOptions={{
                     headerShown:false,
                     tabBarActiveTintColor:"white",
@@ -160,7 +144,6 @@ export default function RootNavigation() {
                         marginTop:'1%'
                     }
                 }}
-                
                 >
                     <tab.Screen name="Home" component={HomeStackScreen}
                     options={{

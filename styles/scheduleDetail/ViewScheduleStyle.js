@@ -24,7 +24,7 @@ export const schedule_info = StyleSheet.create({
     },
 
 });
-export const trainer_schedule = StyleSheet.create({
+export const worker_schedule = StyleSheet.create({
     schedule_container: {
         flex: 1,
         alignItems: 'center',

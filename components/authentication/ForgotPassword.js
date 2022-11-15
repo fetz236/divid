@@ -6,12 +6,27 @@ import { View, Text } from 'react-native'
 import { Divider } from 'react-native-elements'
 import { fp_style } from '../../styles/authentication/ForgotPassword'
 import Icon from 'react-native-vector-icons/Ionicons';
-import { auth, db, storage } from '../../firebase'
+import { auth } from '../../firebase'
+
+
+/*
+This is the forgot password screen for the authentication page
+This works by:
+1) Retrieving all params from the login screen 
+2) Passing the isCheckout paramter which tells the navigator to take the user to the checkout
+or the user information screen
+3) Replacing the stack instead of navigating
+
+*/
+
 
 export default function ForgotPassword({navigation, ...props}) {
     const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
 
+    //Using firebase auth, are able to send a password reset email
+    //This screen is rendered by Google and no necessary coding is required to handle the changing of a password
+    //Once the user submits the form, their password will update on Firebase Auth
     const handleForgotPass = async() => {
         setLoading(true);
         auth.sendPasswordResetEmail(email).then(() => {
@@ -23,6 +38,7 @@ export default function ForgotPassword({navigation, ...props}) {
         
         setLoading(false);
     }
+
     return (
         <SafeAreaView>
             <Icon name="close" color='#d95a00' size={50} style={fp_style.close_button} 

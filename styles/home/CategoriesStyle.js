@@ -22,6 +22,7 @@ export const categories_css = StyleSheet.create({
     },
     reload:{
         alignItems:'center',
+        justifyContent:'center',
     },
     reload_button:{
         backgroundColor:'#d95a00',

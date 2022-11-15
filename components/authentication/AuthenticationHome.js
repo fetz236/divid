@@ -5,6 +5,18 @@ import { View, Text } from 'react-native'
 import { auth_style } from '../../styles/authentication/AuthenticationHomeStyle'
 import Icon from 'react-native-vector-icons/Ionicons';
 
+
+/*
+This is the home screen for the authentication page
+
+This works by:
+1) Passing all necessary params to the login or forgot password screen
+2) Passing the isCheckout paramter which tells the navigator to take the user to the checkout
+or the user information screen
+3) Replacing the stack instead of navigating
+
+*/
+
 export default function AuthenticationHome({navigation, ...props}) {
 
     return (

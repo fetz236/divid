@@ -135,7 +135,7 @@ export default function CheckoutPage({navigation, ...props}) {
     
     
     const [checkout_data, setCheckoutData] = useState()
-    const [isTrainer, setisTrainer] = useState()
+    const [isWorker, setisWorker] = useState()
     const [user_data, setUserData] = useState('')
     const [loaded_user_data, setLoadedUserData] = useState(false)
 
@@ -162,11 +162,11 @@ export default function CheckoutPage({navigation, ...props}) {
             await loadUserInfo()
             if (props.route.params.u_data){
                 setCheckoutData(props.route.params.u_data)
-                setisTrainer(false, "false")
+                setisWorker(false, "false")
             }
             else{
                 setCheckoutData(props.route.params.t_data)
-                setisTrainer(true)
+                setisWorker(true)
 
                 
             }
@@ -178,8 +178,8 @@ export default function CheckoutPage({navigation, ...props}) {
     
     const fetchPaymentIntentClientSecret = async () => {
         let price; 
-        if (isTrainer==true){
-            price = props.route.params.t_data.trainer_selected.trainer.price
+        if (isWorker==true){
+            price = props.route.params.t_data.worker_selected.worker.price
         }
         else{
             price = props.route.params.u_data.class_selected.class.price
@@ -221,7 +221,7 @@ export default function CheckoutPage({navigation, ...props}) {
             if (error) {
               alert(`Payment Confirmation Error ${error.message}`);
             } else if (paymentIntent) {
-                if (isTrainer){
+                if (isWorker){
                     db.collection('bookings').add({
                         class: '',
                         date: checkout_data.date,
@@ -229,11 +229,11 @@ export default function CheckoutPage({navigation, ...props}) {
                         end_time: checkout_data.end_time,
                         fc: '',
                         reference_number: generateString(10),
-                        location: checkout_data.trainer_selected.trainer.location,
-                        name: "Personal Trainer session with "+ checkout_data.trainer_selected.trainer.first_name
-                        + checkout_data.trainer_selected.trainer.last_name,
-                        telephone_number: checkout_data.trainer_selected.trainer.mobile_calling_code + checkout_data.trainer_selected.trainer.mobile,
-                        trainer: checkout_data.trainer_selected.trainer.id,
+                        location: checkout_data.worker_selected.worker.location,
+                        name: "Personal Worker session with "+ checkout_data.worker_selected.worker.first_name
+                        + checkout_data.worker_selected.worker.last_name,
+                        telephone_number: checkout_data.worker_selected.worker.mobile_calling_code + checkout_data.worker_selected.worker.mobile,
+                        worker: checkout_data.worker_selected.worker.id,
                         user: auth.currentUser.uid
                     })
                 }
@@ -248,7 +248,7 @@ export default function CheckoutPage({navigation, ...props}) {
                         name: checkout_data.class_selected.class.name  + " Class Booking at " + checkout_data.class_selected.fc.name,
                         reference_number: generateString(10),
                         telephone_number: checkout_data.class_selected.fc.telephone_number,
-                        trainer: '',
+                        worker: '',
                         user: auth.currentUser.uid
                     })
                 }
@@ -278,7 +278,7 @@ export default function CheckoutPage({navigation, ...props}) {
     return (
         <SafeAreaView>
             {
-                loaded_user_data && !isTrainer &&  
+                loaded_user_data && !isWorker &&  
                 <>
                     <Information checkout_data={checkout_data}/>
                     <Payment confirmPayment={confirmPayment} changePayment={changePayment} setCardDetails={setCardDetails} 
@@ -290,9 +290,9 @@ export default function CheckoutPage({navigation, ...props}) {
                 </>
             }
             {
-                loaded_user_data && isTrainer &&  
+                loaded_user_data && isWorker &&  
                 <>
-                    <TrainerInformation checkout_data={checkout_data}/>
+                    <WorkerInformation checkout_data={checkout_data}/>
                     <Payment confirmPayment={confirmPayment} changePayment={changePayment} setCardDetails={setCardDetails} 
                     navigation={navigation}/>
                     { 
@@ -327,10 +327,10 @@ const Information = (props) => (
     </>
 )
 
-const TrainerInformation = (props) => (
+const WorkerInformation = (props) => (
     <>
         <View style={checkout_style.header_container}>
-            <Text style={checkout_style.sub_heading}>{props.checkout_data.trainer_selected.trainer.first_name} {props.checkout_data.trainer_selected.trainer.last_name} Trainer Booking</Text>
+            <Text style={checkout_style.sub_heading}>{props.checkout_data.worker_selected.worker.first_name} {props.checkout_data.worker_selected.worker.last_name} Booking</Text>
         </View>
         <Divider width={1} style={checkout_style.divider}/>
         <View style ={checkout_style.order_container}>
@@ -353,9 +353,9 @@ const Order = (props) => (
         </View>
         <Divider width={1} style={checkout_style.perks_divider}/>
         <View style={checkout_style.perks_info}>
-            <Text style={checkout_style.perks_subheader}>No Trainer</Text>
+            <Text style={checkout_style.perks_subheader}>No Worker</Text>
             <TouchableOpacity>
-                <Text style={checkout_style.perks_text}>Add a Trainer</Text>
+                <Text style={checkout_style.perks_text}>Add a Worker</Text>
             </TouchableOpacity>
         </View>
         <View style={checkout_style.perks_info}>

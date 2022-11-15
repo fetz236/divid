@@ -8,50 +8,86 @@ import { TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { auth, db, storage } from '../../firebase'
 import {doc, setDoc} from 'firebase/firestore'
-import { getDownloadURL, ref } from "firebase/storage";
+import { getDownloadURL, listAll, ref } from "firebase/storage";
 import MultiSelect from 'react-native-multiple-select'
 import PhoneInput from "react-native-phone-number-input";
 
 const categories = require('../../categories.json');
 
+/*
+    The Sign Up Page :D 
+    The most compelx part of our Authentication stack...
+
+    Here we create users using Firebase Auth and we are able to easily add users to our database. Furthermore, 
+    we are able to update the Firestore DB easily using the auth uid as our doc id
+    
+    Thus, making it easier to access users' extra data such as their favourites, profile picture and more.
+*/
 
 export default function SignUp({navigation, ...props}) {
 
+    //Declaring Variables to set the data the user declared
     const [f_name, setF_name] = useState('');
     const [l_name, setL_name] = useState('');
     const [email, setEmailState] = useState('');
     const [mobile, setMobile] = useState('');
     const [mobileCountry, setMobileCountry] = useState('GB');
     const [mobileCountryCallingCode, setMobileCountryCallingCode] = useState('44');
-
     const [passwordState, setPasswordState] = useState('');
 
+
+    //The url is set to allow for changing of the google profile picture
     const [url, setUrl] = useState('')
 
+
+    /*
+        This useEffect is utilised to retrieve a download url for the default user icon that will
+        be stored in the photoURL attribute inside the unique document generated for the user
+    */ 
     useEffect(() => {
         const getProfileImage = async() =>{
-            const profile_image_ref = ref(storage,`gs://fit-user-app/profile_images/user.png/`);
-            await getDownloadURL(profile_image_ref).then(
-                (x) => {
-                    setUrl(x)
-                }
-            )
+            const profile_image_ref = ref(storage,`gs://divid-edf5d.appspot.com/category_images`);
+            listAll(profile_image_ref)
+                .then(async (res) => {
+                    const { items } = res;
+                    const urls = await Promise.all(
+                    items.map((item) => getDownloadURL(item))
+                    );
+
+                    // Array of download URLs of all files in that folder
+                    console.log(urls);
+                })
+                .catch((error) => {
+                    // Uh-oh, an error occurred!
+                });
         }
-        if (url == '') { getProfileImage()}
+        if (url == '') { 
+            getProfileImage()
+        }
     }, [])
 
+    /*
+        This method centres on creating a user with their login username set as their email.
+        Furthermore, it adds more data to the user collection in the Firestore DB to populate 
+        the users data with more information
+    */
     const handleSignUp = async() => {
         await auth
         .createUserWithEmailAndPassword(email, passwordState)
         .then(userCredentials => {
+
+            //Gets the user and id
             const user = userCredentials.user;
             const id = user.uid;
             
+            //Sends a verification email
+
             //user.sendEmailVerification();
+
+            //Creates a new document with the necessary info for the user
             setDoc(doc(db, "users", id), {
                 rating: 5,
                 reviews:1,
-                isTrainer: false,
                 categories: selectedItems,
                 first_name: checkFName(f_name),
                 last_name: checkLName(l_name),
@@ -60,20 +96,18 @@ export default function SignUp({navigation, ...props}) {
                 mobile_calling_code: mobileCountryCallingCode,
                 email: email,
                 favourites: [],
-                photoURL: "https://firebasestorage.googleapis.com/v0/b/fit-user-app/o/profile_images%2Fuser.png?alt=media&token=6a36bfe8-9305-450e-926d-a39d31195be7"
+                photoURL: "https://firebasestorage.googleapis.com/v0/b/divid-edf5d.appspot.com/o/profile_images%2Fuser.png?alt=media&token=0dc2498c-bc30-4f8d-a663-9b8d6fbfa127"
             });
             user.updateProfile({
                 displayName: checkFName(f_name) + " " + checkLName(l_name),
-                photoURL: url,
+                photoURL: "https://firebasestorage.googleapis.com/v0/b/divid-edf5d.appspot.com/o/profile_images%2Fuser.png?alt=media&token=0dc2498c-bc30-4f8d-a663-9b8d6fbfa127",
             }).then(function() {
                 // Profile updated successfully!
                 if(props.route.params.isCheckout){
                     navigation.replace("Checkout", props.route.params);
                 }
                 else{
-                    navigation.replace("UserDetail", {
-                        navigation:navigation,
-                    });
+                    navigation.replace("UserDetail", props.route.params);
                 }
                  
                 
@@ -89,11 +123,14 @@ export default function SignUp({navigation, ...props}) {
         })
     };
 
+    //First Name Verification
     const checkFName = (first) => {
         const res = first.trim();
         return res
     };
 
+
+    //Last Name Verification
     const checkLName = (last) => {
         const res = last.trim();
         return res

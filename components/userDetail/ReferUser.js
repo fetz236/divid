@@ -10,7 +10,7 @@ export default function ReferUser() {
         </View>
         <View style={refer_user_style.body_container}>
             <Text style={refer_user_style.sub_heading}>Here is the unique code unique to your account.
-            Once a user sign ups and books a course or a trainer, you will receive the referral amount
+            Once a user sign ups and books a course or a worker, you will receive the referral amount
             as credit to your account</Text>
         </View>
         <View style={refer_user_style.referral_code_container}>

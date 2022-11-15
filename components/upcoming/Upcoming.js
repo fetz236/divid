@@ -61,7 +61,7 @@ export default function Upcoming({navigation}) {
             location: item.location,
             reference_number: item.reference_number,
             telephone_number: item.telephone_number,
-            trainer: item.trainer,
+            worker: item.worker,
             fc: item.fc,
             class: item.class,
             user: item.user,

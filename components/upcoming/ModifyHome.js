@@ -8,7 +8,7 @@ import { modify_home_style } from '../../styles/upcoming/ModifyHomeStyle'
 const fitness_center = {
     name:'Gym Way Marble Arch',
     class:'Spinning',
-    trainer:'Kate Wilson',
+    worker:'Kate Wilson',
     price: '£5.00'
 }
 
@@ -53,7 +53,7 @@ const ModifyMain = () => (
 const ModifyDate = (props) => (
     <View style={modify_home_style.confirm_modification}>
         <View style={modify_home_style.confirm_container}>
-            <Text style={modify_home_style.title}>Select a new date and time for your trainer</Text>
+            <Text style={modify_home_style.title}>Select a new date and time for your worker</Text>
         </View>
         <View style={modify_home_style.all_buttons}>
             <DateTimePicker
@@ -80,7 +80,7 @@ const AcceptTerms = (props) => (
     <View style={modify_home_style.accept_terms}>
         <View style={modify_home_style.confirm_container}>
             <Text style={modify_home_style.sub_heading}>You will be charged a fee of {props.fitness_center.price} at {props.fitness_center.name} completing 
-            the {props.fitness_center.class} class with trainer {props.fitness_center.trainer}
+            the {props.fitness_center.class} class with worker {props.fitness_center.worker}
             </Text>
         <CheckBox 
             style={{
