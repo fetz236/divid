@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native'
-import { TouchableOpacity } from 'react-native'
 import { TextInput } from 'react-native'
 import { View, Text } from 'react-native'
 import { Divider } from 'react-native-elements'
 import { fp_style } from '../../styles/authentication/ForgotPassword'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { auth } from '../../firebase'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 
 /*

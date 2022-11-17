@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Image } from 'react-native';
 import { View } from 'react-native'
 import { general_info_css } from '../../styles/home/GeneralInfoStyle';
@@ -26,7 +26,7 @@ export default function GeneralInfo({ navigation, ...props }) {
     };
     return (
         <View source={general_info_css.gi_container}>
-            <Logo/>
+            <Logo navigation={navigation}/>
             <View style={general_info_css.profile_container}>
                 <TouchableOpacity
                     onPress={() => checkAuthentication()}>
@@ -42,8 +42,9 @@ export default function GeneralInfo({ navigation, ...props }) {
 
 
 const Logo = (props) => (
-    <View style={general_info_css.logo_container}>
+    <TouchableOpacity style={general_info_css.logo_container}
+    onPress={() => props.navigation.navigate("AddAddressScreen")}>
         <Image source ={logo.image} style={general_info_css.logo_def}/>
-    </View>
+    </TouchableOpacity>
 );
 

@@ -75,10 +75,6 @@ export const worker_style = StyleSheet.create({
         marginTop:"2%",
         marginRight:'10%',
     },
-    location_box:{
-        marginTop:'30%',
-        marginLeft:'5%',
-    },
     map_location_box:{
         marginTop:'5%',
         width:'90%',

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { View, Text, Image } from 'react-native'
 import { Rating } from 'react-native-ratings';
 import { ScrollView } from 'react-native';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import {worker_style, worker_schedule} from '../../styles/workers/ViewWorkerStyle'
 import MapView, { Marker } from 'react-native-maps';
@@ -147,22 +147,4 @@ const WorkerLocations = (props) => (
         
     </View>
 
-);
-
-const ViewWorkerSchedule = (props) => (
-    <View style={
-        worker_schedule.schedule_container
-    }>
-        <View style={
-            worker_schedule.schedule_button_style
-        }>
-            <TouchableOpacity style={
-                worker_schedule.touchable_opacity
-            }>
-                <Text style={
-                    worker_schedule.button_text
-                }> View Schedule </Text>
-            </TouchableOpacity>
-        </View>
-    </View>
 );

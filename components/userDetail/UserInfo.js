@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Image } from 'react-native';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import { View, Text } from 'react-native'
 import { Rating } from 'react-native-ratings';
 import { user_css } from '../../styles/userDetail/UserInfoStyle';

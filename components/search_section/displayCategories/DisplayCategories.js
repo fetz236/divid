@@ -1,10 +1,11 @@
-import { View, Text, TouchableOpacity, Image } from 'react-native'
+import { View, Text, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { db } from '../../../firebase'
 import { display_categories_style } from '../../../styles/SearchHome/DisplayCategories/DisplayCategoriesStyle'
 import { style_sheet } from '../../../styles/workers/WorkerItemsStyle'
 import { Divider } from 'react-native-elements'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 export default function DisplayCategories({navigation, ...props}) {
 

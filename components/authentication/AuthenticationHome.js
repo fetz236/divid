@@ -1,9 +1,9 @@
 import React from 'react'
-import { TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native'
 import { View, Text } from 'react-native'
 import { auth_style } from '../../styles/authentication/AuthenticationHomeStyle'
 import Icon from 'react-native-vector-icons/Ionicons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 /*

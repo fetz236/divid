@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Linking, TouchableOpacity } from 'react-native';
+import { Linking } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import { View, Text } from 'react-native'
 import { Divider } from 'react-native-elements/dist/divider/Divider';
 import { auth, db } from '../../firebase';
@@ -10,7 +11,6 @@ import NoLogin from '../userDetail/NoLogin';
 
 export default function Upcoming({navigation}) {
     
-
     const [bookings, setBookings] = useState([])
     const [loaded_bookings, setLoadedBookings] = useState(false)
     

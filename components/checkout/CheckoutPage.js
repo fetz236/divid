@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native'
 import { Button } from 'react-native'
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import { View, Text } from 'react-native'
 import { Divider } from 'react-native-elements'
 import { checkout_style } from '../../styles/checkout/CheckoutPageStyle'
 import { CardField, useConfirmPayment } from '@stripe/stripe-react-native';
 import { auth, db } from '../../firebase'
-
 
 /*
 

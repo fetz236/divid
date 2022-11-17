@@ -4,7 +4,7 @@ import { View, Text } from 'react-native'
 import { signup_style } from '../../styles/authentication/SignUpStyle'
 import { Divider } from 'react-native-elements/dist/divider/Divider'
 import { TextInput } from 'react-native'
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { auth, db, storage } from '../../firebase'
 import {doc, setDoc} from 'firebase/firestore'

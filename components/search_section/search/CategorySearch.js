@@ -1,9 +1,7 @@
-import { getBlob, getDownloadURL, ref } from 'firebase/storage';
-import React, { useEffect, useState } from 'react'
-import { TouchableOpacity } from 'react-native';
+import React, { useState } from 'react'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import { ImageBackground } from 'react-native';
 import { View, Text } from 'react-native'
-import { db, storage } from '../../../firebase';
 import { category_search_bar_css } from '../../../styles/SearchHome/UserSearchBar/CategorySearch';
 
 
