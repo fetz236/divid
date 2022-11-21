@@ -10,6 +10,8 @@ const logo = {image : require('../../assets/divid.png')};
 
 export default function GeneralInfo({ navigation, ...props }) {
 
+
+    //Checks authentication for to see which Screen the user should be guided to during Login
     const checkAuthentication = () => {
         
         if (auth.currentUser) {
@@ -24,9 +26,23 @@ export default function GeneralInfo({ navigation, ...props }) {
         }
         
     };
+
+    //Checks to see if the user is logged in for address authentication
+    const checkAddress = () => {
+        if (auth.currentUser) {
+            navigation.navigate("CurrentAddressScreen", {
+                navigation:navigation,
+            })
+        } else {
+            navigation.navigate("LoginAddressNeededScreen", {
+                navigation:navigation,
+            })
+        }
+    }
+
     return (
         <View source={general_info_css.gi_container}>
-            <Logo navigation={navigation}/>
+            <Logo navigation={navigation} checkAddress={checkAddress}/>
             <View style={general_info_css.profile_container}>
                 <TouchableOpacity
                     onPress={() => checkAuthentication()}>
@@ -43,7 +59,7 @@ export default function GeneralInfo({ navigation, ...props }) {
 
 const Logo = (props) => (
     <TouchableOpacity style={general_info_css.logo_container}
-    onPress={() => props.navigation.navigate("AddAddressScreen")}>
+    onPress={() => props.checkAddress()}>
         <Image source ={logo.image} style={general_info_css.logo_def}/>
     </TouchableOpacity>
 );

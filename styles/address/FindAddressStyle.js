@@ -16,7 +16,6 @@ export const find_address_style = StyleSheet.create({
         marginLeft:'auto',
         right:0,
     },
-
     map_location_box:{
         height:Dimensions.get('window').height,
         width: Dimensions.get('window').width,

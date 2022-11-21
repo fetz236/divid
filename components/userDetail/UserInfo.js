@@ -41,7 +41,7 @@ export default function UserInfo({navigation, route}) {
     const [url, setUrl] = useState()
     const [updated, setUpdated] = useState(false)
 
-    useEffect(async() => {
+    useEffect(() => {
         const loadData = async() => {
             const snap = await getDoc(doc(db, 'users', user.uid))
             if (snap.exists()) {
@@ -52,10 +52,9 @@ export default function UserInfo({navigation, route}) {
                 alert("Internal Error")
             }
         }
-        if (user_data ==''){
-            await loadData()
-            setUpdated(true)
-        }
+        loadData()
+        setUpdated(true)
+        
     }, [])
 
     const handleSignOut = () => {

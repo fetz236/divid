@@ -7,6 +7,7 @@ import { search_bar_css } from '../../styles/home/SearchBarStyle'
 import Icon from 'react-native-vector-icons/Ionicons';
 import MapView, { Marker } from 'react-native-maps'
 import { find_address_style } from '../../styles/address/FindAddressStyle'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 
 /*
@@ -17,7 +18,6 @@ import { find_address_style } from '../../styles/address/FindAddressStyle'
 */
 
 export default function FindAddress({navigation, ...props}) {
-
 
     const [pin, setPin] = useState({
         latitude: 37.78825,
@@ -43,19 +43,10 @@ export default function FindAddress({navigation, ...props}) {
 
   return (
     <View>
-        { /*
-        <View style={find_address_style.main_container}>
-            <MaterialCommunityIcons name="close" color='#d95a00' size={50} style={auth_style.close_button} 
-                onPress={()=> navigation.goBack()}
-            />      
-            <View style={find_address_style.search_bar_container }>
-                <View style={find_address_style.google_places}>
-                    <GooglePlaces onLocationChange={onLocationChange} />
-                </View>
-            </View>
-        </View>
-        */}
         <View>
+            <MaterialCommunityIcons name="close" color='#d95a00' size={50} style={find_address_style.close_button} 
+                    onPress={()=> navigation.goBack()}
+                />
             <WorkerLocations pin={pin} setPin={setPin} region={region} setRegion={setRegion}/>
         </View>
 
@@ -64,14 +55,11 @@ export default function FindAddress({navigation, ...props}) {
   )
 }
 
-const GooglePlaces = (props) => (
-    <View style={ search_bar_css.search_bar_container }>
-        
-    </View>
-)
+/*
 
-//https://maps.googleapis.com/maps/api/geocode/json?&address=
-//Needs to account for private gym radius in the future radius or zones
+This is a massive function that contains the rendering of the worker's location
+
+*/
 const WorkerLocations = (props) => (
     <View style={find_address_style.location_box}>
         <GooglePlacesAutocomplete 

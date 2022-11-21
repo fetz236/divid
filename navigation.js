@@ -31,6 +31,7 @@ import { header_style } from './styles/components/HeaderStyle';
 import AddAddressScreen from './screens/Address/AddAddressScreen';
 import FindAddressScreen from './screens/Address/FindAddressScreen';
 import CurrentAddressScreen from './screens/Address/CurrentAddressScreen';
+import LoginAddressNeededScreen from './screens/Address/LoginAddressNeededScreen';
 
 const tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -93,6 +94,7 @@ const HomeStackScreen = () => (
         <HomeStack.Screen name = "AddAddressScreen" component={AddAddressScreen} options={{ presentation:'modal'}}/>
         <HomeStack.Screen name = "FindAddressScreen" component={FindAddressScreen} options={{ presentation:'modal'}}/>
         <HomeStack.Screen name = "CurrentAddressScreen" component={CurrentAddressScreen} options={{ presentation:'modal'}}/>
+        <HomeStack.Screen name = "LoginAddressNeededScreen" component={LoginAddressNeededScreen} options={{ presentation:'modal'}}/>
         
     </HomeStack.Navigator>
 
@@ -126,8 +128,6 @@ const UpcomingStackScreen = () => (
             }}/>
         <UpcomingStack.Screen name = "NoLogin" component={NoLogin}/>
         <UpcomingStack.Screen name = "BookingConfirmation" component={BookingConfirmation}/>
-        
-
     </UpcomingStack.Navigator>
 )
 
