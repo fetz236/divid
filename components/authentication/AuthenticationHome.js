@@ -24,7 +24,7 @@ export default function AuthenticationHome({navigation, ...props}) {
                 <Icon name="close" color='#d95a00' size={50} style={auth_style.close_button} 
                     onPress={()=> navigation.goBack()}
                 />
-                <SafeAreaView style={auth_style.safe_one_styll}>
+                <SafeAreaView style={auth_style.sa_view}>
                     
                     <View style={auth_style.lil_circle_backg}/>
                     <View style={auth_style.header_container}>

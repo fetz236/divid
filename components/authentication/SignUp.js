@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native'
 import { View, Text } from 'react-native'
 import { signup_style } from '../../styles/authentication/SignUpStyle'
@@ -6,9 +6,8 @@ import { Divider } from 'react-native-elements/dist/divider/Divider'
 import { TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons';
-import { auth, db, storage } from '../../firebase'
+import { auth, db } from '../../firebase'
 import {doc, setDoc} from 'firebase/firestore'
-import { getDownloadURL, listAll, ref } from "firebase/storage";
 import MultiSelect from 'react-native-multiple-select'
 import PhoneInput from "react-native-phone-number-input";
 
@@ -36,14 +35,11 @@ export default function SignUp({navigation, ...props}) {
     const [passwordState, setPasswordState] = useState('');
 
 
-    //The url is set to allow for changing of the google profile picture
-    const [url, setUrl] = useState('')
 
 
     /*
         This useEffect is utilised to retrieve a download url for the default user icon that will
         be stored in the photoURL attribute inside the unique document generated for the user
-    */ 
     useEffect(() => {
         const getProfileImage = async() =>{
             const profile_image_ref = ref(storage,`gs://divid-edf5d.appspot.com/category_images`);
@@ -53,18 +49,15 @@ export default function SignUp({navigation, ...props}) {
                     const urls = await Promise.all(
                     items.map((item) => getDownloadURL(item))
                     );
-
-                    // Array of download URLs of all files in that folder
-                    console.log(urls);
                 })
                 .catch((error) => {
                     // Uh-oh, an error occurred!
                 });
         }
-        if (url == '') { 
-            getProfileImage()
-        }
+        getProfileImage()
     }, [])
+    */ 
+
 
     /*
         This method centres on creating a user with their login username set as their email.

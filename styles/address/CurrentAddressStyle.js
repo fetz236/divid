@@ -39,6 +39,10 @@ export const current_address_style = StyleSheet.create({
         fontSize:20,
         fontWeight:'600',
         
-    }
+    },
+    close_button: {
+        marginLeft:'auto',
+        right:0,
+    },
 });
 
