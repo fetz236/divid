@@ -12,11 +12,24 @@ export const schedule_style_sheet = StyleSheet.create({
         fontWeight:'600',    
     },
     date_time_style:{
-        width: 100,
         alignItems:'center',
         justifyContent: 'center',
         flexDirection: 'column',
         backgroundColor: '#d95a00',
+    },
+    hours_style:{
+        width:'50%',
+        flexDirection:'row',
+        alignSelf:'center',
+        alignContent:'center',
+        justifyContent:'center',
+        textAlign:'center',
+        marginBottom:'5%',
+    },
+    hours_text:{
+        marginTop:'7%',
+        fontSize:'16',
+        marginRight:'5%',
     },
     course_container:{
         width:60,

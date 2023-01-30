@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, Platform, StyleSheet} from 'react-native';
+import {View, Text, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Divider } from 'react-native-elements';
 import { schedule_style_sheet } from '../../styles/workers/WorkerScheduleStyle'
 import { Button } from 'react-native';
 import { auth, db } from '../../firebase';
+import { SelectList } from 'react-native-dropdown-select-list';
 
 export const WorkerSchedule = ({navigation, ...props}) => {
     const worker_selected = {
@@ -14,6 +15,41 @@ export const WorkerSchedule = ({navigation, ...props}) => {
     const [worker_schedule, setClassSchedule] = useState([])
     const [loaded_worker_schedule, setLoadedClassSchedule] = useState(false)
     const [db_schedule_data, setdb_schedule_data] = useState([])
+
+
+    //Used to select how many hours are required 
+    const hours = [
+        {
+            key: '2',
+            value: '2',
+        },
+        {
+            key: '3',
+            value: '3',
+        },
+        {
+            key: '4',
+            value: '4',
+        },
+        {
+            key: '5',
+            value: '5',
+        },
+        {
+            key: '6',
+            value: '6',
+        },
+        {
+            key: '7',
+            value: '7',
+        },
+        {
+            key: '8',
+            value: '8',
+        },
+    ];
+
+    const [selected_hour, setSelectedHour] = useState(hours[0])
 
     //Loads all data for the selected worker
     useEffect(()=> {
@@ -116,18 +152,19 @@ export const WorkerSchedule = ({navigation, ...props}) => {
     If the user is logged in then we render the checkout, if they are not
     then we render our authentication stack
     */
-    const checkAuthentication = (t_data) => {
+    const checkAuthentication = (w_data) => {
+        w_data[selected_hour] = selected_hour
         if (auth.currentUser) {
             navigation.navigate("Checkout",{
                 navigation: navigation,
-                t_data: t_data,
+                w_data: w_data,
             }
             )
         } else {
             navigation.navigate("AuthenticationScreen", {
                 navigation:navigation,
                 isCheckout: true,
-                t_data: t_data,
+                w_data: w_data,
             })
         }
     };
@@ -145,10 +182,8 @@ export const WorkerSchedule = ({navigation, ...props}) => {
                   minimumDate={new Date()}
                   value={date}
                   mode={mode}
-                  is24Hour={true}
                   display="default"
-                  onChange={changedDate}
-                  style={schedule_style_sheet.date_time_style}
+                  onChange={changedDate}                  
                   />
           </View>
           <Divider style={{
@@ -156,18 +191,34 @@ export const WorkerSchedule = ({navigation, ...props}) => {
               marginBottom:25,
 
           }}>
+            <SelectHours
+                setSelectedHour={setSelectedHour}
+                hours={hours}
+            />
           </Divider>
           <DisplaySchedule
             worker_schedule = {worker_schedule}
             checkAuthentication={checkAuthentication}
             navigation={navigation}
+            
             />
       </View>
     );
   };
 
 
-
+  const SelectHours = (props) => (
+    <View style= {schedule_style_sheet.hours_style} >
+        <Text style = {schedule_style_sheet.hours_text}>Hours</Text>
+        <SelectList 
+            search={false}
+            defaultOption={{ key:'2', value:'2' }}
+            setSelected={(val) => props.setSelectedHour(val)} 
+            data={props.hours} 
+            save="value"
+        />
+    </View>
+  )
 // Utilised for displaying the schedule
 const DisplaySchedule = ({navigation, ...props}) => {
     return (
@@ -184,6 +235,7 @@ const DisplaySchedule = ({navigation, ...props}) => {
                             <View style= {schedule_style_sheet.time_container} >
                                 <Text style={schedule_style_sheet.date_text}> {item_k.start_time}-{item_k.end_time}</Text>
                             </View>
+
                             <View style= {schedule_style_sheet.time_container} >
                                 <View style ={schedule_style_sheet.book_button}>
                                     <Button title="Book" color="white"  onPress={() => props.checkAuthentication(item_k)}/>

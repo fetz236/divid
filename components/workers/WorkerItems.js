@@ -2,9 +2,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import React, { useEffect, useState } from 'react'
 import { View, Text, Image, ScrollView } from 'react-native'
 import { Divider } from 'react-native-elements'
+import Icon from 'react-native-vector-icons/Ionicons';
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { db } from '../../firebase'
+import { auth, db } from '../../firebase'
 import { categories_css } from '../../styles/home/CategoriesStyle'
+import { search_bar_css } from '../../styles/home/SearchBarStyle'
 import { style_sheet } from '../../styles/workers/WorkerItemsStyle'
 
 
@@ -18,6 +20,12 @@ export default function WorkerItems({ navigation, ...props }) {
     const [sorted, setSorted] = useState([])
     const [loaded_sorted, setLoadedSorted] = useState(false)
 
+    const [currentAddress, setCurrentAddress] = useState({
+        address1: '30 Aldwych',
+        address2:'',
+        addressPostal: 'WC2B 4BG',
+        
+    })
 
     useEffect(() => {
         const loadData = async() => {
@@ -41,6 +49,7 @@ export default function WorkerItems({ navigation, ...props }) {
     }, [])
 
 
+    //loads the relevant data depending on what category is selected
     const loadFitness = (selected_cat) => {
         const sorted_data = []
         for(let i=0; i<worker_details.length;i++){
@@ -56,9 +65,24 @@ export default function WorkerItems({ navigation, ...props }) {
         setLoadedSorted(true)
     }
     
+    //Loads all necessary sorted data
     const loadAll = () => {
         setSorted(worker_details)
         setLoadedSorted(false)
+    }
+
+
+    //Checks to see if the user is logged in for address authentication
+    const checkAddress = () => {
+        if (auth.currentUser) {
+            navigation.navigate("CurrentAddressScreen", {
+                navigation:navigation,
+            })
+        } else {
+            navigation.navigate("LoginAddressNeededScreen", {
+                navigation:navigation,
+            })
+        }
     }
 
     return (
@@ -67,7 +91,10 @@ export default function WorkerItems({ navigation, ...props }) {
                 {loaded_worker_ &&
                 <>
                     {loaded_sorted &&<Reload loadAll={loadAll}/> }
-                        <Categories items={items} loadFitness={loadFitness}/>
+                    <View style={{backgroundColor: "white", padding: 15}}>
+                        <SearchBar checkAddress={checkAddress}/>
+                    </View>
+                    <Categories items={items} loadFitness={loadFitness}/>
                     {sorted.map((worker, index) => (
                         <TouchableOpacity activeOpacity={1} style={{
                         }}
@@ -86,6 +113,7 @@ export default function WorkerItems({ navigation, ...props }) {
                                 photoURL: worker.photoURL,
                                 rating: worker.rating,
                                 reviews: worker.reviews,
+                                services: worker.services,
                             }
                             )}>
                             <View style={{ marginBottom: 10 }}>
@@ -135,10 +163,10 @@ const Categories = (props) => (
 
 const WorkerInfo = (props) => (
     <View style={style_sheet.worker_info}>
-        <Text style={style_sheet.worker_title_style}>{props.worker_details.first_name} {props.worker_details.last_name}</Text>
-        <Text>{props.worker_details.description}</Text>
-        <Text>£{(props.worker_details.price / 100).toFixed(2)}</Text>
-
+        <Text style={style_sheet.worker_title_style}>Cleaner</Text>
+        <Text>{props.worker_details.first_name} {props.worker_details.last_name}</Text>
+        <Text>🌟 {props.worker_details.rating}</Text>
+        <Text>£{(props.worker_details.price / 100).toFixed(2)} per hour</Text>
     </View>
 )
 
@@ -147,5 +175,21 @@ const WorkerImage = (props) => (
         <Image source={{uri:props.worker_details.photoURL}} 
         style={style_sheet.worker_profile_image} 
         />
+    </View>
+)
+
+const SearchBar = (props) => (
+    <View style={search_bar_css.search_bar_container }>
+        <View style={search_bar_css.location_button}>
+            <Icon name="location-outline" size= {24} color='#d95a00'></Icon>
+        </View>
+        <View style={search_bar_css.textInputContainer}>
+            <Text style={search_bar_css.textInput}>30 Aldwych, London WC2B 4BG</Text>
+        </View>
+        <TouchableOpacity style={search_bar_css.change_address}
+        onPress={() => props.checkAddress()}>
+                <Icon name="time-outline" size={14} color='white'></Icon>
+                <Text style={{color:'white'}}> Change </Text>
+        </TouchableOpacity>
     </View>
 )

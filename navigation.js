@@ -28,6 +28,10 @@ import ReferUserScreen from './screens/HomePage/ReferUserScreen';
 import NoLogin from './components/userDetail/NoLogin';
 import DisplayCategoriesScreen from './screens/SearchPage/DisplayCategoriesScreen';
 import { header_style } from './styles/components/HeaderStyle';
+import AddAddressScreen from './screens/Address/AddAddressScreen';
+import FindAddressScreen from './screens/Address/FindAddressScreen';
+import CurrentAddressScreen from './screens/Address/CurrentAddressScreen';
+import LoginAddressNeededScreen from './screens/Address/LoginAddressNeededScreen';
 
 const tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -53,7 +57,7 @@ const HomeStackScreen = () => (
             }}/>
         <HomeStack.Screen name = "WorkerScheduleDetail" component={WorkerScheduleDetail} options={{headerShown:true, 
             headerStyle:header_style.full_container, headerBackTitleVisible:false, 
-            headerTitleStyle:header_style.title, headerTintColor: 'white', headerTitle:'Select Date'
+            headerTitleStyle:header_style.title, headerTintColor: 'white', headerTitle:'Date & Hour Selection'
             }}/>
         <HomeStack.Screen name = "UserDetail" component={UserDetail} options={{headerShown:true, 
             headerStyle:header_style.full_container, headerBackTitleVisible:false, 
@@ -87,6 +91,11 @@ const HomeStackScreen = () => (
         <HomeStack.Screen name = "LoginScreen" component={LoginScreen} options={{ presentation:'modal', transitionSpec:{open:config_transition, close:config_transition}, animationEnabled:true}}/>
         <HomeStack.Screen name = "SignUpScreen" component={SignUpScreen} options={{ presentation:'modal', transitionSpec:{open:config_transition, close:config_transition}, animationEnabled:true}}/>
         <HomeStack.Screen name = "ForgotPasswordScreen" component={ForgotPasswordScreen} options={{ presentation:'modal', transitionSpec:{open:config_transition, close:config_transition}, animationEnabled:true}}/>
+        <HomeStack.Screen name = "AddAddressScreen" component={AddAddressScreen} options={{ presentation:'modal'}}/>
+        <HomeStack.Screen name = "FindAddressScreen" component={FindAddressScreen} options={{ presentation:'modal'}}/>
+        <HomeStack.Screen name = "CurrentAddressScreen" component={CurrentAddressScreen} options={{ presentation:'modal'}}/>
+        <HomeStack.Screen name = "LoginAddressNeededScreen" component={LoginAddressNeededScreen} options={{ presentation:'modal'}}/>
+        
     </HomeStack.Navigator>
 
 )
@@ -119,8 +128,6 @@ const UpcomingStackScreen = () => (
             }}/>
         <UpcomingStack.Screen name = "NoLogin" component={NoLogin}/>
         <UpcomingStack.Screen name = "BookingConfirmation" component={BookingConfirmation}/>
-        
-
     </UpcomingStack.Navigator>
 )
 

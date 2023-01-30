@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Image } from 'react-native';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import { View, Text } from 'react-native'
 import { Rating } from 'react-native-ratings';
 import { user_css } from '../../styles/userDetail/UserInfoStyle';
@@ -10,7 +10,7 @@ import { ScrollView } from 'react-native';
 import { auth, db, storage } from '../../firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import * as ImagePicker from 'expo-image-picker';
-import { getBlob, getDownloadURL, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
+import {  getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const user_settings = [
@@ -41,7 +41,7 @@ export default function UserInfo({navigation, route}) {
     const [url, setUrl] = useState()
     const [updated, setUpdated] = useState(false)
 
-    useEffect(async() => {
+    useEffect(() => {
         const loadData = async() => {
             const snap = await getDoc(doc(db, 'users', user.uid))
             if (snap.exists()) {
@@ -52,10 +52,9 @@ export default function UserInfo({navigation, route}) {
                 alert("Internal Error")
             }
         }
-        if (user_data ==''){
-            await loadData()
-            setUpdated(true)
-        }
+        loadData()
+        setUpdated(true)
+        
     }, [])
 
     const handleSignOut = () => {

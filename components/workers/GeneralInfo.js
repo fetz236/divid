@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Image } from 'react-native';
 import { View } from 'react-native'
 import { general_info_css } from '../../styles/home/GeneralInfoStyle';
@@ -10,6 +10,8 @@ const logo = {image : require('../../assets/divid.png')};
 
 export default function GeneralInfo({ navigation, ...props }) {
 
+
+    //Checks authentication for to see which Screen the user should be guided to during Login
     const checkAuthentication = () => {
         
         if (auth.currentUser) {
@@ -24,14 +26,14 @@ export default function GeneralInfo({ navigation, ...props }) {
         }
         
     };
+
+
     return (
         <View source={general_info_css.gi_container}>
-            <Logo/>
+            <Logo navigation={navigation} />
             <View style={general_info_css.profile_container}>
                 <TouchableOpacity
                     onPress={() => checkAuthentication()}>
-                        
-
                     <Icon name="person-outline" size={35} color='#d95a00'></Icon>
                 </TouchableOpacity>
             </View>

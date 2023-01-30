@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { View, Text, Image } from 'react-native'
 import { Rating } from 'react-native-ratings';
 import { ScrollView } from 'react-native';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import {worker_style, worker_schedule} from '../../styles/workers/ViewWorkerStyle'
-import MapView, { Marker } from 'react-native-maps';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function ViewWorker({ navigation, ...props }){
 
@@ -22,17 +22,23 @@ export default function ViewWorker({ navigation, ...props }){
         photoURL: props.route.params.photoURL,
         rating: props.route.params.rating,
         reviews: props.route.params.reviews,
+        services: props.route.params.services,
     }
 
 
     const categories = require('../../categories.json')
+    const services = require('../../services.json')
 
     const [skills, setSkills] = useState([])
-
+    const [my_services, setMyServices] = useState([])
+    
     useEffect(() => {
         const getCategories = () => {
             let worker_skills = []
+            let worker_services = []
 
+            //Get categories from json and match all necessary ones the individual provides
+            // HIGHER LEVEL
             for(let i=0; i<categories.length; i++){
                 for(let j=0; j<worker.categories.length; j++){
                     if (categories[i].__id__ == worker.categories[j]){
@@ -40,20 +46,30 @@ export default function ViewWorker({ navigation, ...props }){
                     }
                 }
             }
+
+            //Get services from json and match all necessary ones the individual provides
+            // LOWER LEVEL
+            for(let i=0; i<services.length; i++){
+                for(let j=0; j<worker.services.length; j++){
+                    if (services[i].__id__ == worker.services[j]){
+                        worker_services.push(services[i])
+                    }
+                }
+            }
             setSkills(worker_skills)
+            setMyServices(worker_services)
         }
-    
         getCategories()
     }, [])
-    
+
     return (
         <View>
             <View>
                 <ScrollView>
                 <WorkerImage photoURL={worker.photoURL} rating={worker.rating} reviews={worker.reviews}></WorkerImage>
                 <WorkerDetails name = {worker.first_name+ " "+ worker.last_name} description={worker.description} ></WorkerDetails>
-                <WorkerAbout skills={skills}></WorkerAbout>
-                <WorkerLocations worker={worker}></WorkerLocations>
+                <WorkerAbout skills={skills}/>
+                <WorkerServices my_services={my_services}/>
                 <View style={
                     worker_schedule.schedule_container
                 }>
@@ -125,44 +141,22 @@ const WorkerAbout = (props) => (
         </View>
     </View>
 );
-//Needs to account for private gym radius in the future radius or zones
-const WorkerLocations = (props) => (
-    <View style={worker_style.location_box}>
-        <Text style={worker_style.worker_header}>My Gym Partner</Text>
-        <MapView
-            style={worker_style.map_location_box}
-            showsUserLocation={true}
-            region={{
-            latitude: props.worker.location.latitude,
-            longitude: props.worker.location.longitude,
-            latitudeDelta: 0.0125,
-            longitudeDelta: 0.0125,
-            }}>
-            <Marker coordinate={{
-                latitude: props.worker.location.latitude,
-                longitude: props.worker.location.longitude,
-            }} />
-            
-        </MapView>
-        
-    </View>
 
-);
-
-const ViewWorkerSchedule = (props) => (
-    <View style={
-        worker_schedule.schedule_container
-    }>
-        <View style={
-            worker_schedule.schedule_button_style
-        }>
-            <TouchableOpacity style={
-                worker_schedule.touchable_opacity
-            }>
-                <Text style={
-                    worker_schedule.button_text
-                }> View Schedule </Text>
-            </TouchableOpacity>
+//View worker services
+const WorkerServices = (props) => (
+    <View>
+        <Text style={worker_style.worker_header}>Available Services</Text>
+        <View style={worker_style.text_view}>
+            <View style={worker_style.text_sub_view}>
+                <View style={worker_style.sub_view_item}>
+                    {props.my_services.map((service,index) => (
+                        <View style={worker_style.service} key={index}>
+                            <MaterialCommunityIcons name={service.icon_name} size={20}/>
+                            <Text style={worker_style.services_text}>{service.name}</Text>
+                        </View>
+                    ))}
+                </View>
+            </View>
         </View>
     </View>
-);
+)

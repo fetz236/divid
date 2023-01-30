@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, Text } from 'react-native'
-import { Button, CheckBox, Divider } from 'react-native-elements'
+import { CheckBox, Divider } from 'react-native-elements'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { cancel_home_style } from '../../styles/upcoming/CancelHomeStyle'
 

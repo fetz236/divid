@@ -1,0 +1,32 @@
+[
+    {
+      "__id__": "1RVmvAmlhKOaDUBoPWif",
+      "icon_name": "dishwasher",
+      "name": "Dishes"
+    },
+    {
+      "__id__": "4rxXwJxVlh7QhGdzXk6Y",
+      "icon_name": "washing-machine",
+      "name": "Laundry"
+    },
+    {
+      "__id__": "ZAElABpyl6rKGD1TfUii",
+      "icon_name": "toaster-oven",
+      "name": "Inside Oven"
+    },
+    {
+      "__id__": "dDEhybxQ1qSKspwtOI2h",
+      "icon_name": "fridge",
+      "name": "Inside Fridge"
+    },
+    {
+      "__id__": "eIXZQtHPF11JPGMc0x6I",
+      "icon_name": "iron",
+      "name": "Ironing"
+    },
+    {
+      "__id__": "tZJZZiAHsEuMmsR8oPVb",
+      "icon_name": "window-closed-variant",
+      "name": "Inside Windows"
+    }
+  ]

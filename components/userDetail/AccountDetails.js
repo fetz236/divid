@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { account_details_style } from '../../styles/userDetail/AccountDetailsStyle'
 import { TextInput } from 'react-native-gesture-handler'
@@ -7,6 +7,7 @@ import PhoneInput from 'react-native-phone-number-input'
 import MultiSelect from 'react-native-multiple-select'
 import { auth, db } from '../../firebase'
 import { signup_style } from '../../styles/authentication/SignUpStyle'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const categories = require('../../categories.json');
 

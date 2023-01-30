@@ -2,10 +2,9 @@ import React, { useState } from 'react'
 import { ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native'
 import { View, Text } from 'react-native'
-import { Divider } from 'react-native-elements/dist/divider/Divider'
 import { change_payment_css } from '../../styles/checkout/ChangePaymentStyle'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import { TextInput } from 'react-native'
 import { AddToWalletButton } from '@stripe/stripe-react-native'
 
