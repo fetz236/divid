@@ -1,5 +1,5 @@
 import React from 'react'
-import { View } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
 import AddAddress from '../../components/address/AddAddress'
 import { add_address_style } from '../../styles/address/AddAddressStyle'
 
@@ -9,8 +9,8 @@ import { add_address_style } from '../../styles/address/AddAddressStyle'
  */
 export default function AddAddressScreen({route, navigation}) {
   return (
-    <View style={add_address_style.screen_container}>
+    <ScrollView style={add_address_style.screen_container}>
         <AddAddress route={route} navigation={navigation}/>
-    </View>
+    </ScrollView>
   )
 }

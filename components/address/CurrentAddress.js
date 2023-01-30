@@ -108,15 +108,12 @@ const DisplayCurrentAddresses = (props) => (
   >
     <View style={current_address_style.dca_info}>
       {
-
         props.item.isActive && <Text style={current_address_style.dca_info_active}>Active address</Text>
-
       }
     </View>
 
     <View style={current_address_style.dca_info}>
-      
-      <Text style={current_address_style.dca_info_text}>{props.item.address1}, {props.item.postcode}</Text>
+      <Text style={current_address_style.dca_info_text}>{props.item.address1}, {props.item.address2}, {props.item.postcode}</Text>
     </View>
   </TouchableOpacity>
 )

@@ -57,7 +57,7 @@ const HomeStackScreen = () => (
             }}/>
         <HomeStack.Screen name = "WorkerScheduleDetail" component={WorkerScheduleDetail} options={{headerShown:true, 
             headerStyle:header_style.full_container, headerBackTitleVisible:false, 
-            headerTitleStyle:header_style.title, headerTintColor: 'white', headerTitle:'Select Date'
+            headerTitleStyle:header_style.title, headerTintColor: 'white', headerTitle:'Date & Hour Selection'
             }}/>
         <HomeStack.Screen name = "UserDetail" component={UserDetail} options={{headerShown:true, 
             headerStyle:header_style.full_container, headerBackTitleVisible:false, 

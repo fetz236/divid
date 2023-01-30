@@ -27,27 +27,13 @@ export default function GeneralInfo({ navigation, ...props }) {
         
     };
 
-    //Checks to see if the user is logged in for address authentication
-    const checkAddress = () => {
-        if (auth.currentUser) {
-            navigation.navigate("CurrentAddressScreen", {
-                navigation:navigation,
-            })
-        } else {
-            navigation.navigate("LoginAddressNeededScreen", {
-                navigation:navigation,
-            })
-        }
-    }
 
     return (
         <View source={general_info_css.gi_container}>
-            <Logo navigation={navigation} checkAddress={checkAddress}/>
+            <Logo navigation={navigation} />
             <View style={general_info_css.profile_container}>
                 <TouchableOpacity
                     onPress={() => checkAuthentication()}>
-                        
-
                     <Icon name="person-outline" size={35} color='#d95a00'></Icon>
                 </TouchableOpacity>
             </View>
@@ -58,9 +44,8 @@ export default function GeneralInfo({ navigation, ...props }) {
 
 
 const Logo = (props) => (
-    <TouchableOpacity style={general_info_css.logo_container}
-    onPress={() => props.checkAddress()}>
+    <View style={general_info_css.logo_container}>
         <Image source ={logo.image} style={general_info_css.logo_def}/>
-    </TouchableOpacity>
+    </View>
 );
 

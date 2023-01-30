@@ -1,9 +1,7 @@
 import { View, Text } from 'react-native'
 import React, { useState } from 'react'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
-import { signup_style } from '../../styles/authentication/SignUpStyle'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { search_bar_css } from '../../styles/home/SearchBarStyle'
 import Icon from 'react-native-vector-icons/Ionicons';
 import MapView, { Marker } from 'react-native-maps'
 import { find_address_style } from '../../styles/address/FindAddressStyle'
@@ -20,26 +18,47 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 export default function FindAddress({navigation, ...props}) {
 
     const [pin, setPin] = useState({
-        latitude: 37.78825,
-        longitude: -122.4324,
+        latitude: 51.51311959688299,
+        longitude: -0.11741839349269867,
     })
 
     const [region, setRegion] = useState({
-        latitude: 37.78825,
-        longitude: -122.4324,
+        latitude: 51.51311959688299,
+        longitude: -0.11741839349269867,
         latitudeDelta: 0.0125,
         longitudeDelta: 0.0125,
     })
 
+    const HERE_API_KEY= "Yiv6QNDU_92QX-BbGXma7OzgZfaPkyXe_4LSg-dJAKY"
 
-    //This method handles API requests to Google to ensure 
-    const onLocationChange = (place_id) => {
-        console.log(place_id)
+
+    const handleAddress = async() => {
+        console.log(region)
+        const url = `https://revgeocode.search.hereapi.com/v1/revgeocode?at=${region.latitude}%2C${region.longitude}&lang=en-US&apiKey=${HERE_API_KEY}`
+        fetch(url,{
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            let item_list = data.items
+            console.log(data.items)
+            let address = {
+                address1: item_list[0].address.houseNumber,
+                address2: item_list[0].address.street,
+                addressCity: item_list[0].address.city,
+                addressState: item_list[0].address.state,
+                addressCountry: item_list[0].address.countryName,
+                addressPostal: item_list[0].address.postalCode,
+            }
+            navigation.navigate("AddAddressScreen", address)
+        })
+        .catch(err => console.error(err));
     }
 
-    const handleAddress = () => {
-        console.log('handled')
-    }
 
   return (
     <View>
@@ -47,10 +66,10 @@ export default function FindAddress({navigation, ...props}) {
             <MaterialCommunityIcons name="close" color='#d95a00' size={50} style={find_address_style.close_button} 
                     onPress={()=> navigation.goBack()}
                 />
-            <WorkerLocations pin={pin} setPin={setPin} region={region} setRegion={setRegion}/>
+            <WorkerLocations pin={pin} setPin={setPin} region={region} setRegion={setRegion} handleAddress={handleAddress}/>
+            <CompleteAddress handleAddress={handleAddress}/>
         </View>
 
-        <CompleteAddress handleAddress={handleAddress}/>
     </View>
   )
 }
@@ -122,8 +141,8 @@ const WorkerLocations = (props) => (
             
             style={find_address_style.map_location_box}
             initialRegion={{
-                latitude: 37.78825,
-                longitude: -122.4324,
+                latitude: 51.51311959688299,
+                longitude: -0.11741839349269867,
                 latitudeDelta: 0.0125,
                 longitudeDelta: 0.0125,
             }}
@@ -145,18 +164,16 @@ const WorkerLocations = (props) => (
             }}
             >
             <Marker coordinate={props.pin}/>
-            
         </MapView>
-        
     </View>
 
 );
 
 const CompleteAddress = (props) =>(
-    <View style={signup_style.forgot_container_box}>
-        <TouchableOpacity style={signup_style.touchable_opacity} 
-            onPress={() => props.handleAddress()}>
-            <Text style={signup_style.sub_heading_white}> make me an account </Text>
-        </TouchableOpacity>
-    </View>
+    <TouchableOpacity style={find_address_style.add_address_box} 
+        onPress={() => props.handleAddress()}>
+        
+        <Text style={find_address_style.sub_heading_white}>Add Address</Text>
+        
+    </TouchableOpacity>
 )

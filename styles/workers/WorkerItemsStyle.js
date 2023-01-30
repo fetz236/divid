@@ -15,7 +15,7 @@ export const style_sheet = StyleSheet.create({
     worker_profile_image:{
         width: 100, 
         height: 100, 
-        borderRadius: 8, 
+        borderRadius: 50, 
         marginRight: 20, 
         marginBottom: 5
     },

@@ -21,6 +21,7 @@ export const worker_style = StyleSheet.create({
         fontWeight:"200",
         marginTop:"2%",
         marginLeft:"2%",
+        marginRight:"2%",
         fontSize:16
     },
     container_view: {
@@ -63,6 +64,12 @@ export const worker_style = StyleSheet.create({
         marginLeft:'2%',
         alignItems:'center',
     },
+    service:{
+        width:'46%',
+        flexDirection:'row',
+        marginTop:'5%',
+        marginLeft:'2%',
+    },
     divider: {
         marginTop:"4%",
         borderBottomWidth:5,
@@ -71,6 +78,14 @@ export const worker_style = StyleSheet.create({
         color: 'white',
         fontSize:14,
         fontWeight:'400',
+        marginLeft:"10%",
+        marginTop:"2%",
+        marginRight:'10%',
+    },
+    services_text:{
+        color: '#d95a00',
+        fontSize:14,
+        fontWeight:'500',
         marginLeft:"10%",
         marginTop:"2%",
         marginRight:'10%',

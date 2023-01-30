@@ -14,7 +14,7 @@ export default function Upcoming({navigation}) {
     const [bookings, setBookings] = useState([])
     const [loaded_bookings, setLoadedBookings] = useState(false)
     
-    useEffect(async () => {
+    useEffect(() => {
         
         const loadBookings = () =>{
             let booking_data = []

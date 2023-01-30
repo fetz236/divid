@@ -10,7 +10,7 @@ import { ScrollView } from 'react-native';
 import { auth, db, storage } from '../../firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import * as ImagePicker from 'expo-image-picker';
-import { getBlob, getDownloadURL, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
+import {  getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const user_settings = [

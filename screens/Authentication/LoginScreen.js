@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, ScrollView } from 'react-native'
+import { ScrollView } from 'react-native'
 import Login from '../../components/authentication/Login'
 
 export default function LoginScreen({route, navigation}) {

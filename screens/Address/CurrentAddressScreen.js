@@ -1,4 +1,3 @@
-import { View, Text } from 'react-native'
 import React from 'react'
 import CurrentAddress from '../../components/address/CurrentAddress'
 import { current_address_style } from '../../styles/address/CurrentAddressStyle'

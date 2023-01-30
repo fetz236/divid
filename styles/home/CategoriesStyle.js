@@ -27,6 +27,8 @@ export const categories_css = StyleSheet.create({
     reload_button:{
         backgroundColor:'#d95a00',
         borderRadius:50,
+        alignItems:'center',
+        justifyContent:'center',
     },
     white_subheading:{
         color:'white',

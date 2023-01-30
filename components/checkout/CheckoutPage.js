@@ -8,125 +8,6 @@ import { checkout_style } from '../../styles/checkout/CheckoutPageStyle'
 import { CardField, useConfirmPayment } from '@stripe/stripe-react-native';
 import { auth, db } from '../../firebase'
 
-/*
-
-Object {
-  "cl": "4vY771DMIX7422rzWW7l",
-  "class_selected": Object {
-    "class": Object {
-      "categories": Array [
-        "Abw5hySlBsbHvcKN4vM9",
-      ],
-      "closed_days": Array [
-        Object {
-          "date": "2022-10-20",
-          "fc": "jP6AalbtPcjk0Lbcxo5q",
-          "id": "7HVQgA4ZlmcYuyolvdmc",
-        },
-        Object {
-          "date": "2022-11-01",
-          "fc": "jP6AalbtPcjk0Lbcxo5q",
-          "id": "UlD3xq7xZvNNpHGjmbey",
-        },
-      ],
-      "curr_cap": "0",
-      "description": "Advanced Spinning class",
-      "id": "4vY771DMIX7422rzWW7l",
-      "image": "https://firebasestorage.googleapis.com/v0/b/fit-user-app/o/store_images%2FjP6AalbtPcjk0Lbcxo5q%2Fclass_images%2F20220923135655c.jpg?alt=media&token=26f06243-25ac-4c8b-af9c-ef9dec5d06c7",
-      "max_cap": 25,
-      "name": "Spinning",
-      "price": 8000,
-    },
-    "fc": Object {
-      "categories": Array [
-        "q9TU23VcpJh1YeyBNlU9",
-        "1PVAG7I7cTnxNZqCMehW",
-      ],
-      "id": "jP6AalbtPcjk0Lbcxo5q",
-      "image": Array [
-        "https://firebasestorage.googleapis.com/v0/b/fit-user-app/o/store_images%2FjP6AalbtPcjk0Lbcxo5q%2F20220921003536.jpg?alt=media&token=63bf024e-396d-4655-aced-a10149ded044",
-        "https://firebasestorage.googleapis.com/v0/b/fit-user-app/o/store_images%2FjP6AalbtPcjk0Lbcxo5q%2F20220921003535.jpg?alt=media&token=4366df23-90f9-4af6-a47e-9bcd305af10b",
-        "https://firebasestorage.googleapis.com/v0/b/fit-user-app/o/store_images%2FjP6AalbtPcjk0Lbcxo5q%2F20220921003233.jpg?alt=media&token=269cbc10-7a49-48d4-8fc3-2a7ef2cdb69b",
-        "https://firebasestorage.googleapis.com/v0/b/fit-user-app/o/store_images%2FjP6AalbtPcjk0Lbcxo5q%2F20220921003433.jpg?alt=media&token=846b35a2-9b61-4fad-a335-97c81c4cbc90",
-        "https://firebasestorage.googleapis.com/v0/b/fit-user-app/o/store_images%2FjP6AalbtPcjk0Lbcxo5q%2F20220921003400.jpg?alt=media&token=b0ecdd9d-3de5-40ca-9810-9212044e6d49",
-        "https://firebasestorage.googleapis.com/v0/b/fit-user-app/o/store_images%2FjP6AalbtPcjk0Lbcxo5q%2F20220921003335.jpg?alt=media&token=0d9bd9e2-af1c-49fc-a645-2960becd05c7",
-        "https://firebasestorage.googleapis.com/v0/b/fit-user-app/o/store_images%2FjP6AalbtPcjk0Lbcxo5q%2F20220921003333.jpg?alt=media&token=4b0b0c3a-c409-4d29-8a0e-583794d2f29c",
-      ],
-      "location": Object {
-        "latitude": 51.51435857837156,
-        "longitude": -0.15710420123305274,
-      },
-      "name": "The Gym Way - Marble Arch",
-      "rating": 5,
-      "reviews": 1,
-      "subscription": "red",
-      "telephone_number": "+442076294655",
-    },
-  },
-  "date": "27/10/2022",
-  "id": "gyTAF32tfRORwlc5hKpo",
-  "time": "14:00 - 15:30",
-}
-Object {
-  "cl": "4vY771DMIX7422rzWW7l",
-  "class_selected": Object {
-    "class": Object {
-      "categories": Array [
-        "Abw5hySlBsbHvcKN4vM9",
-      ],
-      "closed_days": Array [
-        Object {
-          "date": "2022-10-20",
-          "fc": "jP6AalbtPcjk0Lbcxo5q",
-          "id": "7HVQgA4ZlmcYuyolvdmc",
-        },
-        Object {
-          "date": "2022-11-01",
-          "fc": "jP6AalbtPcjk0Lbcxo5q",
-          "id": "UlD3xq7xZvNNpHGjmbey",
-        },
-      ],
-      "curr_cap": "0",
-      "description": "Advanced Spinning class",
-      "id": "4vY771DMIX7422rzWW7l",
-      "image": "https://firebasestorage.googleapis.com/v0/b/fit-user-app/o/store_images%2FjP6AalbtPcjk0Lbcxo5q%2Fclass_images%2F20220923135655c.jpg?alt=media&token=26f06243-25ac-4c8b-af9c-ef9dec5d06c7",
-      "max_cap": 25,
-      "name": "Spinning",
-      "price": 8000,
-    },
-    "fc": Object {
-      "categories": Array [
-        "q9TU23VcpJh1YeyBNlU9",
-        "1PVAG7I7cTnxNZqCMehW",
-      ],
-      "id": "jP6AalbtPcjk0Lbcxo5q",
-      "image": Array [
-        "https://firebasestorage.googleapis.com/v0/b/fit-user-app/o/store_images%2FjP6AalbtPcjk0Lbcxo5q%2F20220921003536.jpg?alt=media&token=63bf024e-396d-4655-aced-a10149ded044",
-        "https://firebasestorage.googleapis.com/v0/b/fit-user-app/o/store_images%2FjP6AalbtPcjk0Lbcxo5q%2F20220921003535.jpg?alt=media&token=4366df23-90f9-4af6-a47e-9bcd305af10b",
-        "https://firebasestorage.googleapis.com/v0/b/fit-user-app/o/store_images%2FjP6AalbtPcjk0Lbcxo5q%2F20220921003233.jpg?alt=media&token=269cbc10-7a49-48d4-8fc3-2a7ef2cdb69b",
-        "https://firebasestorage.googleapis.com/v0/b/fit-user-app/o/store_images%2FjP6AalbtPcjk0Lbcxo5q%2F20220921003433.jpg?alt=media&token=846b35a2-9b61-4fad-a335-97c81c4cbc90",
-        "https://firebasestorage.googleapis.com/v0/b/fit-user-app/o/store_images%2FjP6AalbtPcjk0Lbcxo5q%2F20220921003400.jpg?alt=media&token=b0ecdd9d-3de5-40ca-9810-9212044e6d49",
-        "https://firebasestorage.googleapis.com/v0/b/fit-user-app/o/store_images%2FjP6AalbtPcjk0Lbcxo5q%2F20220921003335.jpg?alt=media&token=0d9bd9e2-af1c-49fc-a645-2960becd05c7",
-        "https://firebasestorage.googleapis.com/v0/b/fit-user-app/o/store_images%2FjP6AalbtPcjk0Lbcxo5q%2F20220921003333.jpg?alt=media&token=4b0b0c3a-c409-4d29-8a0e-583794d2f29c",
-      ],
-      "location": Object {
-        "latitude": 51.51435857837156,
-        "longitude": -0.15710420123305274,
-      },
-      "name": "The Gym Way - Marble Arch",
-      "rating": 5,
-      "reviews": 1,
-      "subscription": "red",
-      "telephone_number": "+442076294655",
-    },
-  },
-  "date": "27/10/2022",
-  "id": "gyTAF32tfRORwlc5hKpo",
-  "time": "14:00 - 15:30",
-}
-
-
-*/
 
 //API URL for our Express server
 const API_URL = "https://serene-taiga-13771.herokuapp.com";
@@ -144,6 +25,7 @@ export default function CheckoutPage({navigation, ...props}) {
     const changePayment = () => {
         setChangeState(true);
     };
+
 
     const [cardDetails, setCardDetails] = useState();
     const { confirmPayment, loading } = useConfirmPayment();
@@ -164,7 +46,7 @@ export default function CheckoutPage({navigation, ...props}) {
             setisWorker(false, "false")
         }
         else{
-            setCheckoutData(props.route.params.t_data)
+            setCheckoutData(props.route.params.w_data)
             setisWorker(true)
 
             
@@ -175,7 +57,7 @@ export default function CheckoutPage({navigation, ...props}) {
     const fetchPaymentIntentClientSecret = async () => {
         let price; 
         if (isWorker==true){
-            price = props.route.params.t_data.worker_selected.worker.price
+            price = props.route.params.w_data.worker_selected.worker.price
         }
         else{
             price = props.route.params.u_data.class_selected.class.price
@@ -330,7 +212,7 @@ const WorkerInformation = (props) => (
       <Divider width={1} style={checkout_style.order_divider}/>
       <View style={checkout_style.order_info}>
           <Text style={checkout_style.order_text}> Booking with {props.checkout_data.worker_selected.worker.first_name} {props.checkout_data.worker_selected.worker.last_name} arriving from {props.checkout_data.start_time} - {props.checkout_data.end_time} on  
-            the {props.checkout_data.date}
+            the {props.checkout_data.date} {props.checkout_data.selected_hour}
           </Text>
       </View>
       <Divider width={1} style={checkout_style.order_divider}/>
