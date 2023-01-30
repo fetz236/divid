@@ -8,9 +8,10 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 
 export default function CurrentAddress({navigation, ...props}) {
 
-
+  // Used to store addresses and load page
   const [addresses, setAddresses] = useState([])
-  const [isActiveLoaded, setIsActiveLoaded] = useState(true)
+  const [isActiveLoaded, setIsActiveLoaded] = useState(false)
+
   //Use effect loads data into current addresses
   useEffect(() => {
     const loadAddresses = () => {
@@ -30,6 +31,7 @@ export default function CurrentAddress({navigation, ...props}) {
     }
     
     loadAddresses()
+    setIsActiveLoaded(true)
   
   }, [])
   
@@ -70,6 +72,8 @@ export default function CurrentAddress({navigation, ...props}) {
     }    
   }
 
+  //Render page
+
   return (
     <>
     { isActiveLoaded &&
@@ -89,9 +93,6 @@ export default function CurrentAddress({navigation, ...props}) {
     </>
   )
 }
-
-
-
 
 //Used to build current addresses
 const DisplayCurrentAddresses = (props) => (

@@ -4,18 +4,6 @@ export const current_address_style = StyleSheet.create({
     main_container: {
         marginLeft:'3%',
     },
-    search_bar_container: { 
-        flexDirection: "row",
-        marginRight:'3%',
-    },
-    google_places:{
-        marginTop:'2%',
-        width:'100%',
-    },
-    close_button: {
-        marginLeft:'auto',
-        right:0,
-    },
     dca_info_active:{
         fontWeight:'800',
         color:'#d95a00'
@@ -48,6 +36,8 @@ export const current_address_style = StyleSheet.create({
     },
     ana_text:{
         color:'white',
+        fontSize:20,
+        fontWeight:'600',
         
     }
 });
