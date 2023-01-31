@@ -8,12 +8,6 @@ export const checkout_style = StyleSheet.create({
         flexDirection:'column',
         justifyContent:'space-between',
     },
-    title:{
-        color: '#d95a00',
-        fontSize:20,
-        fontWeight:'600',
-
-    },
     sub_heading:{
         color: '#8d8d8d',
         fontSize:16,
@@ -88,12 +82,6 @@ export const checkout_style = StyleSheet.create({
         fontSize:16,
         fontWeight:'600',    
         color: '#8d8d8d'
-    },
-    payment_divider:{
-        marginTop:'2%',
-        marginBottom:'2%',
-        color:'#a2a2a2',
-        marginLeft:'-3%',
     },
     perks_container:{
         marginTop:'30%',
