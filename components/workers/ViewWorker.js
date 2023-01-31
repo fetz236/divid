@@ -3,7 +3,6 @@ import { View, Text, Image } from 'react-native'
 import { Rating } from 'react-native-ratings';
 import { ScrollView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler'
-
 import {worker_style, worker_schedule} from '../../styles/workers/ViewWorkerStyle'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 

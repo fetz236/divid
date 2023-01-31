@@ -5,9 +5,7 @@ import { Divider } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { auth, db } from '../../firebase'
-import { categories_css } from '../../styles/home/CategoriesStyle'
-import { search_bar_css } from '../../styles/home/SearchBarStyle'
-import { style_sheet } from '../../styles/workers/WorkerItemsStyle'
+import { worker_items_style } from '../../styles/workers/WorkerItemsStyle'
 
 
 export default function WorkerItems({ navigation, ...props }) {
@@ -117,7 +115,7 @@ export default function WorkerItems({ navigation, ...props }) {
                             }
                             )}>
                             <View style={{ marginBottom: 10 }}>
-                                <View style={style_sheet.worker_item_style}>
+                                <View style={worker_items_style.worker_item_style}>
                                     <WorkerImage worker_details={worker} />
                                     <WorkerInfo worker_details={worker} />
                                 </View>
@@ -135,24 +133,24 @@ export default function WorkerItems({ navigation, ...props }) {
 
 //Utilised to show a reload button in charge of refreshing the main section to the tailored requirements of the user
 const Reload = (props) => (
-    <View style={categories_css.reload}>
-        <TouchableOpacity style={categories_css.reload_button} onPress={()=>props.loadAll(false)}>
-            <Text style={categories_css.white_subheading}>SHOW ALL</Text>
+    <View style={worker_items_style.reload}>
+        <TouchableOpacity style={worker_items_style.reload_button} onPress={()=>props.loadAll(false)}>
+            <Text style={worker_items_style.white_subheading}>SHOW ALL</Text>
         </TouchableOpacity>
     </View>
 )
 
 //Loads the horizontal search bar
 const Categories = (props) => (
-    <View style={categories_css.categories_container}>
+    <View style={worker_items_style.categories_container}>
         {   props.items &&
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {props.items.map((item,index) =>(
                     <TouchableOpacity key={index} onPress={()=>props.loadFitness(item)}>
-                        <View key={index} style={categories_css.item_container}>
+                        <View key={index} style={worker_items_style.item_container}>
                             <MaterialCommunityIcons name={item.icon_name} 
-                            style={categories_css.image_def}/>
-                            <Text style={categories_css.text_def}>{item.name}</Text>
+                            style={worker_items_style.image_def}/>
+                            <Text style={worker_items_style.text_def}>{item.name}</Text>
                         </View>  
                     </TouchableOpacity>
                 ))}           
@@ -162,8 +160,8 @@ const Categories = (props) => (
 )
 
 const WorkerInfo = (props) => (
-    <View style={style_sheet.worker_info}>
-        <Text style={style_sheet.worker_title_style}>Cleaner</Text>
+    <View style={worker_items_style.worker_info}>
+        <Text style={worker_items_style.worker_title_style}>Cleaner</Text>
         <Text>{props.worker_details.first_name} {props.worker_details.last_name}</Text>
         <Text>🌟 {props.worker_details.rating}</Text>
         <Text>£{(props.worker_details.price / 100).toFixed(2)} per hour</Text>
@@ -173,20 +171,20 @@ const WorkerInfo = (props) => (
 const WorkerImage = (props) => (
     <View>
         <Image source={{uri:props.worker_details.photoURL}} 
-        style={style_sheet.worker_profile_image} 
+        style={worker_items_style.worker_profile_image} 
         />
     </View>
 )
 
 const SearchBar = (props) => (
-    <View style={search_bar_css.search_bar_container }>
-        <View style={search_bar_css.location_button}>
+    <View style={worker_items_style.search_bar_container }>
+        <View style={worker_items_style.location_button}>
             <Icon name="location-outline" size= {24} color='#d95a00'></Icon>
         </View>
-        <View style={search_bar_css.textInputContainer}>
-            <Text style={search_bar_css.textInput}>30 Aldwych, London WC2B 4BG</Text>
+        <View style={worker_items_style.textInputContainer}>
+            <Text style={worker_items_style.textInput}>30 Aldwych, London WC2B 4BG</Text>
         </View>
-        <TouchableOpacity style={search_bar_css.change_address}
+        <TouchableOpacity style={worker_items_style.change_address}
         onPress={() => props.checkAddress()}>
                 <Icon name="time-outline" size={14} color='white'></Icon>
                 <Text style={{color:'white'}}> Change </Text>

@@ -1,16 +1,16 @@
 import { View, Text, Dimensions } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { current_address_style } from '../../styles/address/CurrentAddressStyle'
-import { auth_style } from '../../styles/authentication/AuthenticationHomeStyle'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { auth, db } from '../../firebase'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 export default function CurrentAddress({navigation, ...props}) {
 
-
+  // Used to store addresses and load page
   const [addresses, setAddresses] = useState([])
-  const [isActiveLoaded, setIsActiveLoaded] = useState(true)
+  const [isActiveLoaded, setIsActiveLoaded] = useState(false)
+
   //Use effect loads data into current addresses
   useEffect(() => {
     const loadAddresses = () => {
@@ -30,6 +30,7 @@ export default function CurrentAddress({navigation, ...props}) {
     }
     
     loadAddresses()
+    setIsActiveLoaded(true)
   
   }, [])
   
@@ -70,11 +71,13 @@ export default function CurrentAddress({navigation, ...props}) {
     }    
   }
 
+  //Render page
+
   return (
     <>
     { isActiveLoaded &&
       <View style={current_address_style.main_container}>
-        <MaterialCommunityIcons name="close" color='#d95a00' size={50} style={auth_style.close_button} 
+        <MaterialCommunityIcons name="close" color='#d95a00' size={50} style={current_address_style.close_button} 
                   onPress={()=> navigation.goBack()}
               /> 
 
@@ -89,9 +92,6 @@ export default function CurrentAddress({navigation, ...props}) {
     </>
   )
 }
-
-
-
 
 //Used to build current addresses
 const DisplayCurrentAddresses = (props) => (

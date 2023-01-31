@@ -18,19 +18,6 @@ export const user_search_bar_css = StyleSheet.create({
         borderColor: '#d95a00',
         alignItems: "center",
     },
-    item_container:{
-        flexDirection:'column',
-        marginTop:'10%',
-    },
-    row_container:{
-        flexDirection:'row',
-        alignItems:'center',
-    },
-    category_text:{
-        fontSize: 20,
-        color: '#d95a00',
-        marginLeft:'5%',
-    },
     input_container:{
         height:'95%',
         width:'85%',
@@ -42,12 +29,6 @@ export const user_search_bar_css = StyleSheet.create({
     },
     search_icon:{
         marginLeft:'2.5%',
-    },
-    header:{
-        fontSize:24,
-        marginTop:'4%',
-        marginBottom: '4%',
-        color:'#8d8d8d'
     },
     flat_list_container:{
         marginTop:'2%',

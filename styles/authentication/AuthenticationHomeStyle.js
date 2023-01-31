@@ -2,7 +2,7 @@
 import { StyleSheet } from 'react-native'
 
 export const auth_style = StyleSheet.create({
-    safe_one_styll:{
+    sa_view:{
         marginTop:'10%',
     },
     header_container: {
@@ -61,10 +61,6 @@ export const auth_style = StyleSheet.create({
         marginBottom:'1%',
         alignItems:'center',
         justifyContent:'center',
-    },
-    auth_text:{
-        fontSize:16,
-        color: 'white'
     },
     close_button: {
         marginLeft:'auto',

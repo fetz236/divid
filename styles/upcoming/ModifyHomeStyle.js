@@ -47,12 +47,6 @@ export const modify_home_style = StyleSheet.create({
         fontWeight:'600',    
         color: '#8d8d8d'
     },
-    modify_divider:{
-        marginTop:'2%',
-        marginBottom:'2%',
-        color:'#a2a2a2',
-        marginLeft:'-3%',
-    },
     accept_terms:{
         borderWidth:2,
         borderRadius:50,

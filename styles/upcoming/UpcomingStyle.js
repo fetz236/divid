@@ -1,12 +1,6 @@
 import { StyleSheet } from 'react-native'
 
 export const upcoming_style_sheet = StyleSheet.create({
-    upcoming_item_style: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginTop:10,
-        marginLeft:20,
-    },
     header_container: {
         alignItems:'center',
         marginTop:"5%",
@@ -40,10 +34,6 @@ export const upcoming_style_sheet = StyleSheet.create({
         marginTop:'3%',
         marginBottom:'3%',
         color:'#a2a2a2',
-    },
-    upcoming_title_style:{
-        fontSize:19,
-        fontWeight:'600',    
     },
     main_container:{
         marginTop:'2%',

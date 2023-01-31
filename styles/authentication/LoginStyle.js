@@ -43,29 +43,6 @@ export const login_style = StyleSheet.create({
         marginRight:'3%',
         fontSize:16,    
     },
-    login_header:{
-        fontSize:20,
-        fontWeight:'600', 
-        color: '#d95a00'
-    },
-    login_info:{
-        marginTop:'3%',
-        marginLeft:'-3%',
-        marginBottom:'1%',
-        alignItems:'center',
-        justifyContent:'center',
-    },
-    login_text:{
-        fontSize:16,
-        fontWeight:'600',    
-        color: '#8d8d8d'
-    },
-    login_divider:{
-        marginTop:'2%',
-        marginBottom:'2%',
-        color:'#a2a2a2',
-        marginLeft:'-3%',
-    },
     forgot_container:{
         marginTop:'10%',
         alignSelf:'center',
@@ -78,6 +55,7 @@ export const login_style = StyleSheet.create({
     forgot_container_box:{
         marginTop:'10%',
         alignSelf:'center',
+        alignItems:'center',
         justifyContent:'center',
         borderWidth:2,
         borderRadius:50,
@@ -86,9 +64,10 @@ export const login_style = StyleSheet.create({
         marginBottom:'10%',
     },
     touchable_opacity:{
-        marginLeft:'1.5%',
+        marginLeft:'2.5%',
         marginRight:'2.5%',
         marginTop:'2%',
+        marginBottom:'2%',
     },
     sub_heading_white:{
         color: 'white',

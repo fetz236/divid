@@ -2,28 +2,6 @@
 import { StyleSheet } from 'react-native'
 
 export const change_payment_css = StyleSheet.create({
-    header_container: {
-        alignItems:'center',
-        marginTop:"5%",
-        flexDirection:'column',
-        justifyContent:'space-between',
-    },
-    title:{
-        color: '#d95a00',
-        fontSize:24,
-        fontWeight:'600',
-
-    },
-    sub_heading:{
-        color: '#8d8d8d',
-        fontSize:16,
-        fontWeight:'400',
-    },
-    divider:{
-        marginTop:'5%',
-        marginBottom:'5%',
-        color:'#a2a2a2',
-    },
     existing_container:{
         marginTop:'10%',
         marginLeft:'3%',
@@ -32,13 +10,6 @@ export const change_payment_css = StyleSheet.create({
         fontSize:24,
         fontWeight:'600', 
         color: '#d95a00'
-    },
-    existing_info:{
-        marginTop:'3%',
-        marginLeft:'-3%',
-        marginBottom:'1%',
-        alignItems:'center',
-        justifyContent:'center',
     },
     existing_text:{
         fontSize:16,
@@ -67,11 +38,6 @@ export const change_payment_css = StyleSheet.create({
         justifyContent:'center',
         borderRadius:50,
         borderColor:'#d95a00'
-    },
-    add_text:{
-        fontSize:50,
-        fontWeight:'600',    
-        color: '#8d8d8d'
     },
     card_box:{
         marginTop:'6%',
@@ -166,6 +132,5 @@ export const change_payment_css = StyleSheet.create({
         fontWeight:'600',    
         color: 'white'
     },
-
 });
 

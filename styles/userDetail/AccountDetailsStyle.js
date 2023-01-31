@@ -62,10 +62,7 @@ export const account_details_style = StyleSheet.create({
         justifyContent:'center',
     },
     multi_input_container:{
-        height:60,
-        marginTop:'3%',
-        marginRight:'3%',
-        width:'90%',    
+        width:'95%',
     },
     submit_button:{
         width:'35%',
@@ -80,6 +77,13 @@ export const account_details_style = StyleSheet.create({
         marginTop:'10%',
         height:60,
         marginBottom:'10%',
+    },
+    mi_sub_heading:{
+        color: '#d95a00',
+        fontSize:20,
+        fontWeight:'600',
+        marginLeft:'1%',
+        marginBottom:'2%',
     },
 });
 
