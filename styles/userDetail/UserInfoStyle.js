@@ -36,11 +36,6 @@ export const user_css = StyleSheet.create({
         alignSelf: "center",       
         marginTop: "10%", 
     },
-    user_rating:{
-        alignContent:'space-around',
-        justifyContent:'center',
-        flexDirection:'row',
-    },
     diplay_settings:{
         marginLeft:'2%',
         marginRight:'2%',
@@ -61,9 +56,6 @@ export const user_css = StyleSheet.create({
         color:'#8d8d8d',
         fontSize:24,
         fontWeight:'600',      
-    },
-    logout_button:{
-        color:'red',
     },
     checkmark:{
         alignSelf:'center',

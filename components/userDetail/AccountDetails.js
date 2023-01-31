@@ -6,7 +6,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import PhoneInput from 'react-native-phone-number-input'
 import MultiSelect from 'react-native-multiple-select'
 import { auth, db } from '../../firebase'
-import { signup_style } from '../../styles/authentication/SignUpStyle'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const categories = require('../../categories.json');
@@ -195,9 +194,9 @@ const AccountMobile = (props) => (
 )
 
 const AccountInterests = (props) =>(
-    <View style={signup_style.signup_container}>
-        <Text style={signup_style.sub_heading}> interests </Text>
-        <View style={signup_style.multi_input_container}>
+    <View style={account_details_style.signup_container}>
+        <Text style={account_details_style.mi_sub_heading}> interests </Text>
+        <View style={account_details_style.multi_input_container}>
                     <MultiSelect 
                         items ={categories}
                         uniqueKey='__id__'

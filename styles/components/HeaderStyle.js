@@ -9,9 +9,6 @@ export const header_style = StyleSheet.create({
         color:'white',
         marginTop: 10,
     },
-    back_container:{
-        color:'white',
-    }
 });
 
 

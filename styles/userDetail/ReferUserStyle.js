@@ -23,9 +23,6 @@ export const refer_user_style = StyleSheet.create({
         marginLeft:'2%',
         marginRight:'2%',
     },
-    checkmark_container:{
-        marginTop:'4%',
-    },
     referral_code_container:{
         marginTop:'20%',
     },
