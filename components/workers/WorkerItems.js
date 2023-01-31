@@ -7,7 +7,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { auth, db } from '../../firebase'
 import { categories_css } from '../../styles/home/CategoriesStyle'
 import { search_bar_css } from '../../styles/home/SearchBarStyle'
-import { style_sheet } from '../../styles/workers/WorkerItemsStyle'
+import { worker_items_style } from '../../styles/workers/WorkerItemsStyle'
 
 
 export default function WorkerItems({ navigation, ...props }) {
@@ -117,7 +117,7 @@ export default function WorkerItems({ navigation, ...props }) {
                             }
                             )}>
                             <View style={{ marginBottom: 10 }}>
-                                <View style={style_sheet.worker_item_style}>
+                                <View style={worker_items_style.worker_item_style}>
                                     <WorkerImage worker_details={worker} />
                                     <WorkerInfo worker_details={worker} />
                                 </View>
@@ -162,8 +162,8 @@ const Categories = (props) => (
 )
 
 const WorkerInfo = (props) => (
-    <View style={style_sheet.worker_info}>
-        <Text style={style_sheet.worker_title_style}>Cleaner</Text>
+    <View style={worker_items_style.worker_info}>
+        <Text style={worker_items_style.worker_title_style}>Cleaner</Text>
         <Text>{props.worker_details.first_name} {props.worker_details.last_name}</Text>
         <Text>🌟 {props.worker_details.rating}</Text>
         <Text>£{(props.worker_details.price / 100).toFixed(2)} per hour</Text>
@@ -173,7 +173,7 @@ const WorkerInfo = (props) => (
 const WorkerImage = (props) => (
     <View>
         <Image source={{uri:props.worker_details.photoURL}} 
-        style={style_sheet.worker_profile_image} 
+        style={worker_items_style.worker_profile_image} 
         />
     </View>
 )

@@ -103,6 +103,7 @@ export default function CheckoutPage({navigation, ...props}) {
                 if (isWorker){
                     db.collection('bookings').add({
                         class: '',
+                        status: 'pending',
                         date: checkout_data.date,
                         start_time: checkout_data.start_time,
                         end_time: checkout_data.end_time,
@@ -119,6 +120,7 @@ export default function CheckoutPage({navigation, ...props}) {
                 else{
                     db.collection('bookings').add({
                         class: checkout_data.cl,
+                        status: 'pending',
                         date: checkout_data.date,
                         start_time: checkout_data.start_time,
                         end_time: checkout_data.end_time,

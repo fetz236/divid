@@ -1,7 +1,7 @@
 
 import { StyleSheet } from 'react-native'
 
-export const style_sheet = StyleSheet.create({
+export const worker_items_style = StyleSheet.create({
     worker_item_style: {
         flexDirection: 'row',
         justifyContent: 'space-between',

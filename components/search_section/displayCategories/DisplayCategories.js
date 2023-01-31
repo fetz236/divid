@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { db } from '../../../firebase'
 import { display_categories_style } from '../../../styles/SearchHome/DisplayCategories/DisplayCategoriesStyle'
-import { style_sheet } from '../../../styles/workers/WorkerItemsStyle'
+import { worker_items_style } from '../../../styles/workers/WorkerItemsStyle'
 import { Divider } from 'react-native-elements'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
@@ -79,7 +79,7 @@ const WorkerItems = (props) => (
             }
             )}>
             <View style={{ marginBottom: 10 }}>
-                <View style={style_sheet.worker_item_style}>
+                <View style={worker_items_style.worker_item_style}>
                     <WorkerImage worker_details={worker} />
                     <WorkerInfo worker_details={worker} />
                 </View>
@@ -91,8 +91,8 @@ const WorkerItems = (props) => (
 )
 
 const WorkerInfo = (props) => (
-    <View style={style_sheet.worker_info}>
-        <Text style={style_sheet.worker_title_style}>{props.worker_details.first_name} {props.worker_details.last_name}</Text>
+    <View style={worker_items_style.worker_info}>
+        <Text style={worker_items_style.worker_title_style}>{props.worker_details.first_name} {props.worker_details.last_name}</Text>
         <Text>{props.worker_details.description}</Text>
         <Text>£{(props.worker_details.price / 100).toFixed(2)}</Text>
 
@@ -102,7 +102,7 @@ const WorkerInfo = (props) => (
 const WorkerImage = (props) => (
     <View>
         <Image source={{uri:props.worker_details.photoURL}} 
-        style={style_sheet.worker_profile_image} 
+        style={worker_items_style.worker_profile_image} 
         />
     </View>
 )
