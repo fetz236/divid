@@ -2,7 +2,7 @@ import React from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Image } from 'react-native';
 import { View } from 'react-native'
-import { general_info_css } from '../../styles/home/GeneralInfoStyle';
+import { general_info_css } from '../../styles/workers/GeneralInfoStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {auth} from '../../firebase'
 
