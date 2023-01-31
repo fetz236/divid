@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import { no_login_style } from '../../styles/upcoming/NoLoginStyle'
+import { no_login_style } from '../../styles/userDetail/NoLoginStyle'
 
 export default function NoLogin() {
   return (
