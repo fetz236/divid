@@ -10,13 +10,6 @@ export const worker_style = StyleSheet.create({
         marginBottom:"4%",
         color: '#d95a00'
     },
-    worker_sub_header: {
-        color:'#d95a00',
-        fontWeight: "600",
-        fontSize: 16,
-        marginLeft:"2%",
-        marginTop:"2%",
-    },
     worker_body: {
         fontWeight:"200",
         marginTop:"2%",
@@ -70,10 +63,6 @@ export const worker_style = StyleSheet.create({
         marginTop:'5%',
         marginLeft:'2%',
     },
-    divider: {
-        marginTop:"4%",
-        borderBottomWidth:5,
-    },
     about_text:{
         color: 'white',
         fontSize:14,
@@ -89,11 +78,6 @@ export const worker_style = StyleSheet.create({
         marginLeft:"10%",
         marginTop:"2%",
         marginRight:'10%',
-    },
-    map_location_box:{
-        marginTop:'5%',
-        width:'90%',
-        height:350,     
     },
     worker_image: {
         width: 150,

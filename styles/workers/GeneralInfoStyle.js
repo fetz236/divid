@@ -11,16 +11,10 @@ export const general_info_css = StyleSheet.create({
         marginTop:'5%',
         marginLeft:'2%'
     },
-    image_def:{
-        width:35,
-        height:35,
-        resizeMode: "contain",
-    },
     profile_container:{
         position:'absolute',
         right:'5%',
         marginTop:'6%',
-
     },
     logo_def:{
         width:110,
