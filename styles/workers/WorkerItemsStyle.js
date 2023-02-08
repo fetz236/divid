@@ -2,6 +2,12 @@
 import { Dimensions, StyleSheet } from 'react-native'
 
 export const worker_items_style = StyleSheet.create({
+    categories_container: {
+        marginTop:5,
+        backgroundColor: "white",
+        paddingVertical: 10,
+        paddingLeft: 15,
+    },
     worker_item_style: {
         flexDirection: 'row',
         justifyContent: 'space-between',

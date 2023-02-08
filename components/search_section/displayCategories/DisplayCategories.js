@@ -76,6 +76,7 @@ const WorkerItems = (props) => (
                 photoURL: worker.photoURL,
                 rating: worker.rating,
                 reviews: worker.reviews,
+                services: worker.services,
             }
             )}>
             <View style={{ marginBottom: 10 }}>

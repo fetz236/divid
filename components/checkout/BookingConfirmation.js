@@ -7,6 +7,8 @@ import QRCode from 'react-native-qrcode-svg';
 
 
 export default function BookingConfirmation() {
+
+    //Initial Booking state
     const initialItemState ={
         name: 'Sugar',
         expiryDate: '2023-12-31',

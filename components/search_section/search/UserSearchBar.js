@@ -110,6 +110,7 @@ const UserSearchBar = ({ navigation }) => {
                 photoURL: item.photoURL,
                 rating: item.rating,
                 reviews: item.reviews,
+                services: item.services,
             }
             )
         }
