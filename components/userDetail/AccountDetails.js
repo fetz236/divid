@@ -12,6 +12,7 @@ const categories = require('../../categories.json');
 
 export default function AccountDetails({navigation, ...props}) {
 
+    //Loading the users category icons using the categories.json file
 
     const [category_icons, setCategoryIcons] = useState([])
     const [categories_loaded, setLoadedCategories] = useState(false)
@@ -41,6 +42,8 @@ export default function AccountDetails({navigation, ...props}) {
    
     }, [])
     
+
+    // Setting states to retrieve the users information
     const [f_name, setF_name] = useState()
     const [fView, setfView] = useState(false)
 
@@ -59,6 +62,7 @@ export default function AccountDetails({navigation, ...props}) {
     };
     
 
+    //Submits relevant changes to firestore
     const handleInfo = async() => {
 
         await db.collection('users').doc(auth.currentUser.uid).update({

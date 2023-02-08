@@ -1,5 +1,5 @@
 
-import { StyleSheet } from 'react-native'
+import { Dimensions, StyleSheet } from 'react-native'
 
 export const worker_items_style = StyleSheet.create({
     worker_item_style: {

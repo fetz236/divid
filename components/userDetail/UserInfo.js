@@ -13,6 +13,7 @@ import * as ImagePicker from 'expo-image-picker';
 import {  getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+//Store settings in the list of objects
 const user_settings = [
     {
         name:'Account Details',
@@ -33,11 +34,14 @@ const user_settings = [
 ];
 
 
-export default function UserInfo({navigation, route}) {
-    const id = route.params.id;
+export default function UserInfo({navigation}) {
+    //Retrive the current user
     const user = auth.currentUser;
 
+    //To store the user data
     const [user_data, setUserData] = useState('');
+
+    //URL and updated for the profile picture change
     const [url, setUrl] = useState()
     const [updated, setUpdated] = useState(false)
 
@@ -46,7 +50,10 @@ export default function UserInfo({navigation, route}) {
             const snap = await getDoc(doc(db, 'users', user.uid))
             if (snap.exists()) {
                 setUserData(snap.data())
-                setUrl(snap.data().photoURL)
+                //The URL is already updated elsewhere so there is no need to continue to update it
+                if(url == null){
+                    setUrl(snap.data().photoURL)
+                }
             }
             else {
                 alert("Internal Error")
@@ -57,6 +64,7 @@ export default function UserInfo({navigation, route}) {
         
     }, [])
 
+    //Sign out user from the app
     const handleSignOut = () => {
         auth
         .signOut()
@@ -66,17 +74,19 @@ export default function UserInfo({navigation, route}) {
         .catch(error => alert(error.message))
     };
 
+    //Uploading of the user profile state
     const [uploading, setUploading] = useState(false)
     
+    //Selecting the Image from the users' library
     const selectLibrary = async() => {
-        const result = await ImagePicker.launchImageLibraryAsync({
+        await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
             aspect: [4,3],
             quality:1,
         }).then((result) => {
-            if (result.uri){
-                setUrl(result.uri)
+            if (!result.canceled && result.assets[0].uri){
+                setUrl(result.assets[0].uri)
                 setUploading(true);
             }
         }
@@ -85,20 +95,21 @@ export default function UserInfo({navigation, route}) {
         });
     };
 
+    //Uploads the file to our storage bucket and then creates a download URL for easy access when listing profiles
     const uploadFile = async() => {
 
         const response = await fetch(url);
         const blob = await response.blob();
         const file_name = user.uid;
 
-        var reference = ref(storage, `gs://divid-edf5d3.appspot.com/profile_images/${file_name}`);
+        var reference = ref(storage, `gs://divid-edf5d.appspot.com/profile_images/${file_name}`);
         await uploadBytesResumable(reference, blob)
         .then(async function(){
                 await getDownloadURL(reference).then( async (docURL) => {
                     db.collection('users').doc(user.uid).update({
                         photoURL: docURL,
                     })
-                    await setUrl(docURL)
+                    setUrl(docURL)
                 }).catch((e) => alert(e))
             }
         ).catch((err) =>

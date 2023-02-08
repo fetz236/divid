@@ -6,6 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 
 export default function ContactPreferences() {
 
+    // Contact Preferences for the user by mobile and email format
     const [email_accepted, setEmailAccepted] = useState(true)
     const [mobile_accepted, setMobileAccepted] = useState(true)
 

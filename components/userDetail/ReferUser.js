@@ -2,6 +2,7 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { refer_user_style } from '../../styles/userDetail/ReferUserStyle'
 
+//Referring a user display screen
 export default function ReferUser() {
   return (
     <View style={refer_user_style.main_container}>
