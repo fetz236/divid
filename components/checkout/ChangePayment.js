@@ -8,7 +8,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { TextInput } from 'react-native'
 import { AddToWalletButton } from '@stripe/stripe-react-native'
 
-
+//Existing cards template
 const existing_cards = [
     {
         name: "Stefanos Karathanassis",

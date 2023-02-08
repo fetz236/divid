@@ -8,57 +8,9 @@ import { category_search_bar_css } from '../../../styles/SearchHome/UserSearchBa
 
 export default function CategorySearch({navigation}) {
 
-    const [loaded_categories, setLoadedCategories] = useState(false)
     const category_data = require('../../../categories.json')
 
-    const [selected_data, setSelectedData] = useState([])
 
-    /*
-
-    useEffect(() => {
-
-        setSelectedData(category_data)
-        const loadCategoryImages = async() => {
-            console.log("1")
-            for (let i=0; i<selected_data.length;i++){
-                const category_image_ref = ref(storage, `gs://divid-edf5d3.appspot.com/category_images/${selected_data[i].image_name}.jpg`);
-                
-                await getDownloadURL(category_image_ref).then(
-                    (x) => {
-                        db.collection('categories').doc(selected_data[i].__id__).update({
-                            image_name:selected_data[i].image_name,
-                            image_url: x
-                        })
-                    }
-                )
-                
-                setLoadedCategories(true)
-                console.log("lol")
-            }   
-        }
-    
-        if (loaded_categories == false){
-            loadCategoryImages()
-            setLoadedCategories(true)
-
-        }
-    }, [])
-    
-
-    const getCategoryImage = async() =>{
-        const fileReaderInstance = new FileReader();
-        fileReaderInstance.readAsDataURL(await getBlob(category_image_ref)).then(
-            (x) => {
-                
-                fileReaderInstance.onload = () => {
-                    base64data = fileReaderInstance.result;                
-                    setUrl(base64data);
-                }
-            }
-        )
-    };
-    
-    */
     return (
         <View style={category_search_bar_css.main_container}>
             <View style={category_search_bar_css.item_container}>
