@@ -117,6 +117,7 @@ export default function CheckoutPage({ navigation, ...props }) {
   );
 }
 
+//Displays the order information
 const WorkerInformation = (props) => (
   <View style={checkout_style.order_container}>
     <Text style={checkout_style.order_header}> Order </Text>
@@ -136,38 +137,16 @@ const WorkerInformation = (props) => (
   </View>
 );
 
-const Order = (props) => (
-  <View style={checkout_style.perks_container}>
-    <View>
-      <Text style={checkout_style.perks_header}> Add Perks </Text>
-    </View>
-    <Divider width={1} style={checkout_style.perks_divider} />
-    <View style={checkout_style.perks_info}>
-      <Text style={checkout_style.perks_subheader}>No Worker</Text>
-      <TouchableOpacity>
-        <Text style={checkout_style.perks_text}>Add a Worker</Text>
-      </TouchableOpacity>
-    </View>
-    <View style={checkout_style.perks_info}>
-      <Text style={checkout_style.perks_subheader}>divid perks</Text>
-
-      <TouchableOpacity onPress={() => props.navigation.navigate("ViewPerks")}>
-        <Text style={checkout_style.perks_text}>Add a Perk</Text>
-      </TouchableOpacity>
-    </View>
-    <Divider width={1} style={checkout_style.perks_divider} />
-  </View>
-);
-
+//Displays the Payment data
 const Payment = (props) => (
   <View style={checkout_style.payment_container}>
     <View style={checkout_style.payment_header_info}>
       <Text style={checkout_style.payment_header}> Payment </Text>
       {/*
-            <TouchableOpacity style={checkout_style.payment_change}
-            onPress={() => props.navigation.navigate("ChangePayment")}>
-                <Text style={checkout_style.payment_change_text}> Change Payment method </Text>
-            </TouchableOpacity> */}
+        <TouchableOpacity style={checkout_style.payment_change}
+        onPress={() => props.navigation.navigate("ChangePayment")}>
+            <Text style={checkout_style.payment_change_text}> Change Payment method </Text>
+        </TouchableOpacity> */}
     </View>
     <View style={checkout_style.payment_info}>
       <CardField
