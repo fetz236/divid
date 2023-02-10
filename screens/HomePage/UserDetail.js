@@ -1,11 +1,11 @@
-import React from 'react'
-import { View } from 'react-native'
-import UserInfo from '../../components/userDetail/UserInfo'
+import React from "react";
+import { View } from "react-native";
+import UserInfo from "../../components/userDetail/UserInfo";
 
-export default function UserDetail({route, navigation}) {
-    return (
-        <View>
-            <UserInfo navigation={navigation} route={route}></UserInfo>
-        </View>
-    )
+export default function UserDetail({ route, navigation }) {
+  return (
+    <View>
+      <UserInfo navigation={navigation} route={route}></UserInfo>
+    </View>
+  );
 }

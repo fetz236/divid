@@ -1,11 +1,11 @@
-import { View } from 'react-native'
-import React from 'react'
-import LoginAddressNeeded from '../../components/address/LoginAddressNeeded'
+import { View } from "react-native";
+import React from "react";
+import LoginAddressNeeded from "../../components/address/LoginAddressNeeded";
 
-export default function LoginAddressNeededScreen({navigation, route}) {
+export default function LoginAddressNeededScreen({ navigation, route }) {
   return (
     <View>
-        <LoginAddressNeeded navigation={navigation}/>
+      <LoginAddressNeeded navigation={navigation} />
     </View>
-  )
+  );
 }

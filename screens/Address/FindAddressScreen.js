@@ -1,11 +1,11 @@
-import { View } from 'react-native'
-import React from 'react'
-import FindAddress from '../../components/address/FindAddress'
+import { View } from "react-native";
+import React from "react";
+import FindAddress from "../../components/address/FindAddress";
 
-export default function FindAddressScreen({navigation, route}) {
+export default function FindAddressScreen({ navigation, route }) {
   return (
     <View>
-      <FindAddress navigation={navigation} route={route}/>
+      <FindAddress navigation={navigation} route={route} />
     </View>
-  )
+  );
 }

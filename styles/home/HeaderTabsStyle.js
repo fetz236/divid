@@ -1,5 +1,3 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet } from "react-native";
 
-export const header_tabs_css = StyleSheet.create({
-});
-
+export const header_tabs_css = StyleSheet.create({});
