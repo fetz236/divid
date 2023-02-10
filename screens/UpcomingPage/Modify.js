@@ -1,11 +1,11 @@
-import React from 'react'
-import { SafeAreaView } from 'react-native'
-import ModifyHome from '../../components/upcoming/ModifyHome'
+import React from "react";
+import { SafeAreaView } from "react-native";
+import ModifyHome from "../../components/upcoming/ModifyHome";
 
 export default function Modify() {
-    return (
-        <SafeAreaView>
-            <ModifyHome/>
-        </SafeAreaView>
-    )
+  return (
+    <SafeAreaView>
+      <ModifyHome />
+    </SafeAreaView>
+  );
 }
