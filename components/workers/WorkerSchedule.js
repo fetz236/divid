@@ -169,12 +169,14 @@ export const WorkerSchedule = ({ navigation, ...props }) => {
       navigation.navigate("Checkout", {
         navigation: navigation,
         w_data: w_data,
+        worker_selected: worker_selected,
       });
     } else {
       navigation.navigate("AuthenticationScreen", {
         navigation: navigation,
         isCheckout: true,
         w_data: w_data,
+        worker_selected: worker_selected,
       });
     }
   };

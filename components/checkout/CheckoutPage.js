@@ -13,19 +13,14 @@ const API_URL = "https://serene-taiga-13771.herokuapp.com";
 
 //Checkout Page presented to the user which is wrapped in StripeProvider
 export default function CheckoutPage({ navigation, ...props }) {
-  const [checkout_data, setCheckoutData] = useState();
+  const [checkout_data, setCheckoutData] = useState(props.route.params.w_data);
   const [changeState, setChangeState] = useState(false);
-
   const changePayment = () => {
     setChangeState(true);
   };
 
   const [cardDetails, setCardDetails] = useState();
   const { confirmPayment, loading } = useConfirmPayment();
-
-  useEffect(() => {
-    setCheckoutData(props.route.params.w_data);
-  }, []);
 
   const fetchPaymentIntentClientSecret = async () => {
     let price;
