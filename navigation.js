@@ -237,6 +237,86 @@ const SearchStackScreen = () => (
         headerTitle: "Fitness Centres",
       }}
     />
+    <SearchStack.Screen
+      name="WorkerDetailSS"
+      component={WorkerDetail}
+      options={{
+        headerShown: true,
+        headerStyle: header_style.full_container,
+        headerBackTitleVisible: false,
+        headerTitleStyle: header_style.title,
+        headerTintColor: "white",
+        headerTitle: "",
+      }}
+    />
+    <SearchStack.Screen
+      name="WorkerScheduleDetail"
+      component={WorkerScheduleDetail}
+      options={{
+        headerShown: true,
+        headerStyle: header_style.full_container,
+        headerBackTitleVisible: false,
+        headerTitleStyle: header_style.title,
+        headerTintColor: "white",
+        headerTitle: "Date & Hour Selection",
+      }}
+    />
+    <SearchStack.Screen
+      name="Checkout"
+      component={Checkout}
+      options={{
+        headerShown: true,
+        headerStyle: header_style.full_container,
+        headerBackTitleVisible: false,
+        headerTitleStyle: header_style.title,
+        headerTintColor: "white",
+        headerTitle: " Checkout",
+      }}
+    />
+    <SearchStack.Screen
+      name="ChangePayment"
+      component={ChangePayment}
+      options={{
+        headerShown: true,
+        headerStyle: header_style.full_container,
+        headerBackTitleVisible: false,
+        headerTitleStyle: header_style.title,
+        headerTintColor: "white",
+        headerTitle: " Change Payment",
+      }}
+    />
+    <SearchStack.Screen
+      name="AuthenticationScreen"
+      component={AuthenticationScreen}
+      options={{ presentation: "modal" }}
+    />
+    <SearchStack.Screen
+      name="LoginScreen"
+      component={LoginScreen}
+      options={{
+        presentation: "modal",
+        transitionSpec: { open: config_transition, close: config_transition },
+        animationEnabled: true,
+      }}
+    />
+    <SearchStack.Screen
+      name="SignUpScreen"
+      component={SignUpScreen}
+      options={{
+        presentation: "modal",
+        transitionSpec: { open: config_transition, close: config_transition },
+        animationEnabled: true,
+      }}
+    />
+    <SearchStack.Screen
+      name="ForgotPasswordScreen"
+      component={ForgotPasswordScreen}
+      options={{
+        presentation: "modal",
+        transitionSpec: { open: config_transition, close: config_transition },
+        animationEnabled: true,
+      }}
+    />
   </SearchStack.Navigator>
 );
 

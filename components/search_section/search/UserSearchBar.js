@@ -85,7 +85,7 @@ const UserSearchBar = ({ navigation }) => {
 
   const checkNavigation = (title, item) => {
     if (title == "Workers") {
-      navigation.navigate("WorkerDetail", {
+      navigation.navigate("WorkerDetailSS", {
         first_name: item.first_name,
         last_name: item.last_name,
         id: item.id,
