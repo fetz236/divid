@@ -16,32 +16,58 @@ export default function WorkerItems({ navigation, ...props }) {
   const [sorted, setSorted] = useState([]);
   const [loaded_sorted, setLoadedSorted] = useState(false);
 
-  const [currentAddress, setCurrentAddress] = useState({
+  const [current_address, setCurrentAddress] = useState({
     address1: "30 Aldwych",
     address2: "",
     addressPostal: "WC2B 4BG",
+    centerPoint: { latitude: 51.513187, longitude: -0.117499 },
   });
+  // Convert degrees to radians
+  function toRadians(degrees) {
+    return degrees * (Math.PI / 180);
+  }
+  // Convert the latitude and longitude values to radians
+  const centerPointLatRad = toRadians(current_address.centerPoint.latitude);
+  const centerPointLngRad = toRadians(current_address.centerPoint.longitude);
+
+  // Define a maximum distance in kilometers
+  const maxDistance = 5;
 
   useEffect(() => {
     const loadData = async () => {
-      let worker_data = [];
+      let filteredDocs = [];
       db.collection("workers")
         .get()
-        .then((snapshot) => {
-          snapshot.forEach((doc) => {
-            const data = doc.data();
-            data.id = doc.id;
-            worker_data.push(data);
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            const worker_data = doc.data();
+            const locationLatRad = toRadians(worker_data.location.latitude);
+            const locationLngRad = toRadians(worker_data.location.longitude);
+
+            // Calculate the distance between the center point and the location using the Haversine formula
+            const a =
+              Math.sin((locationLatRad - centerPointLatRad) / 2) *
+                Math.sin((locationLatRad - centerPointLatRad) / 2) +
+              Math.cos(centerPointLatRad) *
+                Math.cos(locationLatRad) *
+                Math.sin((locationLngRad - centerPointLngRad) / 2) *
+                Math.sin((locationLngRad - centerPointLngRad) / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            const distance = 6371 * c;
+
+            // Add the location to the filtered docs array if it's within the maximum distance
+            if (distance <= maxDistance) {
+              filteredDocs.push(worker_data);
+            }
           });
         })
         .then(function () {
-          setWorkers(worker_data);
-          setSorted(worker_data);
+          setWorkers(filteredDocs);
+          setSorted(filteredDocs);
           setLoadedWorkers(true);
         })
         .catch((err) => alert(err));
     };
-
     loadData();
   }, []);
 
