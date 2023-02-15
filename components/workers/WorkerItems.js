@@ -15,28 +15,46 @@ export default function WorkerItems({ navigation, ...props }) {
 
   const [sorted, setSorted] = useState([]);
   const [loaded_sorted, setLoadedSorted] = useState(false);
-
-  const [currentAddress, setCurrentAddress] = useState({
-    address1: "30 Aldwych",
-    address2: "",
-    addressPostal: "WC2B 4BG",
-  });
+  const [current_address, setCurrentAddress] = useState(props.current_address);
+  // Convert degrees to radians
+  function toRadians(degrees) {
+    return degrees * (Math.PI / 180);
+  }
+  // Convert the latitude and longitude values to radians
+  const centerPointLatRad = toRadians(current_address.location.latitude);
+  const centerPointLngRad = toRadians(current_address.location.longitude);
 
   useEffect(() => {
     const loadData = async () => {
-      let worker_data = [];
+      let filteredDocs = [];
       db.collection("workers")
         .get()
-        .then((snapshot) => {
-          snapshot.forEach((doc) => {
-            const data = doc.data();
-            data.id = doc.id;
-            worker_data.push(data);
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            const worker_data = doc.data();
+            const locationLatRad = toRadians(worker_data.location.latitude);
+            const locationLngRad = toRadians(worker_data.location.longitude);
+
+            // Calculate the distance between the center point and the location using the Haversine formula
+            const a =
+              Math.sin((locationLatRad - centerPointLatRad) / 2) *
+                Math.sin((locationLatRad - centerPointLatRad) / 2) +
+              Math.cos(centerPointLatRad) *
+                Math.cos(locationLatRad) *
+                Math.sin((locationLngRad - centerPointLngRad) / 2) *
+                Math.sin((locationLngRad - centerPointLngRad) / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            const distance = 6371 * c;
+
+            // Add the location to the filtered docs array if it's within the maximum distance
+            if (distance <= worker_data.radius) {
+              filteredDocs.push(worker_data);
+            }
           });
         })
         .then(function () {
-          setWorkers(worker_data);
-          setSorted(worker_data);
+          setWorkers(filteredDocs);
+          setSorted(filteredDocs);
           setLoadedWorkers(true);
         })
         .catch((err) => alert(err));
@@ -71,6 +89,7 @@ export default function WorkerItems({ navigation, ...props }) {
     if (auth.currentUser) {
       navigation.navigate("CurrentAddressScreen", {
         navigation: navigation,
+        setCurrentAddress: setCurrentAddress,
       });
     } else {
       navigation.navigate("LoginAddressNeededScreen", {
@@ -86,7 +105,10 @@ export default function WorkerItems({ navigation, ...props }) {
           <>
             {loaded_sorted && <Reload loadAll={loadAll} />}
             <View style={{ backgroundColor: "white", padding: 15 }}>
-              <SearchBar checkAddress={checkAddress} />
+              <SearchBar
+                current_address={current_address}
+                checkAddress={checkAddress}
+              />
             </View>
             <Categories items={items} loadFitness={loadFitness} />
             {sorted.map((worker, index) => (
@@ -192,7 +214,7 @@ const SearchBar = (props) => (
     </View>
     <View style={worker_items_style.textInputContainer}>
       <Text style={worker_items_style.textInput}>
-        30 Aldwych, London WC2B 4BG
+        {props.current_address.address1} {props.current_address.address2}
       </Text>
     </View>
     <TouchableOpacity
