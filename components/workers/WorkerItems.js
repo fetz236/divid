@@ -60,19 +60,9 @@ export default function WorkerItems({ navigation, ...props }) {
         .catch((err) => alert(err));
     };
 
-    const loadUserAddress = async () => {
-      db.collection(`users/${auth.currentUser.uid}/address`)
-        .where("isActive", "==", true)
-        .get()
-        .then((snapshot) => {
-          snapshot.forEach((doc) => {
-            setCurrentAddress(doc.data());
-          });
-        });
-    };
-
     loadData();
   }, []);
+
   //loads the relevant data depending on what category is selected
   const loadFitness = (selected_cat) => {
     const sorted_data = [];
@@ -224,8 +214,7 @@ const SearchBar = (props) => (
     </View>
     <View style={worker_items_style.textInputContainer}>
       <Text style={worker_items_style.textInput}>
-        {props.current_address.address1}
-        {props.current_address.address2}
+        {props.current_address.address1} {props.current_address.address2}
       </Text>
     </View>
     <TouchableOpacity
