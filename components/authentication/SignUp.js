@@ -10,6 +10,7 @@ import { auth, db } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import MultiSelect from "react-native-multiple-select";
 import PhoneInput from "react-native-phone-number-input";
+import { nanoid } from "nanoid";
 
 const categories = require("../../categories.json");
 
@@ -59,6 +60,7 @@ export default function SignUp({ navigation, ...props }) {
           mobile_calling_code: mobileCountryCallingCode,
           email: email,
           favourites: [],
+          referral_code: nanoid(8),
           photoURL:
             "https://firebasestorage.googleapis.com/v0/b/divid-edf5d.appspot.com/o/profile_images%2Fuser.png?alt=media&token=0dc2498c-bc30-4f8d-a663-9b8d6fbfa127",
         });

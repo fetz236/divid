@@ -15,23 +15,14 @@ export default function WorkerItems({ navigation, ...props }) {
 
   const [sorted, setSorted] = useState([]);
   const [loaded_sorted, setLoadedSorted] = useState(false);
-
-  const [current_address, setCurrentAddress] = useState({
-    address1: "30 Aldwych",
-    address2: "",
-    addressPostal: "WC2B 4BG",
-    centerPoint: { latitude: 51.513187, longitude: -0.117499 },
-  });
+  const [current_address, setCurrentAddress] = useState(props.current_address);
   // Convert degrees to radians
   function toRadians(degrees) {
     return degrees * (Math.PI / 180);
   }
   // Convert the latitude and longitude values to radians
-  const centerPointLatRad = toRadians(current_address.centerPoint.latitude);
-  const centerPointLngRad = toRadians(current_address.centerPoint.longitude);
-
-  // Define a maximum distance in kilometers
-  const maxDistance = 5;
+  const centerPointLatRad = toRadians(current_address.location.latitude);
+  const centerPointLngRad = toRadians(current_address.location.longitude);
 
   useEffect(() => {
     const loadData = async () => {
@@ -56,7 +47,7 @@ export default function WorkerItems({ navigation, ...props }) {
             const distance = 6371 * c;
 
             // Add the location to the filtered docs array if it's within the maximum distance
-            if (distance <= maxDistance) {
+            if (distance <= worker_data.radius) {
               filteredDocs.push(worker_data);
             }
           });
@@ -68,9 +59,20 @@ export default function WorkerItems({ navigation, ...props }) {
         })
         .catch((err) => alert(err));
     };
+
+    const loadUserAddress = async () => {
+      db.collection(`users/${auth.currentUser.uid}/address`)
+        .where("isActive", "==", true)
+        .get()
+        .then((snapshot) => {
+          snapshot.forEach((doc) => {
+            setCurrentAddress(doc.data());
+          });
+        });
+    };
+
     loadData();
   }, []);
-
   //loads the relevant data depending on what category is selected
   const loadFitness = (selected_cat) => {
     const sorted_data = [];
@@ -97,6 +99,7 @@ export default function WorkerItems({ navigation, ...props }) {
     if (auth.currentUser) {
       navigation.navigate("CurrentAddressScreen", {
         navigation: navigation,
+        setCurrentAddress: setCurrentAddress,
       });
     } else {
       navigation.navigate("LoginAddressNeededScreen", {
@@ -112,7 +115,10 @@ export default function WorkerItems({ navigation, ...props }) {
           <>
             {loaded_sorted && <Reload loadAll={loadAll} />}
             <View style={{ backgroundColor: "white", padding: 15 }}>
-              <SearchBar checkAddress={checkAddress} />
+              <SearchBar
+                current_address={current_address}
+                checkAddress={checkAddress}
+              />
             </View>
             <Categories items={items} loadFitness={loadFitness} />
             {sorted.map((worker, index) => (
@@ -218,7 +224,8 @@ const SearchBar = (props) => (
     </View>
     <View style={worker_items_style.textInputContainer}>
       <Text style={worker_items_style.textInput}>
-        30 Aldwych, London WC2B 4BG
+        {props.current_address.address1}
+        {props.current_address.address2}
       </Text>
     </View>
     <TouchableOpacity
