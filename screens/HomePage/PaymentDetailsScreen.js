@@ -5,7 +5,7 @@ import PaymentDetails from "../../components/userDetail/PaymentDetails";
 export default function PaymentDetailsScreen({ route, navigation }) {
   return (
     <ScrollView style={{ backgroundColor: "white" }}>
-      <PaymentDetails />
+      <PaymentDetails route={route} navigation={navigation} />
     </ScrollView>
   );
 }

@@ -23,42 +23,55 @@ export default function AddAddress({ navigation, ...props }) {
 
   //function to add new address to the user's collection of addresses
 
-  const addNewAddress = () => {
-    db.collection(`users/${auth.currentUser.uid}/address`)
+  function setAddressToFalse() {
+    return db
+      .collection(`users/${auth.currentUser.uid}/address`)
       .where("isActive", "==", true)
       .get()
       .then((snapshot) => {
-        snapshot.forEach((doc) => {
-          doc.ref.update({
-            isActive: false,
+        if (snapshot.size > 0) {
+          snapshot.forEach((doc) => {
+            const docRef = db
+              .collection(`users/${auth.currentUser.uid}/address`)
+              .doc(doc.id);
+            docRef
+              .update({
+                isActive: false,
+              })
+              .catch((error) => {
+                console.error("Error updating address: ", error);
+              });
           });
-        });
-      })
-      .then(
-        //Adds to the address to the current users address collection
-        db.collection(`users/${auth.currentUser.uid}/address`).add({
-          address1: address1,
-          address2: address2,
-          city: addressCity,
-          state: addressState,
-          country: addressCountry,
-          postcode: addressPostal,
-          isActive: true,
-        })
-      )
-      .then(
-        //Pops the whole modal once the address is added
-        navigation.pop(2)
-      )
-      .catch((error) => {
-        alert(`Error found: ${error}! Please contact support`);
-      })
-      .catch((error) => {
-        alert(`Error found: ${error}! Please contact support`);
+        }
       })
       .catch((error) => {
         alert(`Error found: ${error}! Please contact support`);
       });
+  }
+
+  function uploadNewAddress() {
+    return db
+      .collection(`users/${auth.currentUser.uid}/address`)
+      .add({
+        address1: address1,
+        address2: address2,
+        city: addressCity,
+        state: addressState,
+        country: addressCountry,
+        postcode: addressPostal,
+        isActive: true,
+      })
+      .catch((error) => {
+        alert(`Error found: ${error}! Please contact support`);
+      });
+  }
+  const addNewAddress = () => {
+    //Adds to the address to the current users address collection
+    setAddressToFalse().then(() => {
+      return uploadNewAddress();
+    });
+    //Pops the whole modal once the address is added
+    navigation.pop(2);
   };
   return (
     <View style={add_address_style.main_container}>
