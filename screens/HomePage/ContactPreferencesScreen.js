@@ -5,7 +5,7 @@ import ContactPreferences from "../../components/userDetail/ContactPreferences";
 export default function ContactPreferencesScreen({ route, navigation }) {
   return (
     <ScrollView>
-      <ContactPreferences />
+      <ContactPreferences route={route} navigation={navigation} />
     </ScrollView>
   );
 }
