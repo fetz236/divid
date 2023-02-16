@@ -38,7 +38,6 @@ export default function FindAddress({ navigation, ...props }) {
   */
 
   const handleAddress = async () => {
-    console.log(region);
     const url = `https://revgeocode.search.hereapi.com/v1/revgeocode?at=${region.latitude}%2C${region.longitude}&lang=en-US&apiKey=${HERE_API_KEY}`;
     fetch(url, {
       method: "GET",
@@ -50,7 +49,6 @@ export default function FindAddress({ navigation, ...props }) {
       .then((response) => response.json())
       .then((data) => {
         let item_list = data.items;
-        console.log(data.items);
         let address = {
           address1: item_list[0].address.houseNumber,
           address2: item_list[0].address.street,

@@ -18,20 +18,53 @@ export default function WorkerHome({ route, navigation }) {
     addressPostal: "WC2B 4BG",
     location: { latitude: 51.513187, longitude: -0.117499 },
   });
+  console.log(current_address);
 
   const [addressLoad, setAddressLoad] = useState(true);
   useEffect(() => {
     const loadUserAddress = async () => {
-      db.collection(`users/${auth.currentUser.uid}/address`)
+      const subcollectionRef = db
+        .collection("users")
+        .doc(auth.currentUser.uid)
+        .collection("address");
+      const activeDocsQuery = subcollectionRef.where("isActive", "==", true);
+      activeDocsQuery
+        .get()
+        .then((querySnapshot) => {
+          if (querySnapshot.size > 0) {
+            // Subcollection exists
+            querySnapshot.forEach((doc) => {
+              setCurrentAddress(doc.data());
+              setAddressLoad(true);
+            });
+          } else {
+            // Subcollection does not exist
+            setCurrentAddress({
+              address1: "30 Aldwych",
+              address2: "",
+              addressPostal: "WC2B 4BG",
+              location: { latitude: 51.513187, longitude: -0.117499 },
+            });
+            setAddressLoad(true);
+          }
+        })
+        .catch((error) => {
+          console.log("Error getting subcollection: ", error);
+        });
+    };
+
+    /*
+    db.collection(`users/${auth.currentUser.uid}/address`)
         .where("isActive", "==", true)
         .get()
         .then((snapshot) => {
           snapshot.forEach((doc) => {
-            setCurrentAddress(doc.data());
-            setAddressLoad(true);
+            if (doc.data() != "{}") {
+              setAddressLoad(true);
+            }
           });
         });
-    };
+    */
     auth.onAuthStateChanged(function (authState) {
       if (authState) {
         setAddressLoad(false);

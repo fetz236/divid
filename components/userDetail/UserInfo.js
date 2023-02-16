@@ -119,6 +119,8 @@ export default function UserInfo({ navigation }) {
     setUploading(false);
   };
 
+  console.log(user_data);
+
   return (
     <ScrollView style={user_css.main_container}>
       {updated && (
@@ -135,11 +137,7 @@ export default function UserInfo({ navigation }) {
         <TouchableOpacity
           key={index}
           style={{ marginBottom: "1%" }}
-          onPress={() =>
-            navigation.navigate(settings.navName, {
-              user_data: user_data,
-            })
-          }
+          onPress={() => navigation.navigate(settings.navName, user_data)}
         >
           <DisplaySettings name={settings.name}></DisplaySettings>
         </TouchableOpacity>

@@ -5,7 +5,7 @@ import ReferUser from "../../components/userDetail/ReferUser";
 export default function ReferUserScreen({ route, navigation }) {
   return (
     <ScrollView>
-      <ReferUser />
+      <ReferUser route={route} navigation={navigation} />
     </ScrollView>
   );
 }

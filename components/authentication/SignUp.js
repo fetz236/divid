@@ -10,7 +10,6 @@ import { auth, db } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import MultiSelect from "react-native-multiple-select";
 import PhoneInput from "react-native-phone-number-input";
-import { nanoid } from "nanoid";
 
 const categories = require("../../categories.json");
 
@@ -60,7 +59,7 @@ export default function SignUp({ navigation, ...props }) {
           mobile_calling_code: mobileCountryCallingCode,
           email: email,
           favourites: [],
-          referral_code: nanoid(8),
+          referral_code: generateReferralCode(f_namef_name, l_name),
           photoURL:
             "https://firebasestorage.googleapis.com/v0/b/divid-edf5d.appspot.com/o/profile_images%2Fuser.png?alt=media&token=0dc2498c-bc30-4f8d-a663-9b8d6fbfa127",
         });
@@ -101,6 +100,24 @@ export default function SignUp({ navigation, ...props }) {
   const checkLName = (last) => {
     const res = last.trim();
     return res;
+  };
+
+  const generateReferralCode = (first, last) => {
+    let ref_code = "";
+
+    if (first.length >= 3) {
+      ref_code += first.substring(0, 3);
+    } else {
+      ref_code += first;
+    }
+
+    if (last.length >= 3) {
+      ref_code += last.substring(0, 3);
+    } else {
+      ref_code += last;
+    }
+
+    ref_code += Math.floor(Math.random() * 10000);
   };
 
   const [selectedItems, setSelectedItems] = useState([]);

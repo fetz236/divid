@@ -3,7 +3,7 @@ import React from "react";
 import { refer_user_style } from "../../styles/userDetail/ReferUserStyle";
 
 //Referring a user display screen
-export default function ReferUser() {
+export default function ReferUser({ navigation, ...props }) {
   return (
     <View style={refer_user_style.main_container}>
       <View>
@@ -19,7 +19,9 @@ export default function ReferUser() {
         </Text>
       </View>
       <View style={refer_user_style.referral_code_container}>
-        <Text style={refer_user_style.referral_text}>ABC123</Text>
+        <Text style={refer_user_style.referral_text}>
+          {props.route.params.referral_code}
+        </Text>
       </View>
     </View>
   );
