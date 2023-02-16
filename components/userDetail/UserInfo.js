@@ -119,8 +119,6 @@ export default function UserInfo({ navigation }) {
     setUploading(false);
   };
 
-  console.log(user_data);
-
   return (
     <ScrollView style={user_css.main_container}>
       {updated && (

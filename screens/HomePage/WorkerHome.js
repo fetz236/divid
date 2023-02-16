@@ -18,7 +18,6 @@ export default function WorkerHome({ route, navigation }) {
     addressPostal: "WC2B 4BG",
     location: { latitude: 51.513187, longitude: -0.117499 },
   });
-  console.log(current_address);
 
   const [addressLoad, setAddressLoad] = useState(true);
   useEffect(() => {
@@ -49,7 +48,7 @@ export default function WorkerHome({ route, navigation }) {
           }
         })
         .catch((error) => {
-          console.log("Error getting subcollection: ", error);
+          alert("Error getting subcollection: ", error);
         });
     };
 
