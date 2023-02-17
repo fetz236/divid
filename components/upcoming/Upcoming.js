@@ -71,26 +71,31 @@ export default function Upcoming({ navigation }) {
       {loaded_bookings && (
         <>
           <BookingHeader />
-          {grouped_bookings.map((booking, index) => (
-            <View key={index}>
-              <Divider style={upcoming_style_sheet.divider_date} />
-              <View style={upcoming_style_sheet.date_header}>
-                <Text style={upcoming_style_sheet.sub_heading}>
-                  {booking.date}
-                </Text>
-              </View>
-              {booking.data.map((value, j_index) => (
-                <View key={j_index}>
+          {grouped_bookings.length > 0 && (
+            <>
+              {grouped_bookings.map((booking, index) => (
+                <View key={index}>
                   <Divider style={upcoming_style_sheet.divider_date} />
-                  <UpcomingBookings
-                    key={index}
-                    navigation={navigation}
-                    booking={value}
-                  />
+                  <View style={upcoming_style_sheet.date_header}>
+                    <Text style={upcoming_style_sheet.sub_heading}>
+                      {booking.date}
+                    </Text>
+                  </View>
+                  {booking.data.map((value, j_index) => (
+                    <View key={j_index}>
+                      <Divider style={upcoming_style_sheet.divider_date} />
+                      <UpcomingBookings
+                        key={index}
+                        navigation={navigation}
+                        booking={value}
+                      />
+                    </View>
+                  ))}
                 </View>
               ))}
-            </View>
-          ))}
+            </>
+          )}
+          {grouped_bookings.length == 0 && <NoBookings />}
         </>
       )}
       {!loaded_bookings && <NoLogin />}
@@ -185,4 +190,12 @@ const UpcomingNavigationButtons = (props) => (
       <Text style={upcoming_style_sheet.btn_text}> {props.name} </Text>
     </View>
   </TouchableOpacity>
+);
+
+const NoBookings = () => (
+  <View style={upcoming_style_sheet.no_booking_header_container}>
+    <Text style={upcoming_style_sheet.no_booking_title}>
+      No Current Bookings at the moment
+    </Text>
+  </View>
 );

@@ -89,4 +89,13 @@ export const upcoming_style_sheet = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  no_booking_header_container: {
+    alignItems: "center",
+    marginTop: "60%",
+  },
+  no_booking_title: {
+    color: "#d95a00",
+    fontSize: 20,
+    fontWeight: "600",
+  },
 });
