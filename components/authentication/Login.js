@@ -13,8 +13,8 @@ import { auth } from "../../firebase";
 */
 
 export default function Login({ navigation, ...props }) {
-  const [loginState, setLoginState] = useState("");
-  const [passwordState, setPasswordState] = useState("");
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
 
   /*
         Handles the login using Firebase auth and then navigates to the necessary page 
@@ -23,8 +23,8 @@ export default function Login({ navigation, ...props }) {
     */
   const handleLogin = () => {
     auth
-      .signInWithEmailAndPassword(loginState, passwordState)
-      .then((userCredentials) => {
+      .signInWithEmailAndPassword(login, password)
+      .then(() => {
         if (props.route.params.isCheckout) {
           navigation.replace("Checkout", props.route.params);
         } else {
@@ -55,8 +55,8 @@ export default function Login({ navigation, ...props }) {
             autoCapitalize="none"
             textContentType="emailAddress"
             autoComplete="email"
-            value={loginState}
-            onChangeText={(text) => setLoginState(text)}
+            value={login}
+            onChangeText={(text) => setLogin(text)}
             style={login_style.ti_container}
             underlineColorAndroid="transparent"
           ></TextInput>
@@ -70,9 +70,9 @@ export default function Login({ navigation, ...props }) {
             autoCapitalize="none"
             textContentType="password"
             autoComplete="password"
-            value={passwordState}
+            value={password}
             secureTextEntry={true}
-            onChangeText={(text) => setPasswordState(text)}
+            onChangeText={(text) => setPassword(text)}
             style={login_style.ti_container}
             underlineColorAndroid="transparent"
           ></TextInput>

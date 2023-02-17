@@ -44,12 +44,6 @@ const CancelHeader = () => (
 
 const CancelMain = () => (
   <View>
-    <View style={cancel_home_style.cancel_container}>
-      <Text style={cancel_home_style.cancel_header}>
-        {" "}
-        You are able to modify your booking
-      </Text>
-    </View>
     <View style={cancel_home_style.cancel_info}>
       <Text style={cancel_home_style.cancel_text}>
         You may be charged a fee for cancelling the booking
