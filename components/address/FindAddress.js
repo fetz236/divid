@@ -19,7 +19,6 @@ export default function FindAddress({ navigation, ...props }) {
     latitude: 51.51311959688299,
     longitude: -0.11741839349269867,
   });
-
   const [region, setRegion] = useState({
     latitude: 51.51311959688299,
     longitude: -0.11741839349269867,
@@ -56,8 +55,13 @@ export default function FindAddress({ navigation, ...props }) {
           addressState: item_list[0].address.state,
           addressCountry: item_list[0].address.countryName,
           addressPostal: item_list[0].address.postalCode,
+          addressLatitude: pin.latitude,
+          addressLongitude: pin.longitude,
         };
-        navigation.navigate("AddAddressScreen", address);
+        navigation.navigate("AddAddressScreen", {
+          address: address,
+          setCurrentAddress: props.route.params.setCurrentAddress,
+        });
       })
       .catch((err) => console.error(err));
   };

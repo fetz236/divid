@@ -59,7 +59,7 @@ export default function SignUp({ navigation, ...props }) {
           mobile_calling_code: mobileCountryCallingCode,
           email: email,
           favourites: [],
-          referral_code: generateReferralCode(f_namef_name, l_name),
+          referral_code: generateReferralCode(f_name, l_name),
           photoURL:
             "https://firebasestorage.googleapis.com/v0/b/divid-edf5d.appspot.com/o/profile_images%2Fuser.png?alt=media&token=0dc2498c-bc30-4f8d-a663-9b8d6fbfa127",
         });
@@ -118,6 +118,8 @@ export default function SignUp({ navigation, ...props }) {
     }
 
     ref_code += Math.floor(Math.random() * 10000);
+
+    return ref_code;
   };
 
   const [selectedItems, setSelectedItems] = useState([]);

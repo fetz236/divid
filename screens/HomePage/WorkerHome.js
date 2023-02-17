@@ -34,7 +34,6 @@ export default function WorkerHome({ route, navigation }) {
             // Subcollection exists
             querySnapshot.forEach((doc) => {
               setCurrentAddress(doc.data());
-              setAddressLoad(true);
             });
           } else {
             // Subcollection does not exist
@@ -44,9 +43,9 @@ export default function WorkerHome({ route, navigation }) {
               addressPostal: "WC2B 4BG",
               location: { latitude: 51.513187, longitude: -0.117499 },
             });
-            setAddressLoad(true);
           }
         })
+        .then(setAddressLoad(true))
         .catch((error) => {
           alert("Error getting subcollection: ", error);
         });
@@ -76,11 +75,13 @@ export default function WorkerHome({ route, navigation }) {
           addressPostal: "WC2B 4BG",
           location: { latitude: 51.513187, longitude: -0.117499 },
         });
+        console.log(current_address);
         setAddressLoad(true);
       }
     });
   }, []);
 
+  console.log(current_address);
   return (
     <>
       <SafeAreaView style={{ backgroundColor: "white", flex: 1 }}>
