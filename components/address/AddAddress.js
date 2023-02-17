@@ -6,19 +6,19 @@ import { add_address_style } from "../../styles/address/AddAddressStyle";
 import { auth, db } from "../../firebase";
 
 export default function AddAddress({ navigation, ...props }) {
-  const [address1, setAddress1] = useState(props.route.params.address1);
-  const [address2, setAddress2] = useState(props.route.params.address2);
+  const [address1, setAddress1] = useState(props.route.params.address.address1);
+  const [address2, setAddress2] = useState(props.route.params.address.address2);
   const [addressCity, setAddressCity] = useState(
-    props.route.params.addressCity
+    props.route.params.address.addressCity
   );
   const [addressState, setAddressState] = useState(
-    props.route.params.addressState
+    props.route.params.address.addressState
   );
   const [addressCountry, setAddressCountry] = useState(
-    props.route.params.addressCountry
+    props.route.params.address.addressCountry
   );
   const [addressPostal, setAddressPostal] = useState(
-    props.route.params.addressPostal
+    props.route.params.address.addressPostal
   );
 
   //function to add new address to the user's collection of addresses
@@ -60,18 +60,47 @@ export default function AddAddress({ navigation, ...props }) {
         country: addressCountry,
         postcode: addressPostal,
         isActive: true,
+        location: {
+          latitude: props.route.params.address.addressLatitude,
+          longitude: props.route.params.address.addressLongitude,
+        },
       })
       .catch((error) => {
         alert(`Error found: ${error}! Please contact support`);
       });
   }
+
+  function updateFrontendAddress() {
+    return db
+      .collection(`users/${auth.currentUser.uid}/address`)
+      .where("isActive", "==", true)
+      .get()
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          props.route.params.setCurrentAddress(doc.data());
+        });
+      })
+      .catch((error) => {
+        alert(
+          `Error retrieving updated address: ${error}! Please contact support`
+        );
+      })
+      .catch((error) => {
+        alert(
+          `Error retrieving updated address: ${error}! Please contact support`
+        );
+      });
+  }
   const addNewAddress = () => {
     //Adds to the address to the current users address collection
     setAddressToFalse().then(() => {
-      return uploadNewAddress();
+      return uploadNewAddress().then(() => {
+        return updateFrontendAddress().then(() => {
+          navigation.pop(2);
+        });
+      });
     });
     //Pops the whole modal once the address is added
-    navigation.pop(2);
   };
   return (
     <View style={add_address_style.main_container}>
