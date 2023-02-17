@@ -20,13 +20,11 @@ or the user information screen
 
 export default function ForgotPassword({ navigation, ...props }) {
   const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
 
   //Using firebase auth, are able to send a password reset email
   //This screen is rendered by Google and no necessary coding is required to handle the changing of a password
   //Once the user submits the form, their password will update on Firebase Auth
   const handleForgotPass = async () => {
-    setLoading(true);
     auth
       .sendPasswordResetEmail(email)
       .then(() => {
@@ -35,8 +33,6 @@ export default function ForgotPassword({ navigation, ...props }) {
       .catch((error) => {
         alert(error);
       });
-
-    setLoading(false);
   };
 
   return (
