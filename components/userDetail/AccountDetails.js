@@ -14,21 +14,14 @@ export default function AccountDetails({ navigation, ...props }) {
   //Loading the users category icons using the categories.json file
 
   const [category_icons, setCategoryIcons] = useState([]);
-  const [categories_loaded, setLoadedCategories] = useState(false);
-
-  useEffect(async () => {
+  console.log(props.route);
+  useEffect(() => {
     const getCategories = () => {
       let category_images = [];
 
       for (let i = 0; i < categories.length; i++) {
-        for (
-          let j = 0;
-          j < props.route.params.user_data.categories.length;
-          j++
-        ) {
-          if (
-            categories[i].__id__ == props.route.params.user_data.categories[j]
-          ) {
+        for (let j = 0; j < props.route.params.categories.length; j++) {
+          if (categories[i].__id__ == props.route.params.categories[j]) {
             category_images.push(categories[i].__id__);
           }
         }
@@ -37,26 +30,22 @@ export default function AccountDetails({ navigation, ...props }) {
     };
 
     if (category_icons.length == 0) {
-      await getCategories();
-      setF_name(props.route.params.user_data.first_name);
-      setL_name(props.route.params.user_data.last_name);
-      setMobile(props.route.params.user_data.mobile);
-      setMobileCountry(props.route.params.user_data.mobile_country);
-      setLoadedCategories(true);
+      getCategories();
     }
   }, []);
 
   // Setting states to retrieve the users information
-  const [f_name, setF_name] = useState();
+  const [f_name, setF_name] = useState(props.route.params.first_name);
   const [fView, setfView] = useState(false);
 
-  const [l_name, setL_name] = useState();
+  const [l_name, setL_name] = useState(props.route.params.last_name);
   const [lView, setlView] = useState(false);
 
-  const [mobile, setMobile] = useState();
+  const [mobile, setMobile] = useState(props.route.params.mobile);
   const [mobileCountry, setMobileCountry] = useState("GB");
-  const [mobileCountryCallingCode, setMobileCountryCallingCode] =
-    useState("44");
+  const [mobileCountryCallingCode, setMobileCountryCallingCode] = useState(
+    props.route.params.mobile_country
+  );
 
   const [mView, setmView] = useState(false);
 
@@ -78,41 +67,39 @@ export default function AccountDetails({ navigation, ...props }) {
 
   return (
     <View style={account_details_style.main_container}>
-      {categories_loaded && (
+      <View>
+        <AccountDetailsBody />
+        <AccountFirstName
+          f_name={f_name}
+          setF_name={setF_name}
+          fView={fView}
+          setfView={setfView}
+        />
+        <AccountLastName
+          l_name={l_name}
+          setL_name={setL_name}
+          lView={lView}
+          setlView={setlView}
+        />
+        <AccountMobile
+          mobile={mobile}
+          mobileCountry={mobileCountry}
+          setMobile={setMobile}
+          mView={mView}
+          setmView={setmView}
+          setMobileCountry={setMobileCountry}
+          setMobileCountryCallingCode={setMobileCountryCallingCode}
+        />
+        <>
+          <AccountInterests
+            category_icons={category_icons}
+            onSelectedItemsChanged={onSelectedItemsChanged}
+          />
+        </>
         <View>
-          <AccountDetailsBody />
-          <AccountFirstName
-            f_name={f_name}
-            setF_name={setF_name}
-            fView={fView}
-            setfView={setfView}
-          />
-          <AccountLastName
-            l_name={l_name}
-            setL_name={setL_name}
-            lView={lView}
-            setlView={setlView}
-          />
-          <AccountMobile
-            mobile={mobile}
-            mobileCountry={mobileCountry}
-            setMobile={setMobile}
-            mView={mView}
-            setmView={setmView}
-            setMobileCountry={setMobileCountry}
-            setMobileCountryCallingCode={setMobileCountryCallingCode}
-          />
-          <>
-            <AccountInterests
-              category_icons={category_icons}
-              onSelectedItemsChanged={onSelectedItemsChanged}
-            />
-          </>
-          <View>
-            <SubmitInfo handleInfo={handleInfo} />
-          </View>
+          <SubmitInfo handleInfo={handleInfo} />
         </View>
-      )}
+      </View>
     </View>
   );
 }

@@ -113,12 +113,8 @@ const UpcomingBookings = (props) => (
     <InfoHeader booking={props.booking} />
 
     <View style={upcoming_style_sheet.display_buttons}>
-      <UpcomingButtons name="Contact" booking={props.booking} />
-      <UpcomingQR
-        navigation={props.navigation}
-        name="Check Location"
-        booking={props.booking}
-      />
+      <ContactButton booking={props.booking} />
+      <CancelBooking booking={booking} />
     </View>
   </View>
 );
@@ -144,7 +140,7 @@ const InfoHeader = (props) => (
     </View>
   </View>
 );
-const UpcomingButtons = (props) => (
+const ContactButton = (props) => (
   <TouchableOpacity
     style={upcoming_style_sheet.btn_container}
     onPress={() => {
@@ -152,30 +148,7 @@ const UpcomingButtons = (props) => (
     }}
   >
     <View>
-      <Text style={upcoming_style_sheet.btn_text}> {props.name} </Text>
-    </View>
-  </TouchableOpacity>
-);
-
-const UpcomingQR = (props) => (
-  <TouchableOpacity
-    style={upcoming_style_sheet.btn_container}
-    onPress={() => {
-      const scheme = Platform.select({
-        ios: "maps:0,0?q=",
-        android: "geo:0,0?q=",
-      });
-      const latLng = `${props.booking.location.latitude},${props.booking.location.longitude}`;
-      const label = "Custom Label";
-      const url = Platform.select({
-        ios: `${scheme}${label}@${latLng}`,
-        android: `${scheme}${latLng}(${label})`,
-      });
-      Linking.openURL(url);
-    }}
-  >
-    <View>
-      <Text style={upcoming_style_sheet.btn_text}> {props.name} </Text>
+      <Text style={upcoming_style_sheet.btn_text}> Contact </Text>
     </View>
   </TouchableOpacity>
 );
@@ -183,10 +156,10 @@ const UpcomingQR = (props) => (
 const CancelBooking = (props) => (
   <TouchableOpacity
     style={upcoming_style_sheet.btn_container}
-    onPress={() => props.navigation.navigate(props.name)}
+    onPress={() => props.navigation.navigate("Cancel")}
   >
     <View>
-      <Text style={upcoming_style_sheet.btn_text}> {props.name} </Text>
+      <Text style={upcoming_style_sheet.btn_text}> Cancel </Text>
     </View>
   </TouchableOpacity>
 );
