@@ -62,7 +62,6 @@ export default function CheckoutPage({ navigation, ...props }) {
           alert(`Payment Confirmation Error ${error.message}`);
         } else if (paymentIntent) {
           db.collection("bookings").add({
-            class: "",
             status: "pending",
             date: checkout_data.date,
             start_time: checkout_data.start_time,

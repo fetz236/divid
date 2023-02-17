@@ -17,7 +17,6 @@ import AuthenticationScreen from "./screens/Authentication/AuthenticationScreen"
 import LoginScreen from "./screens/Authentication/LoginScreen";
 import SignUpScreen from "./screens/Authentication/SignUpScreen";
 import ForgotPasswordScreen from "./screens/Authentication/ForgotPasswordScreen";
-import Modify from "./screens/UpcomingPage/Modify";
 import Cancel from "./screens/UpcomingPage/Cancel";
 import BookingConfirmation from "./components/checkout/BookingConfirmation";
 import AccountDetailsScreen from "./screens/HomePage/AccountDetailsScreen";
@@ -327,18 +326,6 @@ const UpcomingStackScreen = () => (
     }}
   >
     <UpcomingStack.Screen name="UpcomingHome" component={UpcomingHome} />
-    <UpcomingStack.Screen
-      name="Modify"
-      component={Modify}
-      options={{
-        headerShown: true,
-        headerStyle: header_style.full_container,
-        headerBackTitleVisible: false,
-        headerTitleStyle: header_style.title,
-        headerTintColor: "white",
-        headerTitle: "Modify Booking",
-      }}
-    />
     <UpcomingStack.Screen
       name="Cancel"
       component={Cancel}

@@ -59,7 +59,6 @@ export default function Upcoming({ navigation }) {
         telephone_number: item.telephone_number,
         worker: item.worker,
         fc: item.fc,
-        class: item.class,
         user: item.user,
       });
       return acc;
@@ -181,7 +180,7 @@ const UpcomingQR = (props) => (
   </TouchableOpacity>
 );
 
-const UpcomingNavigationButtons = (props) => (
+const CancelBooking = (props) => (
   <TouchableOpacity
     style={upcoming_style_sheet.btn_container}
     onPress={() => props.navigation.navigate(props.name)}
