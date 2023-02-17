@@ -195,7 +195,7 @@ const UpcomingNavigationButtons = (props) => (
 const NoBookings = () => (
   <View style={upcoming_style_sheet.no_booking_header_container}>
     <Text style={upcoming_style_sheet.no_booking_title}>
-      No Current Bookings at the moment
+      No current bookings at the moment
     </Text>
   </View>
 );
