@@ -47,22 +47,19 @@ export default function WorkerHome({ route, navigation }) {
         })
         .then(setAddressLoad(true))
         .catch((error) => {
-          alert("Error getting subcollection: ", error);
+          alert("Error loading home screen" + error);
+        })
+        .catch(() => {
+          setCurrentAddress({
+            address1: "30 Aldwych",
+            address2: "",
+            addressPostal: "WC2B 4BG",
+            location: { latitude: 51.513187, longitude: -0.117499 },
+          });
+          setAddressLoad(true);
         });
     };
 
-    /*
-    db.collection(`users/${auth.currentUser.uid}/address`)
-        .where("isActive", "==", true)
-        .get()
-        .then((snapshot) => {
-          snapshot.forEach((doc) => {
-            if (doc.data() != "{}") {
-              setAddressLoad(true);
-            }
-          });
-        });
-    */
     auth.onAuthStateChanged(function (authState) {
       if (authState) {
         setAddressLoad(false);
@@ -75,13 +72,11 @@ export default function WorkerHome({ route, navigation }) {
           addressPostal: "WC2B 4BG",
           location: { latitude: 51.513187, longitude: -0.117499 },
         });
-        console.log(current_address);
         setAddressLoad(true);
       }
     });
   }, []);
 
-  console.log(current_address);
   return (
     <>
       <SafeAreaView style={{ backgroundColor: "white", flex: 1 }}>
