@@ -18,7 +18,6 @@ import LoginScreen from "./screens/Authentication/LoginScreen";
 import SignUpScreen from "./screens/Authentication/SignUpScreen";
 import ForgotPasswordScreen from "./screens/Authentication/ForgotPasswordScreen";
 import Cancel from "./screens/UpcomingPage/Cancel";
-import BookingConfirmation from "./components/checkout/BookingConfirmation";
 import AccountDetailsScreen from "./screens/HomePage/AccountDetailsScreen";
 import ContactPreferencesScreen from "./screens/HomePage/ContactPreferencesScreen";
 import PaymentDetailsScreen from "./screens/HomePage/PaymentDetailsScreen";
@@ -339,10 +338,6 @@ const UpcomingStackScreen = () => (
       }}
     />
     <UpcomingStack.Screen name="NoLogin" component={NoLogin} />
-    <UpcomingStack.Screen
-      name="BookingConfirmation"
-      component={BookingConfirmation}
-    />
   </UpcomingStack.Navigator>
 );
 
