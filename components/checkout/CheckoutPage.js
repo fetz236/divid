@@ -66,16 +66,11 @@ export default function CheckoutPage({ navigation, ...props }) {
             date: checkout_data.date,
             start_time: checkout_data.start_time,
             end_time: checkout_data.end_time,
-            fc: "",
             reference_number: generateString(10),
             location: checkout_data.worker_selected.worker.location,
-            name:
-              "Personal Worker session with " +
-              checkout_data.worker_selected.worker.first_name +
-              checkout_data.worker_selected.worker.last_name,
-            telephone_number:
-              checkout_data.worker_selected.worker.mobile_calling_code +
-              checkout_data.worker_selected.worker.mobile,
+            worker_mobile_calling_code:
+              checkout_data.worker_selected.worker.mobile_calling_code,
+            worker_mobile: checkout_data.worker_selected.worker.mobile,
             worker: checkout_data.worker_selected.worker.id,
             user: auth.currentUser.uid,
           });
