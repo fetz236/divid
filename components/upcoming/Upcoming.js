@@ -56,9 +56,11 @@ export default function Upcoming({ navigation }) {
         name: item.name,
         location: item.location,
         reference_number: item.reference_number,
-        telephone_number: item.telephone_number,
+        worker_mobile: item.worker_mobile,
+        worker_mobile_calling_code: item.worker_mobile_calling_code,
+        address: item.address,
+        status: item.status,
         worker: item.worker,
-        fc: item.fc,
         user: item.user,
       });
       return acc;
@@ -114,7 +116,7 @@ const UpcomingBookings = (props) => (
 
     <View style={upcoming_style_sheet.display_buttons}>
       <ContactButton booking={props.booking} />
-      <CancelBooking booking={booking} />
+      <CancelBooking navigation={props.navigation} booking={props.booking} />
     </View>
   </View>
 );
@@ -144,7 +146,9 @@ const ContactButton = (props) => (
   <TouchableOpacity
     style={upcoming_style_sheet.btn_container}
     onPress={() => {
-      Linking.openURL(`tel:${props.booking.telephone_number}`);
+      Linking.openURL(
+        `tel:${props.booking.worker_mobile_calling_code}${props.booking.worker_mobile}`
+      );
     }}
   >
     <View>

@@ -65,6 +65,76 @@ export default function WorkerHome({ route, navigation }) {
 
   useEffect(() => {
     auth.onAuthStateChanged(handleAuthStateChange);
+    // Initialize Firebase
+
+    // Get a reference to the "bookings" collection
+    const bookingsCollection = db.collection("bookings");
+
+    // Define the bookings data to be added
+    const bookingsData = [
+      {
+        status: "pending",
+        date: "2023-02-23",
+        start_time: "13:00",
+        end_time: "15:00",
+        reference_number: "MZN7K1A2LQ",
+        location: {
+          latitude: 51.513274,
+          longitude: -0.16293,
+        },
+        address: "Hyde Park, London W2 2UH, UK",
+        worker_mobile_calling_code: "+1",
+        worker_mobile: "555-555-5555",
+        worker: "fF6cJkAERQbUfftdTF5fZTMI3Si2",
+        user: "aYTEhxpz3fdQIT43QSK5oBXEVNA3",
+      },
+      {
+        status: "pending",
+        date: "2023-02-24",
+        start_time: "9:00",
+        end_time: "12:00",
+        reference_number: "FH8J5K9BNP",
+        location: {
+          latitude: 51.507911,
+          longitude: -0.089562,
+        },
+        address:
+          "St. Paul's Cathedral, St. Paul's Churchyard, London EC4M 8AD, UK",
+        worker_mobile_calling_code: "+1",
+        worker_mobile: "555-123-4567",
+        worker: "fF6cJkAERQbUfftdTF5fZTMI3Si2",
+        user: "aYTEhxpz3fdQIT43QSK5oBXEVNA3",
+      },
+      {
+        status: "pending",
+        date: "2023-02-25",
+        start_time: "10:00",
+        end_time: "13:00",
+        reference_number: "YZ1N7KM3JS",
+        location: {
+          latitude: 51.5054,
+          longitude: -0.086512,
+        },
+        address:
+          "Tower of London, St Katharine's & Wapping, London EC3N 4AB, UK",
+        worker_mobile_calling_code: "+1",
+        worker_mobile: "555-555-1212",
+        worker: "fF6cJkAERQbUfftdTF5fZTMI3Si2",
+        user: "aYTEhxpz3fdQIT43QSK5oBXEVNA3",
+      },
+    ];
+
+    // Loop through each booking and add it as a new document in the "bookings" collection
+    bookingsData.forEach((booking) => {
+      bookingsCollection
+        .add(booking)
+        .then((docRef) => {
+          console.log("Booking added with ID: ", docRef.id);
+        })
+        .catch((error) => {
+          console.error("Error adding booking: ", error);
+        });
+    });
   }, []);
 
   return (
