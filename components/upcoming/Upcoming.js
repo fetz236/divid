@@ -56,8 +56,6 @@ export default function Upcoming({ navigation }) {
         name: item.name,
         location: item.location,
         reference_number: item.reference_number,
-        worker_mobile: item.worker_mobile,
-        worker_mobile_calling_code: item.worker_mobile_calling_code,
         address: item.address,
         status: item.status,
         worker: item.worker,
@@ -146,9 +144,7 @@ const ContactButton = (props) => (
   <TouchableOpacity
     style={upcoming_style_sheet.btn_container}
     onPress={() => {
-      Linking.openURL(
-        `tel:${props.booking.worker_mobile_calling_code}${props.booking.worker_mobile}`
-      );
+      Linking.openURL(`tel:+447444463391`);
     }}
   >
     <View>
