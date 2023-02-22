@@ -2,62 +2,37 @@ import React, { useState } from "react";
 import { View, Text } from "react-native";
 import { CheckBox, Divider } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { cancel_pb_style } from "../../styles/upcoming/CancelPendingBookingStyle";
+import { cancel_pb_style } from "../../styles/upcoming/CancelPendingBookingHomeStyle";
 
-const fitness_center = {
-  name: "Gym Way Marble Arch",
-  class: "Spinning",
-  worker: "Kate Wilson",
-};
-
-export default function CancelPendingBooking({ navigation }) {
+export default function CancelPendingBookingHome({ navigation, ...props }) {
   const [accepted, setAccepted] = useState(false);
+  const booking = props.route.params.booking;
   const handleCancellation = () => {
     console.log("Cancelllleedd");
   };
 
   return (
     <View>
-      <CancelHeader />
-      <Divider style={cancel_pb_style.divider} />
-      <CancelMain />
       <AcceptTerms
         setAccepted={setAccepted}
         accepted={accepted}
-        fitness_center={fitness_center}
+        booking={booking}
       />
       <Divider style={cancel_pb_style.divider} />
       <ConfirmCancellation
         navigation={navigation}
         handleCancellation={handleCancellation}
+        booking={booking}
       />
     </View>
   );
 }
-
-const CancelHeader = () => (
-  <View style={cancel_pb_style.header_container}>
-    <Text style={cancel_pb_style.title}>Confirm Cancellation</Text>
-  </View>
-);
-
-const CancelMain = () => (
-  <View>
-    <View style={cancel_pb_style.cancel_info}>
-      <Text style={cancel_pb_style.cancel_text}>
-        You may be charged a fee for cancelling the booking
-      </Text>
-    </View>
-  </View>
-);
 
 const AcceptTerms = (props) => (
   <View style={cancel_pb_style.accept_terms}>
     <View style={cancel_pb_style.confirm_container}>
       <Text style={cancel_pb_style.sub_heading}>
         You will not be charged a fee because of the pending booking status for{" "}
-        {props.fitness_center.name} completing the {props.fitness_center.class}{" "}
-        class with worker {props.fitness_center.worker}
       </Text>
       <CheckBox
         style={{

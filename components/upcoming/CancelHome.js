@@ -11,7 +11,7 @@ const fitness_center = {
   price: "£5.00",
 };
 
-export default function CancelHome({ navigation }) {
+export default function CancelHome({ navigation, ...props }) {
   const [accepted, setAccepted] = useState(false);
   const handleCancellation = () => {
     console.log("Cancelllleedd");
@@ -19,8 +19,6 @@ export default function CancelHome({ navigation }) {
 
   return (
     <View>
-      <CancelHeader />
-      <Divider style={cancel_home_style.divider} />
       <CancelMain />
       <AcceptTerms
         setAccepted={setAccepted}
@@ -35,12 +33,6 @@ export default function CancelHome({ navigation }) {
     </View>
   );
 }
-
-const CancelHeader = () => (
-  <View style={cancel_home_style.header_container}>
-    <Text style={cancel_home_style.title}>Confirm Cancellation</Text>
-  </View>
-);
 
 const CancelMain = () => (
   <View>

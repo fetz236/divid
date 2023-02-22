@@ -153,16 +153,33 @@ const ContactButton = (props) => (
   </TouchableOpacity>
 );
 
-const CancelBooking = (props) => (
-  <TouchableOpacity
-    style={upcoming_style_sheet.btn_container}
-    onPress={() => props.navigation.navigate("Cancel")}
-  >
-    <View>
-      <Text style={upcoming_style_sheet.btn_text}> Cancel </Text>
-    </View>
-  </TouchableOpacity>
-);
+const CancelBooking = (props) => {
+  if (props.booking.status != "pending") {
+    return (
+      <TouchableOpacity
+        style={upcoming_style_sheet.btn_container}
+        onPress={() => props.navigation.navigate("Cancel", props.booking)}
+      >
+        <View>
+          <Text style={upcoming_style_sheet.btn_text}> Cancel </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  } else {
+    return (
+      <TouchableOpacity
+        style={upcoming_style_sheet.btn_container}
+        onPress={() =>
+          props.navigation.navigate("CancelPendingBooking", props.booking)
+        }
+      >
+        <View>
+          <Text style={upcoming_style_sheet.btn_text}> Cancel </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+};
 
 const NoBookings = () => (
   <View style={upcoming_style_sheet.no_booking_header_container}>

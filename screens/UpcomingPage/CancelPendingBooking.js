@@ -1,13 +1,13 @@
 import React from "react";
 import { SafeAreaView } from "react-native";
 import { ScrollView } from "react-native";
-import CancelPendingBooking from "../../components/upcoming/CancelPendingBooking";
+import CancelPendingBookingHome from "../../components/upcoming/CancelPendingBookingHome";
 
-export default function Cancel() {
+export default function CancelPendingBooking({ navigation, route }) {
   return (
     <ScrollView>
       <SafeAreaView>
-        <CancelPendingBooking />
+        <CancelPendingBookingHome navigation={navigation} route={route} />
       </SafeAreaView>
     </ScrollView>
   );

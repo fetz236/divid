@@ -335,7 +335,7 @@ const UpcomingStackScreen = () => (
         headerBackTitleVisible: false,
         headerTitleStyle: header_style.title,
         headerTintColor: "white",
-        headerTitle: "Cancel Booking",
+        headerTitle: "Confirm Cancellation",
       }}
     />
     <UpcomingStack.Screen
@@ -347,7 +347,7 @@ const UpcomingStackScreen = () => (
         headerBackTitleVisible: false,
         headerTitleStyle: header_style.title,
         headerTintColor: "white",
-        headerTitle: "Cancel Booking",
+        headerTitle: "Confirm Cancellation",
       }}
     />
     <UpcomingStack.Screen name="NoLogin" component={NoLogin} />

@@ -1,12 +1,6 @@
 import { StyleSheet } from "react-native";
 
 export const cancel_home_style = StyleSheet.create({
-  header_container: {
-    alignItems: "center",
-    marginTop: "5%",
-    flexDirection: "column",
-    justifyContent: "space-between",
-  },
   title: {
     color: "#d95a00",
     fontSize: 20,
@@ -21,18 +15,6 @@ export const cancel_home_style = StyleSheet.create({
     marginTop: "5%",
     marginBottom: "5%",
     color: "#a2a2a2",
-  },
-  cancel_container: {
-    marginTop: "10%",
-    marginLeft: "3%",
-    marginRight: "3%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  cancel_header: {
-    fontSize: 20,
-    fontWeight: "600",
-    color: "#d95a00",
   },
   cancel_info: {
     marginTop: "5%",
