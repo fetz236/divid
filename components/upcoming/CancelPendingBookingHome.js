@@ -2,13 +2,24 @@ import React, { useState } from "react";
 import { View, Text } from "react-native";
 import { CheckBox, Divider } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { db } from "../../firebase";
 import { cancel_pb_style } from "../../styles/upcoming/CancelPendingBookingHomeStyle";
 
 export default function CancelPendingBookingHome({ navigation, ...props }) {
+  console.log(props);
   const [accepted, setAccepted] = useState(false);
   const booking = props.route.params.booking;
+
   const handleCancellation = () => {
-    console.log("Cancelllleedd");
+    const doc_ref = db.collection("bookings").doc(booking.id);
+    doc_ref
+      .delete()
+      .then(() => {
+        navigation.goBack({ refresh: true });
+      })
+      .catch((err) => {
+        alert("Error cancelling booking" + err.message);
+      });
   };
 
   return (

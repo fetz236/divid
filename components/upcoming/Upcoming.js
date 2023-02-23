@@ -50,6 +50,7 @@ export default function Upcoming({ navigation }) {
           data: [],
         };
       acc[item.date].data.push({
+        id: item.id,
         name: item.name,
         start_time: item.start_time,
         end_time: item.end_time,
@@ -158,7 +159,9 @@ const CancelBooking = (props) => {
     return (
       <TouchableOpacity
         style={upcoming_style_sheet.btn_container}
-        onPress={() => props.navigation.navigate("Cancel", props.booking)}
+        onPress={() =>
+          props.navigation.navigate("Cancel", { booking: props.booking })
+        }
       >
         <View>
           <Text style={upcoming_style_sheet.btn_text}> Cancel </Text>
@@ -170,7 +173,9 @@ const CancelBooking = (props) => {
       <TouchableOpacity
         style={upcoming_style_sheet.btn_container}
         onPress={() =>
-          props.navigation.navigate("CancelPendingBooking", props.booking)
+          props.navigation.navigate("CancelPendingBooking", {
+            booking: props.booking,
+          })
         }
       >
         <View>

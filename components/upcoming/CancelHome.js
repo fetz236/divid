@@ -13,8 +13,17 @@ const fitness_center = {
 
 export default function CancelHome({ navigation, ...props }) {
   const [accepted, setAccepted] = useState(false);
+  const booking = props.route.params.booking;
   const handleCancellation = () => {
-    console.log("Cancelllleedd");
+    const doc_ref = db.collection("bookings").doc(booking.id);
+    doc_ref
+      .delete()
+      .then(() => {
+        navigation.goBack();
+      })
+      .catch((err) => {
+        alert("Error cancelling booking" + err.message);
+      });
   };
 
   return (
