@@ -6,15 +6,22 @@ import { db } from "../../firebase";
 import { cancel_pb_style } from "../../styles/upcoming/CancelPendingBookingHomeStyle";
 
 export default function CancelPendingBookingHome({ navigation, ...props }) {
-  console.log(props);
   const [accepted, setAccepted] = useState(false);
   const booking = props.route.params.booking;
+
+  const handleGoBack = () => {
+    navigation.goBack();
+  };
 
   const handleCancellation = () => {
     const doc_ref = db.collection("bookings").doc(booking.id);
     doc_ref
       .delete()
       .then(() => {
+        // Call the handleDeleteBooking function to update the state variables
+        props.route.params.handleDeleteBooking(booking.id);
+
+        // Navigate back to the previous screen
         navigation.goBack({ refresh: true });
       })
       .catch((err) => {
@@ -32,6 +39,7 @@ export default function CancelPendingBookingHome({ navigation, ...props }) {
       <Divider style={cancel_pb_style.divider} />
       <ConfirmCancellation
         navigation={navigation}
+        handleGoBack={handleGoBack}
         handleCancellation={handleCancellation}
         booking={booking}
       />
@@ -73,7 +81,7 @@ const ConfirmCancellation = (props) => (
     <View style={cancel_pb_style.all_buttons}>
       <TouchableOpacity
         style={cancel_pb_style.button_container}
-        onPress={props.handleCancellation}
+        onPress={props.handleGoBack}
       >
         <Text style={cancel_pb_style.button_text}>Go Back</Text>
       </TouchableOpacity>
