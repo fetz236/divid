@@ -14,12 +14,21 @@ const fitness_center = {
 export default function CancelHome({ navigation, ...props }) {
   const [accepted, setAccepted] = useState(false);
   const booking = props.route.params.booking;
+
+  const handleGoBack = () => {
+    navigation.goBack();
+  };
+
   const handleCancellation = () => {
     const doc_ref = db.collection("bookings").doc(booking.id);
     doc_ref
       .delete()
       .then(() => {
-        navigation.goBack();
+        // Call the handleDeleteBooking function to update the state variables
+        props.route.params.handleDeleteBooking(booking.id);
+
+        // Navigate back to the previous screen
+        navigation.goBack({ refresh: true });
       })
       .catch((err) => {
         alert("Error cancelling booking" + err.message);
@@ -37,6 +46,7 @@ export default function CancelHome({ navigation, ...props }) {
       <Divider style={cancel_home_style.divider} />
       <ConfirmCancellation
         navigation={navigation}
+        handleGoBack={handleGoBack}
         handleCancellation={handleCancellation}
       />
     </View>
@@ -89,7 +99,7 @@ const ConfirmCancellation = (props) => (
     <View style={cancel_home_style.all_buttons}>
       <TouchableOpacity
         style={cancel_home_style.button_container}
-        onPress={props.handleCancellation}
+        onPress={props.handleGoBack}
       >
         <Text style={cancel_home_style.button_text}>Go Back</Text>
       </TouchableOpacity>
