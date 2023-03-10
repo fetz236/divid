@@ -96,7 +96,7 @@ export default function AddAddress({ navigation, ...props }) {
     setAddressToFalse().then(() => {
       return uploadNewAddress().then(() => {
         return updateFrontendAddress().then(() => {
-          navigation.pop(2);
+          navigation.pop(2, { refresh: true });
         });
       });
     });

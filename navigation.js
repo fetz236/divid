@@ -17,7 +17,6 @@ import AuthenticationScreen from "./screens/Authentication/AuthenticationScreen"
 import LoginScreen from "./screens/Authentication/LoginScreen";
 import SignUpScreen from "./screens/Authentication/SignUpScreen";
 import ForgotPasswordScreen from "./screens/Authentication/ForgotPasswordScreen";
-import Cancel from "./screens/UpcomingPage/Cancel";
 import AccountDetailsScreen from "./screens/HomePage/AccountDetailsScreen";
 import ContactPreferencesScreen from "./screens/HomePage/ContactPreferencesScreen";
 import PaymentDetailsScreen from "./screens/HomePage/PaymentDetailsScreen";
@@ -29,6 +28,8 @@ import AddAddressScreen from "./screens/Address/AddAddressScreen";
 import FindAddressScreen from "./screens/Address/FindAddressScreen";
 import CurrentAddressScreen from "./screens/Address/CurrentAddressScreen";
 import LoginAddressNeededScreen from "./screens/Address/LoginAddressNeededScreen";
+import Cancel from "./screens/UpcomingPage/Cancel";
+import CancelPendingBooking from "./screens/UpcomingPage/CancelPendingBooking";
 
 const tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -334,7 +335,19 @@ const UpcomingStackScreen = () => (
         headerBackTitleVisible: false,
         headerTitleStyle: header_style.title,
         headerTintColor: "white",
-        headerTitle: "Cancel Booking",
+        headerTitle: "Confirm Cancellation",
+      }}
+    />
+    <UpcomingStack.Screen
+      name="CancelPendingBooking"
+      component={CancelPendingBooking}
+      options={{
+        headerShown: true,
+        headerStyle: header_style.full_container,
+        headerBackTitleVisible: false,
+        headerTitleStyle: header_style.title,
+        headerTintColor: "white",
+        headerTitle: "Confirm Cancellation",
       }}
     />
     <UpcomingStack.Screen name="NoLogin" component={NoLogin} />

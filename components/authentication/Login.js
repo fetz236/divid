@@ -28,7 +28,7 @@ export default function Login({ navigation, ...props }) {
         if (props.route.params.isCheckout) {
           navigation.replace("Checkout", props.route.params);
         } else {
-          navigation.replace("UserDetail", props.route.params);
+          navigation.replace("UserDetail");
         }
       })
       .catch((error) => alert(error.message));

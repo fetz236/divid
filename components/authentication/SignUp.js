@@ -70,7 +70,7 @@ export default function SignUp({ navigation, ...props }) {
       if (props.route.params.isCheckout) {
         navigation.replace("Checkout", props.route.params);
       } else {
-        navigation.replace("UserDetail", props.route.params);
+        navigation.replace("UserDetail");
       }
     } catch (error) {
       alert(`${error.code}: ${error.message}`);

@@ -12,12 +12,9 @@ export default function GeneralInfo({ navigation, ...props }) {
   //Checks authentication for to see which Screen the user should be guided to during Login
   const checkAuthentication = () => {
     if (auth.currentUser) {
-      navigation.navigate("UserDetail", {
-        navigation: navigation,
-      });
+      navigation.navigate("UserDetail");
     } else {
       navigation.navigate("AuthenticationScreen", {
-        navigation: navigation,
         isCheckout: false,
       });
     }

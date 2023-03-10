@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const cancel_home_style = StyleSheet.create({
+export const cancel_pb_style = StyleSheet.create({
   title: {
     color: "#d95a00",
     fontSize: 20,
@@ -16,22 +16,11 @@ export const cancel_home_style = StyleSheet.create({
     marginBottom: "5%",
     color: "#a2a2a2",
   },
-  cancel_info: {
-    marginTop: "5%",
-    marginBottom: "1%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  cancel_text: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#8d8d8d",
-  },
   accept_terms: {
     borderWidth: 2,
     borderRadius: 50,
     borderColor: "#d95a00",
-    marginTop: "15%",
+    marginTop: "10%",
     marginLeft: "3%",
     marginRight: "3%",
   },

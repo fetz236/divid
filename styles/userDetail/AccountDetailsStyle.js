@@ -1,5 +1,4 @@
-import { StyleSheet } from "react-native";
-
+import { StyleSheet, Dimensions } from "react-native";
 export const account_details_style = StyleSheet.create({
   title: {
     color: "#d95a00",
@@ -44,15 +43,15 @@ export const account_details_style = StyleSheet.create({
     fontSize: 16,
   },
   editable_pencil: {
-    width: "15%",
+    width: Dimensions.get("window").height / 14,
     borderColor: "#d95a00",
     backgroundColor: "#d95a00",
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
     borderRadius: 50,
-    marginTop: "3%",
-    height: 60,
+    marginTop: "13%",
+    height: Dimensions.get("window").height / 14,
   },
   main_input_container: {
     flexDirection: "row",
@@ -73,7 +72,7 @@ export const account_details_style = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 50,
     marginTop: "10%",
-    height: 60,
+    height: Dimensions.get("window").height / 14,
     marginBottom: "10%",
   },
   mi_sub_heading: {
