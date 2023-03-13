@@ -4,6 +4,7 @@ import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { add_address_style } from "../../styles/address/AddAddressStyle";
 import { auth, db } from "../../firebase";
+import { GeoPoint } from "firebase/firestore";
 
 export default function AddAddress({ navigation, ...props }) {
   const [address1, setAddress1] = useState(props.route.params.address.address1);
@@ -50,6 +51,11 @@ export default function AddAddress({ navigation, ...props }) {
   }
 
   function uploadNewAddress() {
+    const location = new GeoPoint(
+      props.route.params.address.addressLatitude,
+      props.route.params.address.addressLongitude
+    );
+
     return db
       .collection(`users/${auth.currentUser.uid}/address`)
       .add({
@@ -60,10 +66,7 @@ export default function AddAddress({ navigation, ...props }) {
         country: addressCountry,
         postcode: addressPostal,
         isActive: true,
-        location: {
-          latitude: props.route.params.address.addressLatitude,
-          longitude: props.route.params.address.addressLongitude,
-        },
+        location: location,
       })
       .catch((error) => {
         alert(`Error found: ${error}! Please contact support`);
@@ -96,7 +99,8 @@ export default function AddAddress({ navigation, ...props }) {
     setAddressToFalse().then(() => {
       return uploadNewAddress().then(() => {
         return updateFrontendAddress().then(() => {
-          navigation.pop(2, { refresh: true });
+          navigation.pop(2);
+          props.route.params.setRefreshData(true);
         });
       });
     });
