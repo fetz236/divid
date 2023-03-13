@@ -68,6 +68,7 @@ export default function CurrentAddress({ navigation, ...props }) {
             .get()
             .then((snapshot) => {
               props.route.params.setCurrentAddress(snapshot.data());
+              props.route.params.setRefreshData(true);
               navigation.goBack();
             })
             .catch((error) => {
@@ -109,6 +110,7 @@ export default function CurrentAddress({ navigation, ...props }) {
             onPress={() =>
               navigation.replace("FindAddressScreen", {
                 setCurrentAddress: props.route.params.setCurrentAddress,
+                setRefreshData: props.route.params.setRefreshData,
               })
             }
           >

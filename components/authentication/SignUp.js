@@ -25,105 +25,68 @@ const categories = require("../../categories.json");
 
 export default function SignUp({ navigation, ...props }) {
   //Declaring Variables to set the data the user declared
-  const [f_name, setF_name] = useState("");
-  const [l_name, setL_name] = useState("");
-  const [email, setEmailState] = useState("");
+  // Declaring state variables
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
   const [mobileCountry, setMobileCountry] = useState("GB");
-  const [mobileCountryCallingCode, setMobileCountryCallingCode] =
-    useState("44");
-  const [passwordState, setPasswordState] = useState("");
-
-  //Handles the signup for the user
-  const handleSignUp = async () => {
-    await auth
-      .createUserWithEmailAndPassword(email, passwordState)
-      .then((userCredentials) => {
-        //Gets the user and id
-        const user = userCredentials.user;
-        const id = user.uid;
-
-        //Sends a verification email
-
-        //user.sendEmailVerification();
-
-        //Creates a new document with the necessary info for the user
-        setDoc(doc(db, "users", id), {
-          rating: 5,
-          reviews: 1,
-          categories: selectedItems,
-          first_name: checkFName(f_name),
-          last_name: checkLName(l_name),
-          mobile: mobile,
-          mobile_country: mobileCountry,
-          mobile_calling_code: mobileCountryCallingCode,
-          email: email,
-          favourites: [],
-          referral_code: generateReferralCode(f_name, l_name),
-          photoURL:
-            "https://firebasestorage.googleapis.com/v0/b/divid-edf5d.appspot.com/o/profile_images%2Fuser.png?alt=media&token=0dc2498c-bc30-4f8d-a663-9b8d6fbfa127",
-        });
-        user
-          .updateProfile({
-            displayName: checkFName(f_name) + " " + checkLName(l_name),
-            photoURL:
-              "https://firebasestorage.googleapis.com/v0/b/divid-edf5d.appspot.com/o/profile_images%2Fuser.png?alt=media&token=0dc2498c-bc30-4f8d-a663-9b8d6fbfa127",
-          })
-          .then(
-            function () {
-              // Profile updated successfully!
-              if (props.route.params.isCheckout) {
-                navigation.replace("Checkout", props.route.params);
-              } else {
-                navigation.replace("UserDetail", props.route.params);
-              }
-            },
-            function (error) {
-              alert(error.message);
-            }
-          );
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        alert(`${errorCode}: ${errorMessage}`);
-      });
-  };
-
-  //First Name Verification
-  const checkFName = (first) => {
-    const res = first.trim();
-    return res;
-  };
-
-  //Last Name Verification
-  const checkLName = (last) => {
-    const res = last.trim();
-    return res;
-  };
-
-  const generateReferralCode = (first, last) => {
-    let ref_code = "";
-
-    if (first.length >= 3) {
-      ref_code += first.substring(0, 3);
-    } else {
-      ref_code += first;
-    }
-
-    if (last.length >= 3) {
-      ref_code += last.substring(0, 3);
-    } else {
-      ref_code += last;
-    }
-
-    ref_code += Math.floor(Math.random() * 10000);
-
-    return ref_code;
-  };
-
+  const [mobileCountryCode, setMobileCountryCode] = useState("44");
+  const [password, setPassword] = useState("");
   const [selectedItems, setSelectedItems] = useState([]);
 
+  // Signup handler function
+  const handleSignUp = async () => {
+    try {
+      const userCredentials = await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+      const user = userCredentials.user;
+      const id = user.uid;
+
+      await setDoc(doc(db, "users", id), {
+        rating: 5,
+        reviews: 1,
+        categories: selectedItems,
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
+        mobile,
+        mobileCountry,
+        mobileCountryCode,
+        email,
+        favourites: [],
+        referralCode: generateReferralCode(firstName, lastName),
+        photoURL:
+          "https://firebasestorage.googleapis.com/v0/b/divid-edf5d.appspot.com/o/profile_images%2Fuser.png?alt=media&token=0dc2498c-bc30-4f8d-a663-9b8d6fbfa127",
+      });
+
+      await user.updateProfile({
+        displayName: `${firstName.trim()} ${lastName.trim()}`,
+        photoURL:
+          "https://firebasestorage.googleapis.com/v0/b/divid-edf5d.appspot.com/o/profile_images%2Fuser.png?alt=media&token=0dc2498c-bc30-4f8d-a663-9b8d6fbfa127",
+      });
+
+      if (props.route.params.isCheckout) {
+        navigation.replace("Checkout", props.route.params);
+      } else {
+        navigation.replace("UserDetail");
+      }
+    } catch (error) {
+      alert(`${error.code}: ${error.message}`);
+    }
+  };
+
+  // Referral code generator function
+  const generateReferralCode = (firstName, lastName) => {
+    let refCode = "";
+    refCode += firstName.substring(0, 3);
+    refCode += lastName.substring(0, 3);
+    refCode += Math.floor(Math.random() * 10000);
+    return refCode;
+  };
+
+  // Update selected items
   const onSelectedItemsChanged = (selected) => {
     setSelectedItems(selected);
   };
@@ -141,15 +104,15 @@ export default function SignUp({ navigation, ...props }) {
         <Text style={signup_style.title}> divid </Text>
       </View>
       <Divider style={signup_style.divider} />
-      <FirstName setF_name={setF_name} />
-      <LastName setL_name={setL_name} />
+      <FirstName setFirstName={setFirstName} />
+      <LastName setLastName={setLastName} />
       <Mobile
         setMobile={setMobile}
         setMobileCountry={setMobileCountry}
-        setMobileCountryCallingCode={setMobileCountryCallingCode}
+        setMobileCountryCode={setMobileCountryCode}
       />
-      <Email setEmailState={setEmailState} />
-      <Password setPasswordState={setPasswordState} />
+      <Email setEmail={setEmail} />
+      <Password setPassword={setPassword} />
       <Interests
         selectedItems={selectedItems}
         onSelectedItemsChanged={onSelectedItemsChanged}
@@ -192,7 +155,7 @@ const FirstName = (props) => (
         textContentType="givenName"
         autoComplete="name-given"
         style={signup_style.ti_container}
-        onChangeText={(text) => props.setF_name(text)}
+        onChangeText={(text) => props.setFirstName(text)}
         underlineColorAndroid="transparent"
       ></TextInput>
     </View>
@@ -208,7 +171,7 @@ const LastName = (props) => (
         textContentType="familyName"
         autoComplete="name-family"
         style={signup_style.ti_container}
-        onChangeText={(text) => props.setL_name(text)}
+        onChangeText={(text) => props.setLastName(text)}
         underlineColorAndroid="transparent"
       ></TextInput>
     </View>
@@ -225,7 +188,7 @@ const Email = (props) => (
         textContentType="emailAddress"
         autoComplete="email"
         style={signup_style.ti_container}
-        onChangeText={(text) => props.setEmailState(text)}
+        onChangeText={(text) => props.setEmail(text)}
         underlineColorAndroid="transparent"
       ></TextInput>
     </View>
@@ -240,7 +203,7 @@ const Mobile = (props) => (
         <PhoneInput
           defaultCode="GB"
           onChangeCountry={(text) => {
-            props.setMobileCountryCallingCode(text.callingCode[0]);
+            props.setMobileCountryCode(text.callingCode[0]);
             props.setMobileCountry(text.cca2);
           }}
           onChangeText={(text) => props.setMobile(text)}
@@ -270,7 +233,7 @@ const Password = (props) => (
         autoComplete="password-new"
         secureTextEntry={true}
         style={signup_style.ti_container}
-        onChangeText={(text) => props.setPasswordState(text)}
+        onChangeText={(text) => props.setPassword(text)}
         underlineColorAndroid="transparent"
       ></TextInput>
     </View>

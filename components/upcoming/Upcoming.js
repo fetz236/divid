@@ -9,91 +9,110 @@ import NoLogin from "../userDetail/NoLogin";
 
 export default function Upcoming({ navigation }) {
   const [bookings, setBookings] = useState([]);
-  const [loaded_bookings, setLoadedBookings] = useState(false);
+  const [loadedBookings, setLoadedBookings] = useState(false);
+  const [groupedBookings, setGroupedBookings] = useState([]);
+  console.log();
 
   useEffect(() => {
-    const loadBookings = () => {
-      let booking_data = [];
-      db.collection("bookings")
-        .where("user", "==", auth.currentUser.uid)
-        .get()
-        .then((snapshot) =>
-          snapshot.forEach((doc) => {
-            const data = doc.data();
-            data.id = doc.id;
-            booking_data.push(data);
-          })
-        )
-        .then(function () {
-          setBookings(booking_data);
-          setLoadedBookings(true);
-        })
-        .catch((err) => alert(err));
-    };
+    const unsubscribe = db
+      .collection("bookings")
+      .where("user", "==", auth.currentUser.uid)
+      .orderBy("date")
+      .orderBy("start_time")
+      .onSnapshot((snapshot) => {
+        const newBookings = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setBookings(newBookings);
 
-    auth.onAuthStateChanged(async function () {
-      if (auth.currentUser) {
-        setLoadedBookings(false);
-        await loadBookings();
-      } else {
-        setBookings([]);
-        setLoadedBookings(false);
-      }
-    });
+        const grouping = Object.values(
+          newBookings.reduce((acc, item) => {
+            const date = item.date;
+            if (!acc[date]) {
+              acc[date] = {
+                date: date,
+                data: [],
+              };
+            }
+            acc[date].data.push(item);
+            return acc;
+          }, {})
+        );
+        setGroupedBookings(grouping);
+        setLoadedBookings(true);
+      });
+    return () => unsubscribe();
   }, []);
 
-  const grouped_bookings = Object.values(
-    bookings.reduce((acc, item) => {
-      if (!acc[item.date])
-        acc[item.date] = {
-          date: item.date,
-          data: [],
-        };
-      acc[item.date].data.push({
-        name: item.name,
-        start_time: item.start_time,
-        end_time: item.end_time,
-        name: item.name,
-        location: item.location,
-        reference_number: item.reference_number,
-        telephone_number: item.telephone_number,
-        worker: item.worker,
-        fc: item.fc,
-        class: item.class,
-        user: item.user,
-      });
-      return acc;
-    }, {})
-  );
+  // ...
+
+  const handleDeleteBooking = (bookingId) => {
+    // Remove the deleted booking from the state of the bookings
+    const updatedBookings = bookings.filter(
+      (booking) => booking.id !== bookingId
+    );
+    setBookings(updatedBookings);
+
+    // Update the grouped bookings by grouping the updated bookings again
+    const groupedBookings = Object.values(
+      updatedBookings.reduce((acc, item) => {
+        const date = item.date;
+        if (!acc[date]) {
+          acc[date] = {
+            date: date,
+            data: [],
+          };
+        }
+        acc[date].data.push(item);
+        return acc;
+      }, {})
+    )
+      .filter((group) => group.data.length > 0) // Filter out any groups with no bookings
+      .filter((group) => {
+        const today = new Date();
+        const groupDate = new Date(group.date);
+        return groupDate >= today;
+      }); // Filter out any past dates
+
+    // Update the groupedBookings state with the new value
+    setGroupedBookings(groupedBookings);
+  };
 
   return (
     <View>
-      {loaded_bookings && (
+      {loadedBookings && (
         <>
           <BookingHeader />
-          {grouped_bookings.map((booking, index) => (
-            <View key={index}>
-              <Divider style={upcoming_style_sheet.divider_date} />
-              <View style={upcoming_style_sheet.date_header}>
-                <Text style={upcoming_style_sheet.sub_heading}>
-                  {booking.date}
-                </Text>
-              </View>
-              {booking.data.map((value, j_index) => (
-                <View key={j_index}>
+          {groupedBookings.length > 0 && (
+            <>
+              {groupedBookings.map((booking, index) => (
+                <View key={index}>
                   <Divider style={upcoming_style_sheet.divider_date} />
-                  <UpcomingBookings
-                    key={index}
-                    navigation={navigation}
-                    booking={value}
-                  />
+                  <View style={upcoming_style_sheet.date_header}>
+                    <Text style={upcoming_style_sheet.sub_heading}>
+                      {booking.date}
+                    </Text>
+                  </View>
+                  {booking.data.map((value, j_index) => (
+                    <View key={j_index}>
+                      <Divider style={upcoming_style_sheet.divider_date} />
+                      <UpcomingBookings
+                        key={index}
+                        navigation={navigation}
+                        handleDeleteBooking={handleDeleteBooking}
+                        booking={value}
+                      />
+                    </View>
+                  ))}
                 </View>
               ))}
-            </View>
-          ))}
+            </>
+          )}
+          {groupedBookings.length == 0 && <NoBookings />}
         </>
       )}
-      {!loaded_bookings && <NoLogin />}
+      {!loadedBookings && <NoLogin />}
     </View>
   );
 }
@@ -109,11 +128,11 @@ const UpcomingBookings = (props) => (
     <InfoHeader booking={props.booking} />
 
     <View style={upcoming_style_sheet.display_buttons}>
-      <UpcomingButtons name="Contact" booking={props.booking} />
-      <UpcomingQR
+      <ContactButton booking={props.booking} />
+      <CancelBooking
         navigation={props.navigation}
-        name="Check Location"
         booking={props.booking}
+        handleDeleteBooking={props.handleDeleteBooking}
       />
     </View>
   </View>
@@ -140,49 +159,59 @@ const InfoHeader = (props) => (
     </View>
   </View>
 );
-const UpcomingButtons = (props) => (
+const ContactButton = (props) => (
   <TouchableOpacity
     style={upcoming_style_sheet.btn_container}
     onPress={() => {
-      Linking.openURL(`tel:${props.booking.telephone_number}`);
+      Linking.openURL(`tel:+447444463391`);
     }}
   >
     <View>
-      <Text style={upcoming_style_sheet.btn_text}> {props.name} </Text>
+      <Text style={upcoming_style_sheet.btn_text}> Contact </Text>
     </View>
   </TouchableOpacity>
 );
 
-const UpcomingQR = (props) => (
-  <TouchableOpacity
-    style={upcoming_style_sheet.btn_container}
-    onPress={() => {
-      const scheme = Platform.select({
-        ios: "maps:0,0?q=",
-        android: "geo:0,0?q=",
-      });
-      const latLng = `${props.booking.location.latitude},${props.booking.location.longitude}`;
-      const label = "Custom Label";
-      const url = Platform.select({
-        ios: `${scheme}${label}@${latLng}`,
-        android: `${scheme}${latLng}(${label})`,
-      });
-      Linking.openURL(url);
-    }}
-  >
-    <View>
-      <Text style={upcoming_style_sheet.btn_text}> {props.name} </Text>
-    </View>
-  </TouchableOpacity>
-);
+const CancelBooking = (props) => {
+  if (props.booking.status != "pending") {
+    return (
+      <TouchableOpacity
+        style={upcoming_style_sheet.btn_container}
+        onPress={() =>
+          props.navigation.navigate("Cancel", {
+            booking: props.booking,
+            handleDeleteBooking: props.handleDeleteBooking,
+          })
+        }
+      >
+        <View>
+          <Text style={upcoming_style_sheet.btn_text}> Cancel </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  } else {
+    return (
+      <TouchableOpacity
+        style={upcoming_style_sheet.btn_container}
+        onPress={() =>
+          props.navigation.navigate("CancelPendingBooking", {
+            booking: props.booking,
+            handleDeleteBooking: props.handleDeleteBooking,
+          })
+        }
+      >
+        <View>
+          <Text style={upcoming_style_sheet.btn_text}> Cancel </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+};
 
-const UpcomingNavigationButtons = (props) => (
-  <TouchableOpacity
-    style={upcoming_style_sheet.btn_container}
-    onPress={() => props.navigation.navigate(props.name)}
-  >
-    <View>
-      <Text style={upcoming_style_sheet.btn_text}> {props.name} </Text>
-    </View>
-  </TouchableOpacity>
+const NoBookings = () => (
+  <View style={upcoming_style_sheet.no_booking_header_container}>
+    <Text style={upcoming_style_sheet.no_booking_title}>
+      No current bookings at the moment
+    </Text>
+  </View>
 );

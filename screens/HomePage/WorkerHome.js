@@ -20,61 +20,53 @@ export default function WorkerHome({ route, navigation }) {
   });
 
   const [addressLoad, setAddressLoad] = useState(true);
-  useEffect(() => {
-    const loadUserAddress = async () => {
-      const subcollectionRef = db
-        .collection("users")
-        .doc(auth.currentUser.uid)
-        .collection("address");
-      const activeDocsQuery = subcollectionRef.where("isActive", "==", true);
-      activeDocsQuery
-        .get()
-        .then((querySnapshot) => {
-          if (querySnapshot.size > 0) {
-            // Subcollection exists
-            querySnapshot.forEach((doc) => {
-              setCurrentAddress(doc.data());
-            });
-          } else {
-            // Subcollection does not exist
-            setCurrentAddress({
-              address1: "30 Aldwych",
-              address2: "",
-              addressPostal: "WC2B 4BG",
-              location: { latitude: 51.513187, longitude: -0.117499 },
-            });
-          }
-        })
-        .then(setAddressLoad(true))
-        .catch((error) => {
-          alert("Error loading home screen" + error);
-        })
-        .catch(() => {
-          setCurrentAddress({
-            address1: "30 Aldwych",
-            address2: "",
-            addressPostal: "WC2B 4BG",
-            location: { latitude: 51.513187, longitude: -0.117499 },
-          });
-          setAddressLoad(true);
-        });
-    };
+  const [refreshData, setRefreshData] = useState(false);
 
-    auth.onAuthStateChanged(function (authState) {
-      if (authState) {
-        setAddressLoad(false);
-        loadUserAddress();
+  const loadUserAddress = async () => {
+    const subcollectionRef = db
+      .collection("users")
+      .doc(auth.currentUser.uid)
+      .collection("address");
+    const activeDocsQuery = subcollectionRef.where("isActive", "==", true);
+    try {
+      const querySnapshot = await activeDocsQuery.get();
+      if (querySnapshot.size > 0) {
+        querySnapshot.forEach((doc) => {
+          setCurrentAddress(doc.data());
+          setRefreshData(true);
+        });
       } else {
-        setAddressLoad(false);
         setCurrentAddress({
           address1: "30 Aldwych",
           address2: "",
           addressPostal: "WC2B 4BG",
           location: { latitude: 51.513187, longitude: -0.117499 },
         });
-        setAddressLoad(true);
       }
-    });
+    } catch (error) {
+      alert("Error loading home screen" + error);
+    }
+    setAddressLoad(true);
+  };
+
+  const handleAuthStateChange = (authState) => {
+    if (authState) {
+      setAddressLoad(false);
+      loadUserAddress();
+    } else {
+      setAddressLoad(false);
+      setCurrentAddress({
+        address1: "30 Aldwych",
+        address2: "",
+        addressPostal: "WC2B 4BG",
+        location: { latitude: 51.513187, longitude: -0.117499 },
+      });
+      setAddressLoad(true);
+    }
+  };
+
+  useEffect(() => {
+    auth.onAuthStateChanged(handleAuthStateChange);
   }, []);
 
   return (
@@ -93,6 +85,8 @@ export default function WorkerHome({ route, navigation }) {
               navigation={navigation}
               current_address={current_address}
               setCurrentAddress={setCurrentAddress}
+              refreshData={refreshData}
+              setRefreshData={setRefreshData}
             />
           )}
         </ScrollView>

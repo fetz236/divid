@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 
 export const upcoming_style_sheet = StyleSheet.create({
   header_container: {
@@ -39,7 +39,7 @@ export const upcoming_style_sheet = StyleSheet.create({
     marginLeft: "2%",
     marginRight: "2%",
     width: "95%",
-    height: 360,
+    height: Dimensions.get("screen").height / 5,
     borderRadius: 20,
     borderWidth: 3,
     borderColor: "#d95a00",
@@ -60,8 +60,8 @@ export const upcoming_style_sheet = StyleSheet.create({
     marginBottom: "2%",
     marginLeft: "2%",
     marginRight: "2%",
-    width: "44%",
-    height: "35%",
+    width: "100%",
+    height: Dimensions.get("screen").height / 20,
     borderRadius: 50,
     borderWidth: 2,
     borderColor: "#d95a00",
@@ -82,11 +82,22 @@ export const upcoming_style_sheet = StyleSheet.create({
   },
   display_buttons: {
     flex: 1,
+    justifyContent: "space-around",
+    alignItems: "center",
     flexDirection: "row",
     flexWrap: "wrap",
   },
   wrap_text: {
     alignItems: "center",
     justifyContent: "center",
+  },
+  no_booking_header_container: {
+    alignItems: "center",
+    marginTop: "60%",
+  },
+  no_booking_title: {
+    color: "#d95a00",
+    fontSize: 20,
+    fontWeight: "600",
   },
 });

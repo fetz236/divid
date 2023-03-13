@@ -96,18 +96,8 @@ export const WorkerSchedule = ({ navigation, ...props }) => {
               (parseInt(curr.getMonth()) + 1) +
               "/" +
               curr.getFullYear(),
-            start_time:
-              worker_data[j].start_time[0] +
-              worker_data[j].start_time[1] +
-              ":" +
-              worker_data[j].start_time[2] +
-              worker_data[j].start_time[3],
-            end_time:
-              worker_data[j].end_time[0] +
-              worker_data[j].end_time[1] +
-              ":" +
-              worker_data[j].end_time[2] +
-              worker_data[j].end_time[3],
+            start_time: worker_data[j].start_time,
+            end_time: worker_data[j].end_time,
             worker: worker_data[j].worker,
             id: worker_data[j].id,
             worker_selected: worker_selected,

@@ -1,12 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const modify_home_style = StyleSheet.create({
-  header_container: {
-    alignItems: "center",
-    marginTop: "5%",
-    flexDirection: "column",
-    justifyContent: "space-between",
-  },
+export const cancel_pb_style = StyleSheet.create({
   title: {
     color: "#d95a00",
     fontSize: 20,
@@ -22,38 +16,15 @@ export const modify_home_style = StyleSheet.create({
     marginBottom: "5%",
     color: "#a2a2a2",
   },
-  modify_container: {
-    marginTop: "10%",
-    marginLeft: "3%",
-    marginRight: "3%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  modify_header: {
-    fontSize: 20,
-    fontWeight: "600",
-    color: "#d95a00",
-  },
-  modify_info: {
-    marginTop: "5%",
-    marginBottom: "1%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  modify_text: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#8d8d8d",
-  },
   accept_terms: {
     borderWidth: 2,
     borderRadius: 50,
     borderColor: "#d95a00",
-    marginTop: "15%",
+    marginTop: "10%",
     marginLeft: "3%",
     marginRight: "3%",
   },
-  confirm_modification: {
+  confirm_cancellation: {
     borderWidth: 2,
     borderRadius: 50,
     borderColor: "#d95a00",
@@ -92,21 +63,5 @@ export const modify_home_style = StyleSheet.create({
     marginRight: "3%",
     marginTop: "3%",
     marginBottom: "3%",
-  },
-  date_time_style: {
-    width: 100,
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "column",
-    marginTop: 10,
-    backgroundColor: "#d95a00",
-  },
-  time_style: {
-    width: 100,
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "column",
-    marginTop: 10,
-    backgroundColor: "#d95a00",
   },
 });
