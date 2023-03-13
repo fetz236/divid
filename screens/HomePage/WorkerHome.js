@@ -20,6 +20,7 @@ export default function WorkerHome({ route, navigation }) {
   });
 
   const [addressLoad, setAddressLoad] = useState(true);
+  const [refreshData, setRefreshData] = useState(false);
 
   const loadUserAddress = async () => {
     const subcollectionRef = db
@@ -32,6 +33,7 @@ export default function WorkerHome({ route, navigation }) {
       if (querySnapshot.size > 0) {
         querySnapshot.forEach((doc) => {
           setCurrentAddress(doc.data());
+          setRefreshData(true);
         });
       } else {
         setCurrentAddress({
@@ -83,6 +85,8 @@ export default function WorkerHome({ route, navigation }) {
               navigation={navigation}
               current_address={current_address}
               setCurrentAddress={setCurrentAddress}
+              refreshData={refreshData}
+              setRefreshData={setRefreshData}
             />
           )}
         </ScrollView>

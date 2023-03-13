@@ -9,13 +9,14 @@ import { worker_items_style } from "../../styles/workers/WorkerItemsStyle";
 
 export default function WorkerItems({ navigation, ...props }) {
   const [worker_details, setWorkers] = useState([]);
-  const [loaded_worker_, setLoadedWorkers] = useState(false);
+  const [loaded_worker, setLoadedWorkers] = useState(false);
 
   const items = require("../../categories.json");
 
   const [sorted, setSorted] = useState([]);
   const [loaded_sorted, setLoadedSorted] = useState(false);
   const [current_address, setCurrentAddress] = useState(props.current_address);
+
   // Convert degrees to radians
   function toRadians(degrees) {
     return degrees * (Math.PI / 180);
@@ -24,6 +25,7 @@ export default function WorkerItems({ navigation, ...props }) {
   const centerPointLatRad = toRadians(current_address.location.latitude);
   const centerPointLngRad = toRadians(current_address.location.longitude);
 
+  // useEffect to load data at the beginning
   useEffect(() => {
     const loadData = async () => {
       let filteredDocs = [];
@@ -63,8 +65,49 @@ export default function WorkerItems({ navigation, ...props }) {
     loadData();
   }, []);
 
+  useEffect(() => {
+    if (props.refreshData) {
+      const loadData = async () => {
+        let filteredDocs = [];
+        db.collection("workers")
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              const worker_data = doc.data();
+              const locationLatRad = toRadians(worker_data.location.latitude);
+              const locationLngRad = toRadians(worker_data.location.longitude);
+
+              // Calculate the distance between the center point and the location using the Haversine formula
+              const a =
+                Math.sin((locationLatRad - centerPointLatRad) / 2) *
+                  Math.sin((locationLatRad - centerPointLatRad) / 2) +
+                Math.cos(centerPointLatRad) *
+                  Math.cos(locationLatRad) *
+                  Math.sin((locationLngRad - centerPointLngRad) / 2) *
+                  Math.sin((locationLngRad - centerPointLngRad) / 2);
+              const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+              const distance = 6371 * c;
+
+              // Add the location to the filtered docs array if it's within the maximum distance
+              if (distance <= worker_data.radius) {
+                filteredDocs.push(worker_data);
+              }
+            });
+          })
+          .then(function () {
+            setWorkers(filteredDocs);
+            setSorted(filteredDocs);
+            setLoadedWorkers(true);
+          })
+          .catch((err) => alert(err));
+      };
+      loadData();
+      props.setRefreshData(false);
+    }
+  }, [props.refreshData]);
+
   //loads the relevant data depending on what category is selected
-  const loadFitness = (selected_cat) => {
+  const loadCategories = (selected_cat) => {
     const sorted_data = [];
     for (let i = 0; i < worker_details.length; i++) {
       let f_cat = worker_details[i].categories;
@@ -90,6 +133,7 @@ export default function WorkerItems({ navigation, ...props }) {
       navigation.navigate("CurrentAddressScreen", {
         navigation: navigation,
         setCurrentAddress: setCurrentAddress,
+        setRefreshData: props.setRefreshData,
       });
     } else {
       navigation.navigate("LoginAddressNeededScreen", {
@@ -101,7 +145,7 @@ export default function WorkerItems({ navigation, ...props }) {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <>
-        {loaded_worker_ && (
+        {loaded_worker && (
           <>
             {loaded_sorted && <Reload loadAll={loadAll} />}
             <View style={{ backgroundColor: "white", padding: 15 }}>
@@ -110,7 +154,7 @@ export default function WorkerItems({ navigation, ...props }) {
                 checkAddress={checkAddress}
               />
             </View>
-            <Categories items={items} loadFitness={loadFitness} />
+            <Categories items={items} loadCategories={loadCategories} />
             {sorted.map((worker, index) => (
               <TouchableOpacity
                 activeOpacity={1}
@@ -172,7 +216,10 @@ const Categories = (props) => (
     {props.items && (
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {props.items.map((item, index) => (
-          <TouchableOpacity key={index} onPress={() => props.loadFitness(item)}>
+          <TouchableOpacity
+            key={index}
+            onPress={() => props.loadCategories(item)}
+          >
             <View key={index} style={worker_items_style.item_container}>
               <MaterialCommunityIcons
                 name={item.icon_name}

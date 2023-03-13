@@ -61,6 +61,7 @@ export default function FindAddress({ navigation, ...props }) {
         navigation.navigate("AddAddressScreen", {
           address: address,
           setCurrentAddress: props.route.params.setCurrentAddress,
+          setRefreshData: props.route.params.setRefreshData,
         });
       })
       .catch((err) => console.error(err));
