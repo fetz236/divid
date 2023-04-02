@@ -22,7 +22,7 @@ export default function GeneralInfo({ navigation, ...props }) {
 
   return (
     <View source={general_info_css.gi_container}>
-      <Logo navigation={navigation} />
+      <Logo />
       <View style={general_info_css.profile_container}>
         <TouchableOpacity onPress={() => checkAuthentication()}>
           <Icon name="person-outline" size={35} color="#d95a00"></Icon>
@@ -32,7 +32,7 @@ export default function GeneralInfo({ navigation, ...props }) {
   );
 }
 
-const Logo = (props) => (
+const Logo = () => (
   <View style={general_info_css.logo_container}>
     <Image source={logo.image} style={general_info_css.logo_def} />
   </View>
