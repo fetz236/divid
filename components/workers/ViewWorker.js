@@ -11,12 +11,12 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function ViewWorker({ navigation, ...props }) {
   const worker = {
-    first_name: props.route.params.first_name,
-    last_name: props.route.params.last_name,
+    firstName: props.route.params.firstName,
+    lastName: props.route.params.lastName,
     id: props.route.params.id,
     categories: props.route.params.categories,
     mobile: props.route.params.mobile,
-    mobile_calling_code: props.route.params.mobile_calling_code,
+    mobileCallingCode: props.route.params.mobileCallingCode,
     location: props.route.params.location,
     description: props.route.params.description,
     price: props.route.params.price,
@@ -72,7 +72,7 @@ export default function ViewWorker({ navigation, ...props }) {
             reviews={worker.reviews}
           ></WorkerImage>
           <WorkerDetails
-            name={worker.first_name + " " + worker.last_name}
+            name={worker.firstName + " " + worker.lastName}
             description={worker.description}
           ></WorkerDetails>
           <WorkerAbout skills={skills} />

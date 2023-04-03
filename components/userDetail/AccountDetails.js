@@ -35,16 +35,16 @@ export default function AccountDetails({ navigation, ...props }) {
   }, []);
 
   // Setting states to retrieve the users information
-  const [f_name, setF_name] = useState(props.route.params.first_name);
+  const [f_name, setF_name] = useState(props.route.params.firstName);
   const [fView, setfView] = useState(false);
 
-  const [l_name, setL_name] = useState(props.route.params.last_name);
+  const [l_name, setL_name] = useState(props.route.params.lastName);
   const [lView, setlView] = useState(false);
 
   const [mobile, setMobile] = useState(props.route.params.mobile);
   const [mobileCountry, setMobileCountry] = useState("GB");
   const [mobileCountryCallingCode, setMobileCountryCallingCode] = useState(
-    props.route.params.mobile_country
+    props.route.params.mobileCountry
   );
 
   const [mView, setmView] = useState(false);
@@ -57,11 +57,11 @@ export default function AccountDetails({ navigation, ...props }) {
   const handleInfo = async () => {
     await db.collection("users").doc(auth.currentUser.uid).update({
       categories: category_icons,
-      first_name: f_name,
-      last_name: l_name,
+      firstName: f_name,
+      lastName: l_name,
       mobile: mobile,
-      mobile_calling_code: mobileCountryCallingCode,
-      mobile_country: mobileCountry,
+      mobileCallingCode: mobileCountryCallingCode,
+      mobileCountry: mobileCountry,
     });
   };
 
