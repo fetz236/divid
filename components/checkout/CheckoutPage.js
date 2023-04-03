@@ -116,10 +116,8 @@ const WorkerInformation = (props) => (
     <View style={checkout_style.order_info}>
       <Text style={checkout_style.order_text}>
         {" "}
-        Booking with {
-          props.checkout_data.worker_selected.worker.first_name
-        }{" "}
-        {props.checkout_data.worker_selected.worker.last_name} arriving from{" "}
+        Booking with {props.checkout_data.worker_selected.worker.firstName}{" "}
+        {props.checkout_data.worker_selected.worker.lastName} arriving from{" "}
         {props.checkout_data.start_time} - {props.checkout_data.end_time} on the{" "}
         {props.checkout_data.date} {props.checkout_data.selected_hour}
       </Text>

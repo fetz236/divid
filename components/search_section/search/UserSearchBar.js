@@ -34,7 +34,7 @@ const UserSearchBar = ({ navigation }) => {
           snapshot.forEach((doc) => {
             const data = doc.data();
             data.id = doc.id;
-            data.name = data.first_name + " " + data.last_name;
+            data.name = data.firstName + " " + data.lastName;
             wc_data.push(data);
           });
         })
@@ -86,8 +86,8 @@ const UserSearchBar = ({ navigation }) => {
   const checkNavigation = (title, item) => {
     if (title == "Workers") {
       navigation.navigate("WorkerDetailSS", {
-        first_name: item.first_name,
-        last_name: item.last_name,
+        firstName: item.firstName,
+        lastName: item.lastName,
         id: item.id,
         categories: item.categories,
         mobile: item.mobile,

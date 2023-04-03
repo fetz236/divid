@@ -61,12 +61,12 @@ const WorkerItems = (props) =>
       key={index}
       onPress={() =>
         props.navigation.navigate("WorkerDetail", {
-          first_name: worker.first_name,
-          last_name: worker.last_name,
+          firstName: worker.firstName,
+          lastName: worker.lastName,
           id: worker.id,
           categories: worker.categories,
           mobile: worker.mobile,
-          mobile_calling_code: worker.mobile_calling_code,
+          mobileCallingCode: worker.mobileCallingCode,
           description: worker.description,
           price: worker.price,
           location: worker.location,
@@ -90,7 +90,7 @@ const WorkerItems = (props) =>
 const WorkerInfo = (props) => (
   <View style={worker_items_style.worker_info}>
     <Text style={worker_items_style.worker_title_style}>
-      {props.worker_details.first_name} {props.worker_details.last_name}
+      {props.worker_details.firstName} {props.worker_details.lastName}
     </Text>
     <Text>{props.worker_details.description}</Text>
     <Text>£{(props.worker_details.price / 100).toFixed(2)}</Text>
