@@ -46,17 +46,16 @@ export default function SignUp({ navigation, ...props }) {
       const id = user.uid;
 
       await setDoc(doc(db, "users", id), {
-        rating: 5,
-        reviews: 1,
         categories: selectedItems,
+        email: email,
         firstName: firstName.trim(),
         lastName: lastName.trim(),
-        mobile,
-        mobileCountry,
-        mobileCountryCode,
-        email,
-        favourites: [],
+        mobile: mobile,
+        mobileCountry: mobileCountry,
+        mobileCountryCode: mobileCountryCode,
+        rating: 5,
         referralCode: generateReferralCode(firstName, lastName),
+        reviews: 1,
         photoURL:
           "https://firebasestorage.googleapis.com/v0/b/divid-edf5d.appspot.com/o/profile_images%2Fuser.png?alt=media&token=0dc2498c-bc30-4f8d-a663-9b8d6fbfa127",
       });
